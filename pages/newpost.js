@@ -1,4 +1,4 @@
-import { useSession, getSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import HeadInfo from "../components/headInfo"
@@ -11,20 +11,15 @@ const NoSsrWysiwyg = dynamic(()=> import('../components/wysiwyg'),
 
 const Newpost = () => {
 
-    const { data : session } = useSession(); 
+    const { data: session, status } = useSession();
     const { replace } = useRouter();
 
     const [load, setLoad] = useState(false);
 
-    useEffect(async()=>{//로그인 상태면 페이지 강제 이동
-        if(session === undefined){ //새로고침 또는 url 이동 시
-            const _session = await getSession();
-            if(_session === null) replace('/signin');
-            else setLoad(true);
-        }else if(session === null){
-            replace('/signin');
-        }else{ setLoad(true); }
-    }, []);
+    useEffect(()=>{//로그인 상태면 페이지 강제 이동
+        if(status === 'unauthenticated') replace('/signin');
+        else if(status === 'unauthenticated') setLoad(true);
+    }, [status]);
 
     const confirm = (content) => {
         console.log(content);
@@ -39,9 +34,7 @@ const Newpost = () => {
                 <input type="text" className="w-full border rounded-md outline-none text-md py-2 px-3 mb-3"/>
                 <NoSsrWysiwyg confirm={confirm}/>
             </>
-
                 : 
-
             <></>
         }
         </>

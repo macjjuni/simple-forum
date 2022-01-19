@@ -1,16 +1,16 @@
-import axios from "axios";
-import dynamic from "next/dynamic";
+import axios from "axios"
+import dynamic from "next/dynamic"
 import HeadInfo from "../components/headInfo"
-import { getSession, useSession } from "next-auth/react"
-import { useEffect, useState, useRef } from "react";
-import { useRouter } from "next/router";
+import { useSession } from "next-auth/react"
+import { useEffect, useState, useRef } from "react"
+import { useRouter } from "next/router"
 
 const NoSsrReC = dynamic(()=> import('../components/recaptchaV2'), { ssr : false});
 
 const Signup = () => {
 
-    const { data : session } = useSession();
-    
+    const { data : session, status } = useSession();
+
     const idRef = useRef(null);
     const pwRef = useRef(null);
     const pw2Ref = useRef(null);
@@ -23,15 +23,10 @@ const Signup = () => {
 
     const { replace, push } = useRouter();
 
-    useEffect(async()=>{//로그인 상태면 페이지 강제 이동
-        if(session === undefined){ //새로고침 & url 접속시
-            const _session = await getSession();
-            if(_session === null) setLoad(true);
-            else replace('/');
-        }else if(session === null){
-            setLoad(true);
-        }else replace('/');
-    }, []);
+    useEffect(()=>{//로그인 상태면 페이지 강제 이동
+        if(status === 'authenticated') replace('/');
+        else if(status === 'unauthenticated') setLoad(true);
+    }, [status]);
 
     useEffect(()=>{
         if(reCaptchaChk) submitRef.current.classList.replace('bg-gray-400', 'bg-blue-500');

@@ -1,4 +1,4 @@
-import { getSession, useSession } from "next-auth/react"
+import { useSession } from "next-auth/react"
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import { MdPhotoLibrary } from 'react-icons/md'
@@ -8,7 +8,7 @@ import axios from "axios"
 
 const Profile = () => {
 
-    const { data: session } = useSession(); 
+    const { data: session, status } = useSession(); 
     
     const { replace } = useRouter();
     const profileImg = useRef(null);
@@ -19,22 +19,13 @@ const Profile = () => {
     const [userId, setUserId] = useState();
     const [change, setChange] = useState(false);
     
-
-    useEffect(async()=>{//로그인 상태 체크
-        if(session === undefined){ //새로고침 & url 접속시
-            const _session = await getSession();
-            if(_session === null) replace('/');
-            else{ 
-                setLoad(true);
-                setUserId(_session.user.name);
-            }
-        }else if(session === null){
-            replace('/');
-        }else{
+    useEffect(()=>{//로그인 상태면 페이지 강제 이동
+        if(status === 'unauthenticated') replace('/');
+        else if(status === 'authenticated'){
             setUserId(session.user.name);
             setLoad(true);
-        }   
-    }, []);
+        }
+    }, [status]);
 
 
     useEffect(()=>{ //변경사항 발생시 변경 버튼 활성화
