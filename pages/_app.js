@@ -1,7 +1,17 @@
 import '../styles/globals.css'
+import HeadInfo from '../components/headInfo'
+import Layout from '../components/layout/layout'
+import { SessionProvider } from "next-auth/react"
 
-function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+export default function App({ Component, pageProps: { session, ...pageProps } }){
+
+
+  return (
+    <SessionProvider session={session} refetchInterval={60*60}>
+      <HeadInfo />
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </SessionProvider>
+  )
 }
-
-export default MyApp

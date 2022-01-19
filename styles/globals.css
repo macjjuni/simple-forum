@@ -1,9 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
 a {
@@ -13,4 +15,24 @@ a {
 
 * {
   box-sizing: border-box;
+  font-family: 'Noto Sans KR', 'Open Sans', sans-serif;
+}
+
+.noScroll::-webkit-scrollbar{
+  display: none; 
+}
+
+.sha{
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  overflow: hidden;
+}
+
+.skeleton{
+  animation: skeletonAni 2s infinite;
+}
+
+@keyframes skeletonAni {
+  0%{ opacity: 1; }
+  50%{ opacity: 0.5; }
+  100%{ opacity: 1; }
 }
