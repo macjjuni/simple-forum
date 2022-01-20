@@ -18,7 +18,7 @@ const Newpost = () => {
 
     useEffect(()=>{//로그인 상태면 페이지 강제 이동
         if(status === 'unauthenticated') replace('/signin');
-        else if(status === 'unauthenticated') setLoad(true);
+        else if(status === 'authenticated') setLoad(true);
     }, [status]);
 
     const confirm = (content) => {
@@ -31,7 +31,7 @@ const Newpost = () => {
             load ?
             <>
                 <HeadInfo title='글쓰기'/>
-                <input type="text" className="w-full border rounded-md outline-none text-md py-2 px-3 mb-3"/>
+                <input type="text" placeholder="제목을 입력해주세요." className="w-full border rounded-md outline-none text-lg py-2 px-3 mb-3"/>
                 <NoSsrWysiwyg confirm={confirm}/>
             </>
                 : 

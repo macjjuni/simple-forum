@@ -15,9 +15,9 @@ const PostItem = () => {
 
                             <div className="flex justify-between justify-items-center w-full h-fit text-xs sm:text-sm">
                                 <ul className="inline-block w-full overflow-scroll mr-1 noScroll leading-tight">
-                                    <li className="inline-block mr-2 px-2 py-1 rounded-3xl bg-slate-400 text-white">#Tag1</li>
-                                    <li className="inline-block mr-2 px-2 py-1 rounded-3xl bg-slate-400 text-white">#Middle</li>
-                                    <li className="inline-block mr-2 px-2 py-1 rounded-3xl bg-slate-400 text-white">#Next Long Tag</li>
+                                    <li className="inline-block mr-2 px-1.5 py-1 rounded-lg bg-slate-400 text-white">#Tag1</li>
+                                    <li className="inline-block mr-2 px-1.5 py-1 rounded-lg bg-slate-400 text-white">#Middle</li>
+                                    <li className="inline-block mr-2 px-1.5 py-1 rounded-lg bg-slate-400 text-white">#Next Long Tag</li>
                                 </ul>
                                 <p className="flex items-center sm:min-w-[70px] min-w-[60px] text-gray-800">2022.01.15</p>
                             </div>

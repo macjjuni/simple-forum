@@ -20,13 +20,15 @@ const ReCaptchaV2 = ({setReCaptchaChk}) => {
 
     return(
         <>
-            <ReCAPTCHA className="w-[305px] h-[78px] mx-auto mt-8"
-                ref={recaptchaRef}
-                onExpired={()=> { setReCaptchaChk(false); }}
-                sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SECRET}
-                size='normal'
-                onChange={handleSubmit}
-            />
+            <div className="recaptcha-wrap relative w-full h-[75px] mt-5">
+                <ReCAPTCHA className="absolute top-0 left-[50%] translate-x-[-50%]"
+                    ref={recaptchaRef}
+                    onExpired={()=> { setReCaptchaChk(false); }}
+                    sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SECRET}
+                    size='normal'
+                    onChange={handleSubmit}
+                />
+            </div>
         </>
     )
 }
