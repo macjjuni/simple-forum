@@ -2,6 +2,7 @@ import { useSession } from "next-auth/react"
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import { MdPhotoLibrary } from 'react-icons/md'
+import Image from "next/image";
 import HeadInfo from "../components/headInfo"
 import imageCompression from 'browser-image-compression'
 import axios from "axios"
@@ -86,7 +87,7 @@ const Profile = () => {
                         <input id='profile_input' type='file' onChange={uploadImg} accept="image/*" className="absolute w-0 h-0 opacity-0"/>
                             <MdPhotoLibrary className="w-full h-full"/>
                         </label>
-                        <img className="w-full h-full rounded-full" ref={profileImg} src="https://w.namu.la/s/f8ac75fc34f989493fb78048e1012235e3af5f46e7d1b0738ac46caa7e957682fbf0b59c2c3fba4b52bc3f69b0fa3a74352ece27d9cc4c87a0fdd31ec2350c9ab15bff7c3746bd63fa932cfc75a32084671d971d7a020b64e793034cef1ed871f2b34d9f40932fb9e1a1b38a0d673d34" alt="" />
+                        <img className="w-full h-full rounded-full" ref={profileImg} width='100%' height='100%' src="/user_profile.png" alt="user profile" />
                     </div>
                     <h2 className="inline-block text-lg text-center my-3 py-0.5 px-5">{userId}</h2>
 

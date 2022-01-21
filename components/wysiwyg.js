@@ -7,15 +7,12 @@ import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-sy
 import colorSyntax from '@toast-ui/editor-plugin-color-syntax'
 
 
-const WysiwygEditor = () => {
+const WysiwygEditor = ({confirm}) => {
 
-    useEffect(()=> {
-        
+    useEffect(()=> {  
         const editorIns = editorRef.current.getInstance();
         editorIns.removeHook("addImageBlobHook");
-        console.log('Remove addImageBlob Hook!');
-
-        
+        console.log('Remove addImageBlob Hook!');        
     }, [])
 
     const editorRef = useRef(null);
@@ -35,11 +32,9 @@ const WysiwygEditor = () => {
         const editorIns = editorRef.current.getInstance();
         const contentHtml = editorIns.getHTML();
         const contentMark = editorIns.getMarkdown();
-        if(contentMark === ''){
-            console.log('내용없음')
-        }else{
-            console.log(contentMark)
-        }
+
+        confirm(contentMark);
+
     }
 
     return(
@@ -53,9 +48,8 @@ const WysiwygEditor = () => {
                 usageStatistics={false}
                 toolbarItems={toolbarItems}
                 plugins={[colorSyntax, ]}
-                
             />
-            <button className='w-full p-2 mt-2 rounded-md bg-slate-200 text-gray-700' onClick={showTxt}>작성하기</button>
+            <button onClick={showTxt} className='w-full p-2 mt-2 text-gray-100 bg-blue-400 hover:bg-blue-500 transition duration-300 rounded-md'>작성하기</button>
         </>
     )
 

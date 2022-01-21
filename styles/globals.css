@@ -31,6 +31,10 @@ a {
   animation: skeletonAni 2s infinite;
 }
 
+.toastui-editor-defaultUI .ProseMirror{
+  padding: 15px !important;
+}
+
 @keyframes skeletonAni {
   0%{ opacity: 1; }
   50%{ opacity: 0.5; }
