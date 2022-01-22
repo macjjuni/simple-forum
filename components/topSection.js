@@ -1,10 +1,12 @@
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { useRef } from 'react'
 import { GoSearch } from 'react-icons/go'
 import { BsPencil } from 'react-icons/bs'
 
 const TopSection = () =>{
 
+    const { pathname } = useRouter();
     const search = useRef(null); //검색 input Element
 
     const searchClick = () => {
@@ -14,7 +16,7 @@ const TopSection = () =>{
     return(
         <>
             <div className="h-12 flex justify-between items-center">
-                <h2 className="inline-block text-xl px-2">피드</h2>
+                <h2 className="inline-block text-xl px-2">{pathname=== '/' ? '피드' : ''}</h2>
 
                 <div>
                     <Link href='/newpost' passHref>

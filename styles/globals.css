@@ -18,25 +18,26 @@ a {
   font-family: 'Noto Sans KR', 'Open Sans', sans-serif;
 }
 
-.noScroll::-webkit-scrollbar{
-  display: none; 
-}
+.noScroll::-webkit-scrollbar{ display: none; }
 
 .sha{
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   overflow: hidden;
 }
 
-.skeleton{
-  animation: skeletonAni 2s infinite;
-}
+.skeleton{ animation: skeletonAni 2s ease infinite; }
 
-.toastui-editor-defaultUI .ProseMirror{
-  padding: 15px !important;
+.toastui-editor-defaultUI .ProseMirror{ padding: 15px !important; }
+
+.tag-input:after{
+  content:'#';
+  position: absolute; top:0.28rem; left: 0.25rem;
+  width: 12px; height: 20px;
+  font-size: 0.875rem;
 }
 
 @keyframes skeletonAni {
   0%{ opacity: 1; }
-  50%{ opacity: 0.5; }
+  50%{ opacity: 0.3; }
   100%{ opacity: 1; }
 }
