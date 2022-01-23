@@ -80,7 +80,7 @@ const WysiwygEditor = ({confirm}) => {
                 initialValue=''
                 initialEditType='wysiwyg'
                 hideModeSwitch={true}
-                height='550px'
+                height='500px'
                 theme={theme}
                 usageStatistics={false}
                 toolbarItems={toolbarItems}

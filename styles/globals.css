@@ -36,6 +36,7 @@ a {
   font-size: 0.875rem;
 }
 
+
 @keyframes skeletonAni {
   0%{ opacity: 1; }
   50%{ opacity: 0.3; }

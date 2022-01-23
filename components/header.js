@@ -1,49 +1,65 @@
 import { useSession, signIn, signOut } from "next-auth/react"
 import { AnimatePresence, motion } from "framer-motion"
+import Link from "next/link"
 import { useEffect, useState } from "react"
 import { useRouter } from 'next/router'
-import { FiUserCheck } from 'react-icons/fi'
-import Logo from "./logo"
+import { FiUserCheck, FiUserX } from 'react-icons/fi'
 import ProfileModal from "./profilemodal"
 
 const Header = () => {
 
+    const { route, events } = useRouter();
+    const [modal, setModal] = useState(null)
+    const { data: session } = useSession(); //로그인 정보
+
     useEffect(()=> {
         //페이지 이동 체크
         events.on('routeChangeStart', ()=> {
-            setSelectedId(null);
+            setModal(null);
         })
     }, []);
 
-    const { events } = useRouter();
-    const [selectedId, setSelectedId] = useState(null)
-    const { data: session } = useSession(); //로그인 정보
-
-    const toggleModal = () => {
-        if(selectedId === null){ setSelectedId('profile-modal'); }
-        else{ setSelectedId(null); }
+    const toggleModal = (e) => {
+        if(modal === null){ setModal('profile-modal'); }
+        else{ setModal(null); }
     }
 
     return(
         <>
-            <header className="position h-16 sm:h-14 px-4 flex justify-between items-center bg-blue-500 shadow-lg">
-                <Logo/>
+            <header className="relative w-full z-[999] shadow-sm lg:shadow-none">
+                <div className={`header-wrap relative h-full ${route==='/'?'max-w-screen-lg':'max-w-screen-md'} transition-width duration-500 ease-[cubic-bezier(0.17, 0.67, 0.83, 0.67)]
+                mx-auto h-20 lg:h-28 px-2 flex justify-between items-center`}>
+                    
+                    <h1 className='inline-block text-3xl md:text-5xl text-black leading-7
+                    transition-padding duration-500 ease-in-out'>
+                        <Link href='/' passHref>
+                            <a>Simple Forum</a>
+                        </Link>
+                    </h1>
 
-                <button onClick={toggleModal} className="bg-white rounded-full w-9 h-9 overflow-hidden">
-                    <FiUserCheck className='m-auto h-full scale-125'/>
-                </button>
+                    <button onClick={toggleModal} className={`${modal !== null ? 'bg-blue-500' : 'bg-white'} 
+                    transition duration-300 ease-in-out rounded-full w-11 h-11 overflow-hidden`}>
+                        {
+                            !session
+                                ?
+                            <FiUserX className={`${modal!==null?'text-white':'text-black'} m-auto h-full scale-125 transition duration-300 ease-in-out`}/>
+                                :
+                            <FiUserCheck className={`${modal!==null?'text-white':'text-black'} m-auto h-full scale-125 transition duration-300 ease-in-out`}/>
+                        }
+                    </button>
 
-                {/* 프로필 모달 */}
-                <AnimatePresence>   
-                {selectedId && (
-                    <motion.div layoutId='profile-modal' initial={ani.init} animate={ani.ani} exit={ ani.exit } transition={{ duration: 0.3 }}
-                    className='modal'>
-                        <ProfileModal session={session} signIn={signIn} signOut={signOut} toggleModal={toggleModal}/>
-                    </motion.div>
-                    )
-                }
-                </AnimatePresence>
+                    {/* 프로필 모달 */}
+                    <AnimatePresence>   
+                        {modal && (
+                            <motion.div layoutId='profile-modal' initial={ani.init} animate={ani.ani} exit={ ani.exit } transition={{ ease : [0.17, 0.67, 0.83, 0.67], duration: 0.3 }}
+                            className='modal'>
+                                <ProfileModal session={session} signIn={signIn} signOut={signOut} toggleModal={toggleModal}/>
+                            </motion.div>
+                            )
+                        }
+                    </AnimatePresence>
 
+                </div>
             </header>
         </>
     )
@@ -52,19 +68,22 @@ const Header = () => {
 const ani = {
     init : {
         position: 'absolute',
-        top : '65px', right : '10px',
+        top : '70px', right : '1000px',
+        transform: 'rotate(350deg)',
         zIndex : 999,
         opacity: 0,
     },
     ani : {
         position: 'absolute',
-        top : '75px', right : '10px',
+        top : '80px', right : '10px',
+        transform: 'rotate(0deg)',
         zIndex : 999,
         opacity: 1,
     },
     exit : {
         position: 'absolute',
-        top : '65px', right : '10px',
+        top : '500px', right : '1000px',
+        transform: 'rotate(300deg)',
         zIndex : 999,
         opacity: 0,
     }

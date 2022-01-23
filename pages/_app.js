@@ -7,11 +7,13 @@ export default function App({ Component, pageProps: { session, ...pageProps } })
 
 
   return (
+    <>
     <SessionProvider session={session} refetchInterval={60*60}>
       <HeadInfo />
       <Layout>
         <Component {...pageProps} />
       </Layout>
     </SessionProvider>
+    </>
   )
 }

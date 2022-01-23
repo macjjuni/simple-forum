@@ -9,34 +9,42 @@ const Layout = ({children}) => {
 
     return(
         <>
-        <div className='relative max-w-screen-md min-h-screen mx-auto bg-gray-50 pb-10 sha'>
-            
-            <Header/>
-            <AnimatePresence exitBeforeEnter={true}> 
-                <motion.div className='p-3'
-                key={route} transition={{ease: "easeInOut", duration : 0.3 }}
-                initial={animate.initial} animate={animate.animate} exit={animate.exit}>
-                    {children}
-                </motion.div>
-            </AnimatePresence>
 
+        <div className='relative bg-white'>
+        
+        <div className={`wraper max-w-screen-lg ease-in-out mx-auto `}>
+            <Header/>
+            <div className="wrap w-full min-h-[calc(100vh-5rem)] lg:min-h-[calc(100vh-7rem)] px-2.5 pt-3.5 pb-10 ">
+                <AnimatePresence exitBeforeEnter={true}> 
+                    <motion.div className='py-0 md:py-6'
+                    key={route} transition={{ease: [0.17, 0.67, 0.83, 0.67], duration : 0.3 }}
+                    initial={animate.initial} animate={animate.animate} exit={animate.exit}>
+                    
+                        {children}
+                    
+                    </motion.div>
+                </AnimatePresence>
+            </div>
             <Footer/>
+        </div>
+        
         </div>  
+        
         </>
     )
 }
 
 const animate = {
     initial :{ //none use
-        transform : `translateY(-15px)`,
+        transform : `translateX(50px)`,
         opacity : 0,
     },
     animate : {
-        transform : `translateY(0px)`,
+        transform : `translateX(0px)`,
         opacity: 1,
     },
     exit : {
-        transform : `translateY(-15px)`,
+        transform : `translateX(-50px)`,
         opacity: 0,
     }
 }

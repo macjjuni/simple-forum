@@ -55,8 +55,10 @@ const Newpost = () => {
         {
             load ?
             <>  
-                <HeadInfo title='글쓰기'/>
-                <NoSsrWysiwyg confirm={confirm}/>
+                <div className="post-wrap mx-auto my-4 max-w-screen-md">
+                    <HeadInfo title='글쓰기'/>
+                    <NoSsrWysiwyg confirm={confirm}/>
+                </div>
             </>
                 :
             <></>

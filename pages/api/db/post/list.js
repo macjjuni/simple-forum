@@ -5,7 +5,7 @@ dbConnect();
 
 export default function handler(req, res) {
 
-    Post.find({}, {title : true, tags : true, date : true, no: true}).sort({ no : 'desc'}).then((post)=>{ //모든 post 조회
+    Post.find({}, {title : true, tags : true, date : true, no: true, comments : true}).sort({ no : 'desc'}).then((post)=>{ //모든 post 조회
         res.status(200).send(post);
     }).catch((err)=>{
         console.log(err);

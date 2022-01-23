@@ -8,17 +8,19 @@ const Home = ({list}) => {
   return (
     <>
       <HeadInfo/>
-    
-      <TopSection/>
-      <ul className="py-4">
-        {
-          list.map((post, idx) =>
-            <PostItem key={post.title+idx} no={post.no} title={post.title} tags={post.tags} date={post.date}/>
-          )
-        }
 
-        <li className="text-center py-3 text-gray-600">글이 없습니다. 글을 작성해주세요. 😄</li>
-      </ul>
+        <TopSection/>
+
+        <h2 className='pt-3 md:pt-6 pb-2 text-2xl'>📚 전체글</h2>
+        <ul className="block w-full py-4">
+          {
+            list.map((post, idx) =>
+              <PostItem key={post.title+idx} no={post.no} title={post.title} tags={post.tags} date={post.date} comments={post.comments}/>
+            )
+          }
+
+          <li className="text-center py-3 text-gray-600">글이 없습니다. 글을 작성해주세요. 😄</li>
+        </ul>
     </>
   )
 }

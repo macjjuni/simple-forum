@@ -1,7 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
 
-const PostItem = ({no, title, tags, date}) => {
+const PostItem = ({no, title, tags, date, comments}) => {
 
     return(
         <> 
@@ -10,7 +10,10 @@ const PostItem = ({no, title, tags, date}) => {
                 <a className="block">
                     <div className="p-3">
 
-                        <h3 className="textlgl mb-2">{title}</h3>
+                        <div className="flex justify-between justify-items-center mb-2">
+                            <h3 className="inline-block text-lg w-full text-ellipsis overflow-hidden">{title}</h3>
+                            <p className="inline-block bg-white rounded-lg px-1.5 py-0.5">{'+'+comments.length}</p>
+                        </div>
                         <div className="flex justify-between justify-items-center w-full h-fit text-xs sm:text-sm">
                             <ul className="inline-block w-full overflow-scroll mr-1 noScroll leading-tight">
                                 {
@@ -21,7 +24,7 @@ const PostItem = ({no, title, tags, date}) => {
                                     )        
                                 }
                             </ul>
-                            <p className="flex items-center sm:min-w-[70px] min-w-[60px] text-xs text-gray-800">
+                            <p className="flex justify-around items-center sm:min-w-[70px] min-w-[60px] text-xs text-gray-800 text-right">
                                 {date.substr(0, 10).replace(/-/g, '.')}
                             </p>
                         </div>
