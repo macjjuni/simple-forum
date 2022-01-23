@@ -22,7 +22,7 @@ const ProfileModal = ({session, signOut, toggleModal}) => {
             {/* <div className="absolute top-[-36px] right-[10px] border-t-[18px] border-b-[18px] border-l-[14px] border-r-[14px] 
             w-0 h-0 border-l-transparent border-r-transparent border-b-[rgba(0,0,0,0.7)] border-t-transparent border-b-shadow-xl z-[110] modal"/> */}
             
-            <div className='relative w-60 p-1.5 bg-[rgba(0,0,0,0.4)] rounded-sm shadow-xl z-[100] modal' style={{boxShadow : 'rgba(0, 0, 0, 0.24) 0px 3px 8px'}}>
+            <div className='relative w-60 p-1.5 bg-[rgba(0,0,0,0.6)] rounded-sm shadow-xl z-[100] modal' style={{boxShadow : 'rgba(0, 0, 0, 0.24) 0px 3px 8px'}}>
             
                 <div className="p-2 modal">
                 {

@@ -11,7 +11,7 @@ const Home = ({list}) => {
 
         <TopSection/>
 
-        <h2 className='pt-3 md:pt-6 pb-2 text-2xl'>📚 전체글</h2>
+        <h2 className='pt-8 pb-2 text-2xl'>📚 전체글</h2>
         <ul className="block w-full py-4">
           {
             list.map((post, idx) =>
