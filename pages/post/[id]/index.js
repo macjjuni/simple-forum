@@ -64,7 +64,7 @@ const Index = ({post}) => {
                 
                 <div className="post-tag-wrap relative relative my-3 rounded shadow-md">
                 <span className="absolute top-0 right-0 px-1.5 py-0.5 bg-white text-sm font-bold text-black rounded-bl shadow-md">🏷 Tag</span> 
-                <ul className="text-sm text-gray-800 px-2.5 py-4 pr-9 bg-slate-200 dark:bg-slate-700 whitespace-nowrap overflow-scroll noScroll rounded ctd">
+                <ul className="text-sm text-gray-800 px-2.5 py-5 md:py-3.5 min-h-[60px] pr-9 bg-slate-200 dark:bg-slate-700 whitespace-nowrap overflow-scroll noScroll rounded ctd">
                 
                 {
                     post.tags.map((t, idx)=>
