@@ -40,7 +40,7 @@ const Header = () => {
     return(
         <>
             <header className="relative w-full z-[999] shadow-sm lg:shadow-none">
-                <div className={`header-wrap relative h-full ${route==='/'?'max-w-screen-lg':'max-w-screen-md'} transition-width duration-500 ease-[cubic-bezier(0.17, 0.67, 0.83, 0.67)]
+                <div className={`header-wrap relative h-full ${route==='/'?'max-w-screen-lg':'max-w-screen-md'} transition-[max-width] duration-500 ease-[cubic-bezier(0.17, 0.67, 0.83, 0.67)]
                 mx-auto h-20 lg:h-28 px-2 flex justify-between items-center`}>
                     
                     <h1 className='inline-block text-3xl md:text-5xl h-10 lg:h-14'>
@@ -49,28 +49,28 @@ const Header = () => {
                         </Link>
                     </h1>
 
-                    <div className="text-[0px] ">
+                    <div className="text-[0px]">
 
                         <button onClick={toggleTheme} className='inline-block w-11 h-11 inline-flex items-center align-top text-lg rounded-full
-                            hover:bg-slate-200 dark:hover:bg-slate-500 transition-[background] ease-in-out duration-300'>
-                            <BsFillSunFill className='mx-auto h-10 text-black text-inherit scale-110'/>
+                            hover:bg-slate-200 dark:hover:bg-slate-500 ctd'>
+                            <BsFillSunFill className='mx-auto h-10 text-black dark:text-white scale-110'/>
                         </button>
                         
                         <Link href='/newpost' passHref>
                             <a className='inline-block w-11 h-11 ml-2 inline-flex items-center align-top text-lg rounded-full
-                            hover:bg-slate-200 dark:hover:bg-slate-500 transition-[background] ease-in-out duration-300'>
-                                <BsPencil className='mx-auto h-10 text-black text-inherit scale-110'/>
+                            hover:bg-slate-200 dark:hover:bg-slate-500 ctd'>
+                                <BsPencil className='mx-auto h-10 text-black dark:text-white scale-110 ctd'/>
                             </a>
                         </Link>
 
-                        <button onClick={toggleModal} className={`${modal !== null ? 'bg-slate-200 dark:bg-slate-400 text-white' : ''} text-lg 
-                        rounded-full w-11 h-11 ml-2 overflow-hidden hover:bg-slate-200 dark:hover:bg-slate-500 transition-[background] ease-in-out duration-300`}>
+                        <button onClick={toggleModal} className={`${modal !== null ? 'bg-slate- 200 dark:bg-slate-400 text-white' : ''} text-lg 
+                        rounded-full w-11 h-11 ml-2 overflow-hidden hover:bg-slate-200 dark:hover:bg-slate-500 ctd`}>
                             {
                                 !session
                                     ?
-                                <FiUserX className={`text-black dark:text-white m-auto h-full scale-110`}/>
+                                <FiUserX className='text-black dark:text-white m-auto h-full scale-110 ctd'/>
                                     :
-                                <FiUserCheck className={`text-black dark:text-white m-auto h-full scale-110`}/>
+                                <FiUserCheck className='text-black dark:text-white m-auto h-full scale-110 ctd'/>
                             }
                         </button>
                     </div>

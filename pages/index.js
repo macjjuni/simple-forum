@@ -18,7 +18,6 @@ const Home = ({list}) => {
               <PostItem key={post.title+idx} no={post.no} title={post.title} tags={post.tags} date={post.date} comments={post.comments}/>
             )
           }
-
           <li className="text-center py-3 text-gray-600">글이 없습니다. 글을 작성해주세요. 😄</li>
         </ul>
     </>

@@ -1,5 +1,7 @@
 import '@toast-ui/editor/dist/toastui-editor.css'
+import '@toast-ui/editor/dist/theme/toastui-editor-dark.css'
 import 'tui-color-picker/dist/tui-color-picker.css'
+
 import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css'
 import { Editor } from '@toast-ui/react-editor'
 import colorSyntax from '@toast-ui/editor-plugin-color-syntax'
@@ -27,7 +29,6 @@ const WysiwygEditor = ({confirm}) => {
     const tagRef = useRef(null);
     const editorRef = useRef(null);
     const [tags, setTag] = useState([]);
-    const [theme, setTheme] = useState();
 
     const toolbarItems = [
         ['heading', 'bold', 'italic', 'strike'],
@@ -65,7 +66,7 @@ const WysiwygEditor = ({confirm}) => {
         const contentHtml = editorIns.getHTML();
         // const contentMark = editorIns.getMarkdown();
         const post = {
-            title : title.current.value,
+            title : titleRef.current.value,
             content : contentHtml,
             tags : tags,
         }
@@ -75,23 +76,25 @@ const WysiwygEditor = ({confirm}) => {
     return(
         <>
             {/* 제목 */}
-            <input ref={titleRef} type="text" placeholder="제목을 입력해주세요." maxLength={50} className="w-full border rounded outline-none text-lg py-2 px-3 mb-3"/>
+            <input ref={titleRef} type="text" placeholder="제목을 입력해주세요." maxLength={50} 
+            className="w-full border dark:border-none bg-white dark:bg-[#222] text-lg py-2 px-3 mb-3 rounded outline-none"/>
             <Editor ref={editorRef}
                 initialValue=''
                 initialEditType='wysiwyg'
                 hideModeSwitch={true}
                 height='500px'
-                theme={theme}
+                theme={''}
                 usageStatistics={false}
                 toolbarItems={toolbarItems}
                 plugins={[colorSyntax, ]}
             />
             
-            <div className="tag-wrap flex my-2 py-2 px-1 border bg-white rounded-sm">
+            <div className="tag-wrap flex my-2 py-2 px-1 border bg-white dark:bg-[#222] text-white dark:text-black rounded-sm ctd">
                 
                 <TagItem tags={tags} deleteTag={deleteTag}/>
                 <div ref={tagRef} className="block tag-input w-full relative ml-1">
-                    <input type="text" placeholder='태그입력' onKeyDown={addTag} onChange={spaceRemove} className="relative inline-block w-full p-1 pl-3.5 outline-0 focus:outline-0 text-sm"/>
+                    <input type="text" placeholder='태그입력' onKeyDown={addTag} onChange={spaceRemove} 
+                    className="relative inline-block w-full p-1 pl-3.5 bg-white dark:bg-[#222] text-black dark:text-white outline-0 focus:outline-0 text-sm ctd"/>
                 </div>
                 
             </div>

@@ -33,9 +33,16 @@ a {
   content:'#';
   position: absolute; top:0.28rem; left: 0.25rem;
   width: 12px; height: 20px;
+  color: #000;
   font-size: 0.875rem;
 }
+.dark .tag-input:after{
+  color: #fff;
+}
 
+.ctd{
+  transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, width 0.3s ease !important; 
+}
 
 @keyframes skeletonAni {
   0%{ opacity: 1; }
