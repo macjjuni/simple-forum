@@ -27,7 +27,7 @@ const WysiwygEditor = ({confirm}) => {
     const tagRef = useRef(null);
     const editorRef = useRef(null);
     const [tags, setTag] = useState([]);
-    const [theme, setTheme] = useState('');
+    const [theme, setTheme] = useState();
 
     const toolbarItems = [
         ['heading', 'bold', 'italic', 'strike'],

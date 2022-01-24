@@ -10,7 +10,7 @@ const Layout = ({children}) => {
     return(
         <>
 
-        <div className='relative bg-white'>
+        <div className='relative bg-white dark:bg-slate-600 dark:text-white transition-bg duration-300 ease-in-out'>
         
         <div className={`wraper max-w-screen-lg ease-in-out mx-auto `}>
             <Header/>
