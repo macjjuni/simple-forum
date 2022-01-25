@@ -10,12 +10,18 @@ const Index = ({post}) => {
     const { push, query } = useRouter();
 
     const [comments, setComments] = useState(post.comments);
-
     const commentRef = useRef(null);
 
-
-    const deletePost = () => {
-        
+    const deletePost = async() => {
+        let alert = confirm("글을 삭제하시겠습니까?");
+        if (alert) {
+            const check = await axios({ method : 'POST', url : '/api/db/post/delete/post', data : { id : query.id } });
+            if(check.data.error === null){ 
+                push('/');
+            }else{
+                console.log(check);
+            }
+        }
     }
 
     const editPost = () => {
@@ -50,8 +56,9 @@ const Index = ({post}) => {
     return(
         <>
             <HeadInfo title={post.title} />
+
             <div className="post-wrap mx-auto my-4 max-w-screen-md ctd">
-                
+
                 {/* 제목 / 작성자 / 작성일 */}
                 <div className="post-header relative px-2 pt-8 pb-2 lg:pb-6 my-3 rounded">
                 <span className="absolute top-0 right-0 px-1.5 py-0.5 text-sm font-bold bg-slate-500 text-white rounded shadow-md">🪧 Title</span> 
@@ -71,7 +78,7 @@ const Index = ({post}) => {
                                 {
                                     session.user.name === post.author ?
                                     <div className="master-wrap inline-block text-black dark:text-white ctd">
-                                        <button className="hover:underline">삭제</button>
+                                        <button onClick={deletePost} className="hover:underline">삭제</button>
                                         <button className="ml-3 hover:underline">수정</button>
                                     </div>
                                         :
@@ -154,12 +161,12 @@ const Index = ({post}) => {
                         댓글 쓰기
                     </button>
                 </div>
-
             </div>
-
         </>
     )
 }
+
+
 
 export const getServerSideProps = async({query}) => {
     
@@ -170,12 +177,14 @@ export const getServerSideProps = async({query}) => {
         data : { id : 'simple-forum' }
     });
 
-    if(res.status === 200){
+    if(res.status === 200 && res.data[0] ){
         return{
             props : { post : res.data[0] }
         }
     }else{
-
+        return{
+            notFound : true    
+        }
     }
 
     
