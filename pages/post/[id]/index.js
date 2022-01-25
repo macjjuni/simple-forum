@@ -6,15 +6,24 @@ import { useRouter } from "next/router"
 
 const Index = ({post}) => {
 
-    const { data : session } = useSession();
+    const { data : session, status } = useSession();
     const { push, query } = useRouter();
 
     const [comments, setComments] = useState(post.comments);
 
     const commentRef = useRef(null);
 
-    const writeComment = () => {
-        const txt = commentRef.current.value;
+
+    const deletePost = () => {
+        
+    }
+
+    const editPost = () => {
+
+    }
+
+    const writeComment = (e) => { //글 작성
+        const txt = commentRef.current.value.trim();
         if(session){
             if( txt !== ''){ //내용이 없을 경우
                 axios({ method : 'POST', url : '/api/db/post/create/comment',
@@ -23,12 +32,15 @@ const Index = ({post}) => {
                     if(res.data.error === null){
                         setComments([...post.comments, {content : txt, author : session.user.name}]); //업데이트 완료 후 댓글 추가
                         commentRef.current.value = '';
+                        e.target.classList.replace('bg-red-400', 'bg-blue-400');
+                        e.target.classList.replace('hover:bg-red-500', 'hover:bg-blue-500');
                     }else{
                         console.log(res);
                     }
                 }).catch(err => console.log(err));
             }else{
-                alert('내용을 입력해주세요.')
+                e.target.classList.replace('bg-blue-400', 'bg-red-400');
+                e.target.classList.replace('hover:bg-blue-500', 'hover:bg-red-500');
             }           
         }else{
             push('/signin');
@@ -47,15 +59,34 @@ const Index = ({post}) => {
                         {post.title}
                     </h2>
 
-                    <div className="post-info-wrap text-sm text-black dark:text-white ctd">
-                        {post.author} <span className="inline-block border-l border-gray-500 mx-1.5 h-2.5" /> {post.date.substr(0, 10).replace(/-/g, '.')}
+                    <div className="post-info-wrap flex justify-between">
+                        <div className="master-left inline-block text-black dark:text-white ctd">
+                        {post.author} <span className="inline-block border-l border-gray-500 text-sm text-black dark:text-white ctd mx-1.5 h-2.5" /> {post.date.substr(0, 10).replace(/-/g, '.')}
+                        </div>
+                        {
+                            status === 'loading' || status === 'unauthenticated' ? //로그인 여부 및 작성자 체크
+                            <></>
+                                :
+                            <>
+                                {
+                                    session.user.name === post.author ?
+                                    <div className="master-wrap inline-block text-black dark:text-white ctd">
+                                        <button className="hover:underline">삭제</button>
+                                        <button className="ml-3 hover:underline">수정</button>
+                                    </div>
+                                        :
+                                    <></>
+                                }
+                            </>
+                        }
+                        
                     </div>
                 </div>
 
                 {/* 본문 내용 */}
                 <div className="post-content-wrap relative min-h-[400px] bg-slate-200 dark:bg-slate-700 ctd shadow-base rounded shadow-md">
                     <span className="absolute top-0 right-0 px-1.5 py-0.5 bg-white text-sm font-bold text-black rounded-bl shadow-md">📄 Content</span> 
-                    <div className="post-content my-3 p-5  leading-6 text-black dark:text-white ctd"
+                    <div className="post-content my-3 p-5 leading-6 text-black dark:text-white ctd"
                     dangerouslySetInnerHTML={ {__html: post.content} } />
                 </div>
                 
