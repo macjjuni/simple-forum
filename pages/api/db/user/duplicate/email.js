@@ -7,13 +7,19 @@ dbConnect();
 
 export default async function handler(req, res){
     
-    const target = req.body.email;
+    const email = req.body.email;
     
-    console.log(target);
-    if(req.method === 'POST' && target ){
-        const getData = await User.findOne({ email : target }); //DB 조회
-        if(getData === null) res.status(200).send({error : null});
-        else res.status(200).send({error : 'Registered Email'});
+    console.log(email);
+    if(req.method === 'POST' && email ){
+ 
+        User.findOne({ email : target }, (err, _res) => {
+            if(_res === null){ //중복된 이메일이 없는 경우
+                res.status(200).send({error : null});
+            }else{            //중복된 이메일이 있는 경우
+                res.status(200).send({error : 'Registered Email'});
+            }
+        }); 
+    
     }else{
         res.status(400).send('404 not found');
     }
