@@ -12,7 +12,7 @@ const Index = ({post}) => {
     const [comments, setComments] = useState(post.comments);
     const commentRef = useRef(null);
 
-    const deletePost = async() => {
+    const deletePost = async() => { //글 삭제
         let alert = confirm("글을 삭제하시겠습니까?");
         if (alert) {
             const check = await axios({ method : 'POST', url : `/api/db/post/delete/${query.id}`, data : { author : session.user.name } });
@@ -24,32 +24,76 @@ const Index = ({post}) => {
         }
     }
 
-    const editPost = () => {
+    const editPost = () => { //글 수정
         push(`/editpost/${query.id}`);
     }
 
-    const writeComment = (e) => { //글 작성
+    const writeComment = async(e) => { //댓글 작성
         const txt = commentRef.current.value.trim();
-        if(session){
+        if(session){ //로그인 체크
             if( txt !== ''){ //내용이 없을 경우
-                axios({ method : 'POST', url : '/api/db/post/create/comment',
-                    data : { target : query.id, author : session.user.name , comment : txt }})
-                .then(res => {
-                    if(res.data.error === null){
-                        setComments([...post.comments, {content : txt, author : session.user.name}]); //업데이트 완료 후 댓글 추가
-                        commentRef.current.value = '';
-                        e.target.classList.replace('bg-red-400', 'bg-blue-400');
-                        e.target.classList.replace('hover:bg-red-500', 'hover:bg-blue-500');
-                    }else{
-                        console.log(res);
-                    }
-                }).catch(err => console.log(err));
-            }else{
-                e.target.classList.replace('bg-blue-400', 'bg-red-400');
-                e.target.classList.replace('hover:bg-blue-500', 'hover:bg-red-500');
+                //댓글 작성 요청
+                const res = await axios({ 
+                    method : 'POST', 
+                    url : `/api/db/comment/create/${query.id}`, 
+                    data : { author : session.user.name, 
+                            comment : txt } 
+                });
+                
+                if(res.data.error === null){
+                    setComments([...post.comments, {content : txt, author : session.user.name}]); //업데이트 완료 후 댓글 추가
+                    commentRef.current.value = '';
+                    errToggle(e.target);
+                }else{
+                    console.log(res);
+                    alert(res.data.error);
+                }
+                
+            }else{ //내용이 없을 경우 에러 표시
+                errToggle(e.target);
             }           
+        }else{ //로그아웃 체크
+            let alert = confirm("로그인이 필요합니다. 로그인 하시겠습니까?");
+            if (alert) {
+                push('/signin');
+            }
+        }
+    }
+
+    const deleteComment = async(e) =>{
+        let alert = confirm("댓글을 삭제하시겠습니까??");
+        if (alert) {
+
+            const target = Number(e.target.dataset.index);
+            const res = await axios({ 
+                method : 'POST', url : `/api/db/comment/delete/${query.id}`, 
+                data : { author : session.user.name, target : target } 
+            });
+
+            if(res.data.error === null){
+                const _comments = comments;
+                _comments.splice(target, 1);
+                setComments([..._comments]);  //댓글 삭제 렌더링
+            }else{
+                alert(res.data.error);
+            }
+
+        }
+    }
+
+    const editComment = (e) =>{
+
+    }
+
+
+    const errToggle = (ele) => {
+        const target = ele;
+        if(target.classList.contains('bg-red-400')){
+            target.classList.replace('bg-red-400', 'bg-blue-400');
+            target.classList.replace('hover:bg-red-500', 'hover:bg-blue-500');
         }else{
-            push('/signin');
+            target.classList.replace('bg-blue-400', 'bg-red-400');
+            target.classList.replace('hover:bg-blue-500', 'hover:bg-red-500');
         }
     }
 
@@ -128,9 +172,28 @@ const Index = ({post}) => {
                             <div className="inline-block comment-profile mb-2.5 px-2.5 py-1.5 text-sm bg-slate-50 dark:bg-slate-500 text-black dark:text-white rounded-md ctd">
                                 {c.author}    
                             </div>
-                            <div className="block comment-profile px-2.5 py-3 text-sm bg-slate-50 dark:bg-slate-500 text-black dark:text-white rounded-sm ctd">
+                            <pre className="block comment-profile px-2.5 py-3 text-sm bg-slate-50 dark:bg-slate-500 text-black dark:text-white rounded-sm whitespace-pre-wrap overflow-auto break-all ctd">
                                 {c.content}
-                            </div>
+                                <div className="flex justify-end pt-0.5 ">
+                                {
+                                    status === 'loading' || status === 'unauthenticated' ? //로그인 여부 및 작성자 체크
+                                    <></>
+                                        :
+                                    <>
+                                    {
+                                        session.user.name === post.author 
+                                            ?
+                                        <>
+                                            <button onClick={editComment} data-index={idx} className="px-1.5 py-0.5 bg-white dark:bg-gray-700 text-black dark:text-white shadow-lg">수정</button>
+                                            <button onClick={deleteComment} data-index={idx} className="px-1.5 py-0.5 ml-1 bg-white dark:bg-gray-700 text-black dark:text-white shadow-md">삭제</button>
+                                        </>
+                                            :
+                                        <></>
+                                    }
+                                    </>
+                                }
+                                </div>
+                            </pre>
                         </li>
                         )
                     }
@@ -173,7 +236,7 @@ export const getServerSideProps = async({query}) => {
     const { id } = query;
     const res = await axios({ //게시글 목록 불러오기
         method : 'POST',
-        url : `http://localhost:${process.env.PORT}/api/db/post/${id}`,
+        url : `http://localhost:${process.env.PORT}/api/db/post/read/${id}`,
         data : { id : 'simple-forum' }
     });
 
