@@ -6,35 +6,38 @@ dbConnect();
 
 export default async function handler(req, res){
 
-    if(req.method === 'POST' && req.body.target ){
+    const { id } = req.query;
+    const { author } = req.body;
 
-        const data = req.body;
+    if(req.method === 'POST' && id && author ){
 
         //기존 댓글 정보 가져오기
-        Post.findOne({ no : data.target }, {comments : true}, (err, post)=> {
+        Post.findOne({ no : id }, {comments : true}, (err, post)=> {
             
             if(!err){
-
+                const data = req.body;
+                
                 const comments = post.comments;
                 //댓글 추가
                 comments.push({content : data.comment, author : data.author});
-                //DB에 댓글 추가
-                Post.findOneAndUpdate( { no : data.target }, {$set : { comments : comments }}, { new : true }).then(_res=>{
+                
+                //해당 Post에 댓글 추가
+                Post.findOneAndUpdate( { no : id }, {$set : { comments : comments }}, { new : true }).then(_res=>{
                     res.status(200).send({error : null});
                 }).catch(err=> {
-                    res.status(404).send({ error : 'error' });
+                    res.status(404).send({ error : 'UPDATE FAILD' });
                     console.log(err)
                 });
                 
             }else{
-                console.log(err);
-                res.status(404).send({ error : 'error' });
+                alert(res.data.error);
+                res.status(404).send({ error : 'NOT FOUND POST' });
             }
             
         });
 
     }else{
-        res.status(404).send({ error : 'error' });
+        res.status(404).send({ error : 'ACCESS ERROR' });
     }
 
 }

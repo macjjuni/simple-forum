@@ -1,5 +1,5 @@
-import dbConnect from '../../../../utils/dbConnect'
-import Post from '../../../../model/postSchema'
+import dbConnect from '../../../../../utils/dbConnect'
+import Post from '../../../../../model/postSchema'
 
 dbConnect();
 

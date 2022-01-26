@@ -29,7 +29,7 @@ export const getServerSideProps = async() => {
 
   const res = await axios({ //게시글 목록 불러오기
     method : 'GET',
-    url : `http://localhost:${process.env.PORT}/api/db/post/list`,
+    url : `http://localhost:${process.env.PORT}/api/db/post/read/list`,
   });
 
   if(res.status === 200){

@@ -34,7 +34,7 @@ const Newpost = () => {
                 comments : [],
             }
             //글 작성 API 
-            const res = await axios({ method : 'POST', url : '/api/db/post/create/post', data : newPost });
+            const res = await axios({ method : 'POST', url : '/api/db/post/create/post', data : { ...newPost, session } });
             if(res.data.error === null) push(`/post/${res.data.no}`);
             else console.log(res);
         }else{

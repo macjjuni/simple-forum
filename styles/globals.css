@@ -44,6 +44,10 @@ a {
   transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, width 0.3s ease !important; 
 }
 
+.toastui-editor-contents{
+  font-size: 1rem !important;
+}
+
 @keyframes skeletonAni {
   0%{ opacity: 1; }
   50%{ opacity: 0.3; }

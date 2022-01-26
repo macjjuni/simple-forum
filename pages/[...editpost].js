@@ -27,13 +27,13 @@ const Editpost = () => {
     }, [status]);
 
     const getPost = async() => {
-        const res = await axios({method : 'POST', url : `/api/db/post/${query.editpost[1]}`, data : { id : 'simple-forum' }});
+        const res = await axios({method : 'POST', url : `/api/db/post/read/${query.editpost[1]}`, data : { id : 'simple-forum' }});
         const post = res.data[0];
-        
         if(post && post.author === session.user.name){
             setInit(post); //수정 데이터 초기화
             setLoad(true);
         }else{
+            alert('잘못된 접근입니다.')
             replace('/');
         }        
     }
