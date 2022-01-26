@@ -41,9 +41,10 @@ const Index = ({post}) => {
                 });
                 
                 if(res.data.error === null){
-                    setComments([...post.comments, {content : txt, author : session.user.name}]); //업데이트 완료 후 댓글 추가
+                    setComments([...comments, {content : txt, author : session.user.name}]); //업데이트 완료 후 댓글 추가
                     commentRef.current.value = '';
-                    errToggle(e.target);
+                    console.log('댓글 작성');
+                    
                 }else{
                     console.log(res);
                     alert(res.data.error);
@@ -71,6 +72,7 @@ const Index = ({post}) => {
             });
 
             if(res.data.error === null){
+                console.log('댓글 삭제');
                 const _comments = comments;
                 _comments.splice(target, 1);
                 setComments([..._comments]);  //댓글 삭제 렌더링

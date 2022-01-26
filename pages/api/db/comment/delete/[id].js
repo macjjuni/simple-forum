@@ -1,4 +1,3 @@
-import { auth } from 'firebase-admin';
 import Post from '../../../../../model/postSchema'
 import dbConnect from '../../../../../utils/dbConnect'
 
@@ -7,9 +6,9 @@ dbConnect();
 
 export default async function handler(req, res){
 
-    const { id } = req.query;
-    const { target } = req.body;
-    const { author } = req.body;
+    const { id } = req.query; // post.no
+    const { target } = req.body; //삭제 대상 index
+    const { author } = req.body; //글 작성자
     
     if(req.method === 'POST' && author ){
 
@@ -22,7 +21,7 @@ export default async function handler(req, res){
                     
                     const comments = post.comments;
                     comments.splice(target, 1); //댓글 삭제
-                    //해당 Post에 댓글 삭제
+                    //해당 Post에서 댓글 삭제
                     Post.findOneAndUpdate( { no : id }, {$set : { comments : comments }}, { new : true }).then(_res=>{
                         res.status(200).send({error : null});
                     }).catch(err=> {
