@@ -10,9 +10,11 @@ export default async function handler(req, res){
     const { user } = req.query;
     const { url } = req.body;
 
-    if(req.method === 'POST' && user && url){
+    console.log(user[0])
 
-    User.findOneAndUpdate({ nicname : user }, { profile_image : url }, { new : true }, (err, _res)=> {
+    if(req.method === 'POST' && user[0] && url){
+
+    User.findOneAndUpdate({ id : user[0] }, { profile_image : url }, { new : true }, (err, _res)=> {
 
         if(!err){
             console.log('성공');
