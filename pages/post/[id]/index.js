@@ -174,9 +174,9 @@ const Index = ({post}) => {
                 </div>
 
                 {/* 본문 내용 */}
-                <div className="post-content-wrap relative min-h-[400px] bg-slate-100 dark:bg-slate-700 ctd shadow-base overflow-hidden rounded shadow-md">
+                <div className="post-content-wrap relative min-h-[400px] px-4 py-5 bg-slate-200 dark:bg-slate-700 ctd shadow-base overflow-hidden rounded shadow-md">
                     <span className="absolute top-0 right-0 px-1.5 py-0.5 bg-white text-sm font-bold text-black rounded-bl shadow-md">📄 Content</span> 
-                    <div className="post-content p-5 leading-6 text-black dark:text-white ctd"
+                    <div className="post-content min-h-[400px] p-4 bg-slate-50 dark:bg-slate-500 leading-6 text-black dark:text-white rounded-sm ctd"
                     dangerouslySetInnerHTML={ {__html: post.content} } />
                 </div>
                 
@@ -185,7 +185,7 @@ const Index = ({post}) => {
                 
                 <div className="post-tag-wrap relative relative my-3 rounded shadow-md">
                 <span className="absolute top-0 right-0 px-1.5 py-0.5 bg-white text-sm font-bold text-black rounded-bl shadow-md">🏷 Tag</span> 
-                <ul className="text-sm text-gray-800 px-2.5 py-5 md:py-3.5 min-h-[60px] pr-9 bg-slate-100 dark:bg-slate-700 whitespace-nowrap overflow-scroll noScroll rounded ctd">
+                <ul className="text-sm text-gray-800 px-2.5 py-5 md:py-3.5 min-h-[60px] pr-9 bg-slate-200 dark:bg-slate-700 whitespace-nowrap overflow-scroll noScroll rounded ctd">
                 
                 {
                     post.tags.map((t, idx)=>
@@ -206,9 +206,9 @@ const Index = ({post}) => {
                     <>
                     {
                         comments.map((c, idx) => 
-                        <li key={idx} className="relative block mb-2.5 p-2.5 bg-slate-100 dark:bg-slate-700 text-black dark:text-white rounded shadow-md ctd">
+                        <li key={idx} className="relative block mb-2.5 p-2.5 bg-slate-200 dark:bg-slate-700 text-black dark:text-white rounded shadow-md ctd">
                             <span className="absolute top-0 right-0 px-1.5 py-0.5 bg-white text-sm font-bold text-black rounded-bl shadow-md">✉️ Comments</span>     
-                            <div className="inline-block comment-profile mb-2.5 px-2.5 py-1.5 text-sm bg-slate-50 dark:bg-slate-500 text-black dark:text-white rounded-md ctd">
+                            <div className="inline-block comment-profile mb-2.5 px-2.5 py-1 text-sm bg-slate-50 dark:bg-slate-500 text-black dark:text-white rounded-md ctd">
                                 {c.author}
                                 <span className="inline-block border-l border-gray-400 text-sm text-black dark:text-white ctd mx-1.5 h-2.5" />
                                 {c.date.substr(0,10).replace(/-/g,'.')}
@@ -233,7 +233,7 @@ const Index = ({post}) => {
                                         :
                                     <>
                                     {
-                                        session.user.name === post.author 
+                                        session.user.name === c.author 
                                             ?
                                         <div className="comments-editBtn-wrap">
                                             <button onClick={startEdit} data-index={idx} className="comments-edit-btn px-1.5 py-0.5 bg-white dark:bg-gray-700 text-black dark:text-white shadow-lg">수정</button>
@@ -251,14 +251,14 @@ const Index = ({post}) => {
                     }
                     </>
                         :      
-                    <div className="no-comment my-3 p-3 text-sm text-gray-700 dark:text-gray-300 bg-slate-100 dark:bg-slate-700 text-center rounded shadow-md ctd">
+                    <div className="no-comment my-3 p-3 text-sm text-gray-700 dark:text-gray-300 bg-slate-200 dark:bg-slate-700 text-center rounded shadow-md ctd">
                         댓글이 없습니다. 댓글을 남겨보세요.😆
                     </div>
                 }
                 </ul>
 
                 {/* 댓글입력창 */}
-                <div className="write-comment-wrap relative my-3 p-2.5 bg-slate-100 dark:bg-slate-700 rounded ctd">
+                <div className="write-comment-wrap relative my-3 p-2.5 bg-slate-200 dark:bg-slate-700 rounded ctd">
                 <span className="absolute top-0 right-0 px-1.5 py-0.5 bg-white text-sm font-bold text-black rounded-bl shadow-md">✏️ Write</span> 
                     <div className="inline-block comment-profile px-2 py-1 text-sm bg-white dark:bg-slate-400 text-black dark:text-white rounded ctd">
                     {
