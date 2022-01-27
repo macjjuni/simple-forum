@@ -37,7 +37,7 @@ a {
   font-size: 0.875rem;
 }
 .dark .tag-input:after{
-  color: #fff;
+  color: black;
 }
 
 .ctd{

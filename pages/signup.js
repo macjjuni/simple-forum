@@ -10,7 +10,7 @@ import { debounce } from "lodash"
 
 const NoSsrReC = dynamic(()=> import('../components/recaptchaV2'), { ssr : false});
 
-const pattern_spc = /[~!@#$%^&*()_+|<>?:{}]/; //특수문자 유효성 체크
+const pattern_spc = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g; //특수문자 유효성 체크
 const pattern_num = /[0-9]/; //숫자 유효성 체크
 const pattern_eng = /[a-zA-Z]/; //영문 유효성 체크
 const pattern_kor = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/; //한글 유효성 체크
@@ -71,7 +71,7 @@ const Signup = () => {
         delete_space(idRef.current); //공백 제거
         const id = idRef.current.value;
         const length = id.length;
-        if(length > 5){
+        if(length > 5 && !pattern_spc.test(id)){
             if(pattern_eng.test(id)){
                 const msg = '올바른 형식의 아이디입니다.';
                 show_comp(idAlertRef.current, idRef.current, msg);
@@ -85,7 +85,7 @@ const Signup = () => {
             const msg = '';
                 show_comp(idAlertRef.current, idRef.current, msg);
         }else{
-            const msg = '6자리 이상의 아이디를 입력해주세요.';
+            const msg = '특수문자를 제외한 6자리 이상의 아이디를 입력해주세요.';
             show_err(idAlertRef.current, idRef.current, msg);
             setIdTriger(false);
         }

@@ -97,7 +97,7 @@ const WysiwygEditor = ({confirm, init}) => {
                 plugins={[colorSyntax, ]}
             />
             
-            <div className="tag-wrap flex my-2 py-2 px-1 border bg-white text-black rounded-sm ctd">
+            <div className="tag-wrap flex my-2 py-2 px-3 border bg-white text-black rounded-sm ctd">
                 
                 <TagItem tags={tags} deleteTag={deleteTag}/>
                 <div ref={tagRef} className="block tag-input w-full relative ml-1">

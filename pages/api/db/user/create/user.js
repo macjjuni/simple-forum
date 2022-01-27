@@ -1,4 +1,3 @@
-import axios from 'axios'
 import User from '../../../../../model/userSchema'
 import dbConnect from '../../../../../utils/dbConnect'
 import bcrypt from 'bcryptjs'
