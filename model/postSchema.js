@@ -6,7 +6,7 @@ const postSchema = new Schema({
         title : { type : String, minlength : 1, maxlength : 50},
         content : String,
         tags : [ { type : String, length : 4 } ],
-        comments : [ { content : String,  author : String, date : Date }],
+        comments : [ { content : String,  author : String, date : { type : Date, default: Date.now } }],
         date : { type: Date, default: Date.now }
     },
     {   timestamps: true    }

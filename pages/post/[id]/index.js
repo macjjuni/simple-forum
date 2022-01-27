@@ -9,8 +9,12 @@ const Index = ({post}) => {
     const { data : session, status } = useSession();
     const { push, query } = useRouter();
 
+    const commentsUl = useRef(null);
+    const commentWriteRef = useRef(null);
+
     const [comments, setComments] = useState(post.comments);
-    const commentRef = useRef(null);
+    const [editMode, setEditMode] = useState('');
+    
 
     const deletePost = async() => { //글 삭제
         let alert = confirm("글을 삭제하시겠습니까?");
@@ -29,7 +33,7 @@ const Index = ({post}) => {
     }
 
     const writeComment = async(e) => { //댓글 작성
-        const txt = commentRef.current.value.trim();
+        const txt = commentWriteRef.current.value.trim();
         if(session){ //로그인 체크
             if( txt !== ''){ //내용이 없을 경우
                 //댓글 작성 요청
@@ -41,8 +45,8 @@ const Index = ({post}) => {
                 });
                 
                 if(res.data.error === null){
-                    setComments([...comments, {content : txt, author : session.user.name}]); //업데이트 완료 후 댓글 추가
-                    commentRef.current.value = '';
+                    setComments([...comments, {content : txt, author : session.user.name, date : getDate() }]); //업데이트 완료 후 댓글 추가
+                    commentWriteRef.current.value = '';
                     console.log('댓글 작성');
                     
                 }else{
@@ -82,11 +86,36 @@ const Index = ({post}) => {
 
         }
     }
+    
+    const startEdit = (e) => {
+        // setEditMode('edit-mode');
+        const index = Number(e.target.dataset.index);
+        commentsUl.current.classList.add('edit-mode');
+        commentsUl.current.children[index].classList.add('edit-on');
+    } 
 
-    const editComment = (e) =>{
+    const updateComment = async(e) =>{
+        const index = Number(e.target.dataset.index);
+        commentsUl.current.classList.remove('edit-mode');
+        commentsUl.current.children[index].classList.remove('edit-on');
+        
+        //수정 댓글 변경 및 렌더링
+        const txt = commentsUl.current.children[index].children[2].children[0].value; //수정 값
+        const _comments = comments;
+        
+        const res = await axios({ method : 'POST', url : `/api/db/comment/update/${query.id}`, 
+                                data : { index : index, content : txt, author : session.user.name } }); 
+        
+        if(res.data.error === null){ //댓글 수정 성공
+            _comments.splice(index, 1 , {content : txt, author : session.user.name, date : getDate() });
+            setComments([..._comments]);
+            setEditMode('');
+        }else{ //댓글 수정 실패
+            alert(res.error);
+            console.log(res);
+        }
 
     }
-
 
     const errToggle = (ele) => {
         const target = ele;
@@ -97,6 +126,14 @@ const Index = ({post}) => {
             target.classList.replace('bg-blue-400', 'bg-red-400');
             target.classList.replace('hover:bg-blue-500', 'hover:bg-red-500');
         }
+    }
+
+    const getDate = () => {
+        const date = new Date();
+        const _month = (date.getMonth()+1).toString();
+        const month = _month.length === 1 ? '0'+_month : _month;
+        
+        return date.getFullYear() + '.'+ month + '.' + date.getDate();
     }
 
     return(
@@ -114,7 +151,7 @@ const Index = ({post}) => {
 
                     <div className="post-info-wrap flex justify-between">
                         <div className="master-left inline-block text-black dark:text-white ctd">
-                        {post.author} <span className="inline-block border-l border-gray-500 text-sm text-black dark:text-white ctd mx-1.5 h-2.5" /> {post.date.substr(0, 10).replace(/-/g, '.')}
+                        {post.author} <span className="inline-block border-l border-gray-400 text-sm text-black dark:text-white ctd mx-1.5 h-2.5" /> {post.date.substr(0, 10).replace(/-/g, '.')}
                         </div>
                         {
                             status === 'loading' || status === 'unauthenticated' ? //로그인 여부 및 작성자 체크
@@ -162,7 +199,7 @@ const Index = ({post}) => {
 
                 {/* 댓글 목록 */}
                 
-                <ul className="post-comment-wrap my-3">
+                <ul ref={commentsUl} className={`post-comment-wrap my-3 ${editMode}`}>
                 {
                     comments.length !== 0 
                         ?
@@ -172,11 +209,24 @@ const Index = ({post}) => {
                         <li key={idx} className="relative block mb-2.5 p-2.5 bg-slate-100 dark:bg-slate-700 text-black dark:text-white rounded shadow-md ctd">
                             <span className="absolute top-0 right-0 px-1.5 py-0.5 bg-white text-sm font-bold text-black rounded-bl shadow-md">✉️ Comments</span>     
                             <div className="inline-block comment-profile mb-2.5 px-2.5 py-1.5 text-sm bg-slate-50 dark:bg-slate-500 text-black dark:text-white rounded-md ctd">
-                                {c.author}    
+                                {c.author}
+                                <span className="inline-block border-l border-gray-400 text-sm text-black dark:text-white ctd mx-1.5 h-2.5" />
+                                {c.date.substr(0,10).replace(/-/g,'.')}
                             </div>
-                            <pre className="block comment-profile px-2.5 py-3 text-sm bg-slate-50 dark:bg-slate-500 text-black dark:text-white rounded-sm whitespace-pre-wrap overflow-auto break-all ctd">
+
+                            
+                            <div className="edit-wrap hidden">
+                                <textarea className="comment-profile block w-full min-h-[50px] p-2 my-2.5 text-sm bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 ctd
+                        outline-none resize-none text-sm rounded-sm" defaultValue={c.content}/>
+                                <button onClick={updateComment} data-index={idx} className="w-full py-1.5 text-gray-100 bg-green-400 hover:bg-green-500 rounded-sm ctd">
+                                    수정하기
+                                </button>
+                            </div>
+                            <pre className="block comment-content-wrap px-2.5 pt-3 py-1.5 text-sm bg-slate-50 dark:bg-slate-500 text-black dark:text-white rounded-sm whitespace-pre-wrap overflow-auto break-all ctd">
                                 {c.content}
-                                <div className="flex justify-end pt-0.5 ">
+                                
+                                <div className="flex justify-end min-h-[30px] pt-1.5">
+                                    
                                 {
                                     status === 'loading' || status === 'unauthenticated' ? //로그인 여부 및 작성자 체크
                                     <></>
@@ -185,10 +235,10 @@ const Index = ({post}) => {
                                     {
                                         session.user.name === post.author 
                                             ?
-                                        <>
-                                            <button onClick={editComment} data-index={idx} className="px-1.5 py-0.5 bg-white dark:bg-gray-700 text-black dark:text-white shadow-lg">수정</button>
-                                            <button onClick={deleteComment} data-index={idx} className="px-1.5 py-0.5 ml-1 bg-white dark:bg-gray-700 text-black dark:text-white shadow-md">삭제</button>
-                                        </>
+                                        <div className="comments-editBtn-wrap">
+                                            <button onClick={startEdit} data-index={idx} className="comments-edit-btn px-1.5 py-0.5 bg-white dark:bg-gray-700 text-black dark:text-white shadow-lg">수정</button>
+                                            <button onClick={deleteComment} data-index={idx} className="comments-delete-btn px-1.5 py-0.5 ml-1 bg-white dark:bg-gray-700 text-black dark:text-white shadow-md">삭제</button>
+                                        </div>
                                             :
                                         <></>
                                     }
@@ -219,7 +269,7 @@ const Index = ({post}) => {
                         <>Stranger</>
                     }
                     </div>
-                    <textarea ref={commentRef} className="comment-profile block w-full min-h-[60px] p-2 my-2.5  text-sm bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 ctd
+                    <textarea ref={commentWriteRef} className="comment-profile block w-full min-h-[50px] p-2 my-2.5  text-sm bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 ctd
                     outline-none resize-none text-sm rounded-sm"/>
                     
                     <button onClick={writeComment} className="w-full py-1.5 text-gray-100 bg-blue-400 hover:bg-blue-500 rounded-sm ctd">

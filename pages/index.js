@@ -28,7 +28,7 @@ const Home = ({list}) => {
 export const getServerSideProps = async() => {
 
   const res = await axios({ //게시글 목록 불러오기
-    method : 'GET',
+    method : 'POST',
     url : `http://localhost:${process.env.PORT}/api/db/post/read/list`,
   });
 
@@ -38,7 +38,7 @@ export const getServerSideProps = async() => {
     }
   }else{
     return{
-      props : { list : [{ no : 0, title : '', date : ''}] }
+      props : { list : [{ no : 0, title : '', date : '', author : '', tags : [], content : '', comments : [] }] }
     }
   }
 
