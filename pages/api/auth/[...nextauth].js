@@ -24,18 +24,18 @@ export default NextAuth({
         },
         //로그인 담당 
             async authorize(credentials, req) {
-
+                
                 // 입력된 계정 검증로직
                 const id = credentials.username;
                 const pw = credentials.password;
 
-                const dbInfo = await User.findOne({ id : id}, {pw : true, nicname : true});
-                const verify = await bcrypt.compare(pw, dbInfo.pw); //비밀번호 체크
-
+                const userInfo = await User.findOne({ id : id}, { id : true, pw : true, nicname : true });
+                const verify = await bcrypt.compare(pw, userInfo.pw); //비밀번호 체크
+                
                 console.log('로그인 체크' + verify);
 
                 if(verify){
-                    const user = { name : dbInfo.nicname };
+                    const user = { name : { id : userInfo.id, nicname : userInfo.nicname } };
                     return user;
                 }else{
                     return null;

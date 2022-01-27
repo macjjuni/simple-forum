@@ -21,6 +21,7 @@ const Header = () => {
         })
     }, []);
 
+
     const toggleModal = (e) => {
         if(modal === null){ setModal('profile-modal'); }
         else{ setModal(null); }

@@ -29,7 +29,7 @@ const Editpost = () => {
     const getPost = async() => {
         const res = await axios({method : 'POST', url : `/api/db/post/read/${query.editpost[1]}`, data : { id : 'simple-forum' }});
         const post = res.data[0];
-        if(post && post.author === session.user.name){
+        if(post && post.author === session.user.name.nicname){
             setInit(post); //수정 데이터 초기화
             setLoad(true);
         }else{
@@ -43,7 +43,7 @@ const Editpost = () => {
         
         if(content.title !== '' && check !== '' ){
               //글 수정 API 
-            const res = await axios({ method : 'POST', url : `/api/db/post/update/post/${query.editpost[1]}`, data : {...content, author : session.user.name} });
+            const res = await axios({ method : 'POST', url : `/api/db/post/update/post/${query.editpost[1]}`, data : {...content, author : session.user.name.nicname} });
             if(res.data.error === null) push(`/post/${query.editpost[1]}`);
             else console.log(res);
 

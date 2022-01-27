@@ -30,7 +30,7 @@ const Newpost = () => {
         if(content.title !== '' && check !== '' ){
             const newPost = {
                 ...content,
-                author : session.user.name,
+                author : session.user.name.nicname,
                 comments : [],
             }
             //글 작성 API 

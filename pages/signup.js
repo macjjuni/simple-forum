@@ -304,9 +304,9 @@ const Signup = () => {
                             <p ref={pwAlertRef} className="h-[16px] px-2 text-left text-xs text-black"/>
                             <input ref={pw2Ref} onChange={sameChk_pw} type='password' placeholder="비밀번호 확인" maxLength={15} className="block w-full mx-auto my-1.5 px-3 py-2 border-b border-b-blue-400 bg-transparent outline-0 focus:outline-none rounded-none"/>
                             <p ref={pw2AlertRef} className="h-[16px] px-2 text-left text-xs text-black"/>
-                            <input ref={emailRef} onChange={patternChk_email} onBlur={duplicateChk_email} type='text' placeholder="이메일(E-mail)" className="block w-full mx-auto my-1.5 px-3 py-2 border-b border-b-blue-400 bg-transparent outline-0 focus:outline-none rounded-none"/>
+                            <input ref={emailRef} onChange={patternChk_email} onBlur={duplicateChk_email} type='text' maxLength={30} placeholder="이메일(E-mail)" className="block w-full mx-auto my-1.5 px-3 py-2 border-b border-b-blue-400 bg-transparent outline-0 focus:outline-none rounded-none"/>
                             <p ref={emailAlertRef} className="h-[16px] px-2 text-left text-xs text-black"/>
-                            <input ref={nicRef} onChange={lengthChk_nic} onBlur={duplicateChk_nic} type='text' placeholder="닉네임" className="block w-full mx-auto my-1.5 px-3 py-2 border-b border-b-blue-400 bg-transparent outline-0 focus:outline-none rounded-none"/>
+                            <input ref={nicRef} onChange={lengthChk_nic} onBlur={duplicateChk_nic} type='text' maxLength={10} placeholder="닉네임" className="block w-full mx-auto my-1.5 px-3 py-2 border-b border-b-blue-400 bg-transparent outline-0 focus:outline-none rounded-none"/>
                             <p ref={nicAlertRef} className="h-[16px] px-2 text-left text-xs text-black"/>
                             
                             <NoSsrReC setReCaptchaChk={setReCaptchaChk}/>

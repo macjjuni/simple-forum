@@ -26,7 +26,7 @@ const ProfileModal = ({session, signOut, toggleModal}) => {
                     <>
                         <div className="w-16 h-16 m-auto bg-white rounded-full modal"/>
                         <h4 className="text-sm text-white text-center pt-1 pb-2 modal">
-                            {session.user.name}
+                            {session.user.name.nicname}
                         </h4>
                     </>
                         :
@@ -55,7 +55,7 @@ const ProfileModal = ({session, signOut, toggleModal}) => {
                         </>
                             :
                         <>
-                            <Link href="/profile" passHref>
+                            <Link href='/profile' passHref>
                                 <a className="w-full mx-1 py-1 text-center bg-white text-black rounded-sm">프로필</a>
                             </Link>
                             <Link href="/newpost" passHref>
