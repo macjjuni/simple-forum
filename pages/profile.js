@@ -1,13 +1,13 @@
 import axios from "axios";
-import { useSession } from "next-auth/react"
-import { useEffect, useRef, useState } from "react";
+import { useSession, getSession } from "next-auth/react"
+import { useEffect, useRef, useState } from "react"
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { MdPhotoLibrary } from 'react-icons/md'
 import HeadInfo from "../components/headInfo"
 import imageCompression from 'browser-image-compression'
 import { initializeApp } from "firebase/app";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-
 
 const firebaseConfig = {
     apiKey: process.env.NEXT_PUBLIC_APIKEY,
@@ -17,12 +17,10 @@ const firebaseConfig = {
     messagingSenderId: process.env.NEXT_PUBLIC_MESSAGINGSENDERID,
     appId: process.env.NEXT_PUBLIC_APPID,
 };
-
 const firebaseApp = initializeApp(firebaseConfig);
 const storage = getStorage(firebaseApp);
 
-
-const Profile = () => {
+const Profile = ({profile}) => {
 
     const { data: session, status } = useSession(); 
     
@@ -31,25 +29,20 @@ const Profile = () => {
     const submitRef = useRef(null);
 
     const [load, setLoad] = useState(false);
-    const [currentImg, setCurrentImg] = useState('/user_profile.png');
+
+
     const [blob, setBlob] = useState('');
     const [imgType, setImgType] = useState('');
     const [userId, setUserId] = useState();
     const [change, setChange] = useState(false);
-    
+        
     useEffect(()=>{//로그인 상태면 페이지 강제 이동
         if(status === 'unauthenticated') replace('/');
         else if(status === 'authenticated'){
             setUserId(session.user.name.nicname);
-            getProfile();
             setLoad(true);            
         }
     }, [status]);
-
-
-    useEffect(()=>{ //변경사항 발생시 변경 버튼 활성화
-        if(change) submitRef.current.classList.replace('bg-gray-400', 'bg-blue-400');
-    }, [change])
 
     const uploadImg = async(e) =>{
         
@@ -60,7 +53,10 @@ const Profile = () => {
         profileImg.current.onload = (e) => { //cleanup
             URL.revokeObjectURL(e.target.src); 
         }
+        //btn 스타일 수정
         setChange(true);
+        submitRef.current.classList.replace('bg-gray-400', 'bg-blue-400');
+        submitRef.current.innerText = '변경하기';
         e.target.value = ''; //input 초기화
         
     }
@@ -96,6 +92,9 @@ const Profile = () => {
                     const { data } = await axios({ method : 'POST', url : `api/db/user/update/profileImg/${session.user.name.id}`, data : { url : url } });
                     if(data.error === null){
                         console.log('변경 성공');
+                        setChange(false);
+                        submitRef.current.classList.replace('bg-blue-400', 'bg-green-400');
+                        submitRef.current.innerText = '변경 완료';
                     }else{
                         alert(data.error);
                     }
@@ -103,24 +102,13 @@ const Profile = () => {
             } catch (err){
                 console.log(err);
             }
-
         }
-        //이미지 url 가져오기
-
 
     }
 
+    //이미지 url 가져오기
     const getProfile = async() => {
-        const { data } = await axios({ method : 'POST', url : `/api/db/user/read/profile/${session.user.name.nicname}` ,
-                            data : { user : session.user.name.nicname }});
-
-        if(data.error === null){
-            setCurrentImg(data.profile);
-        }else{
-            alert(data.error);
-        }
-
-
+        
     }
 
 
@@ -130,17 +118,26 @@ const Profile = () => {
             {
                 load ?
                 <div className="profile-wrap w-full relative py-10 text-center">
-                    <div className="profile-img-wrap relative w-60 h-60 m-auto rounded-lg">
-                        <label htmlFor='profile_input' className="absolute top-1 right-1 w-6 h-6 hover:scale-[1.1] transition duration-100 cursor-pointer">
-                        <input id='profile_input' type='file' onChange={uploadImg} accept="image/*" className="absolute w-0 h-0 opacity-0"/>
-                            <MdPhotoLibrary className="w-full h-full"/>
-                        </label>
-                        <img className="w-full h-full rounded-full" ref={profileImg} width='100%' height='100%' src={currentImg} alt="user profile" />
+                    <div className="img-wrap relative flex justify-around">
+                        
+                        <div className="profile-img-wrap relative inline-block p-8 border border-gray-200 text-[0px] shadow-lg overflow-hidden">
+                            <label htmlFor='profile_input' className="absolute top-2 right-2 w-6 h-6 hover:scale-[1.1] transition duration-100 cursor-pointer z-[9999]]">
+                                <input id='profile_input' type='file' onChange={uploadImg} accept="image/*" className="absolute w-0 h-0 opacity-0"/>
+                                <MdPhotoLibrary className="w-full h-full"/>
+                            </label>
+                            <Image width='250px' height='250px' src={profile === 'not yet' ? '/user_profile.png' : profile} alt="user profile" />
+                        </div>
+                        <div className="inline-block p-4">
+                            <input type="password" className="block w-64 px-2 py-1 mb-3 border" placeholder="기존 비밀번호" />
+                            <input type="password" className="block w-64 px-2 py-1 mb-3 border" placeholder="새 비밀번호" />
+                            <input type="password" className="block w-64 px-2 py-1 mb-3 border" placeholder="비밀번호 재입력" />
+                            <input type="text" className="block w-64 px-2 py-1 mb-3 border" placeholder="새 닉네임" />
+                        </div>
                     </div>
-                    <h2 className="inline-block text-lg text-center my-3 py-0.5 px-5">{userId}</h2>
+                    <h2 className="block text-lg text-center my-3 py-0.5 px-5">{userId}</h2>
 
                     <div className="submit-wrap">
-                        <button ref={submitRef} disabled={!change} onClick={submit} className="block px-10 py-1.5 m-auto bg-gray-400 text-white rounded-sm transition duration-300">변경</button>
+                        <button ref={submitRef} disabled={!change} onClick={submit} className="block px-10 py-1.5 m-auto bg-gray-400 text-white rounded-sm transition duration-300">변경하기</button>
                     </div>
                 </div>
                     :
@@ -148,6 +145,25 @@ const Profile = () => {
             }
         </>
     )
+}
+
+export const getServerSideProps = async(req) => {
+    
+    const session = await getSession(req);
+    
+    const { data } = await axios({ method : 'POST', url : `http://localhost:${process.env.PORT}/api/db/user/read/profile/${encodeURI(session.user.name.nicname)}` ,
+                            data : { user : session.user.name.nicname }});
+
+    if(data.error === null){
+        return{
+            props : { profile : data.profile }
+        }
+    }else{
+        return{
+            props : { profile : 'not yet' }
+        }
+    }
+
 }
 
 export default Profile

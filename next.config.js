@@ -3,4 +3,7 @@ module.exports = {
   api: {
     externalResolver: true,
   },
+  images: {
+    domains: ['firebasestorage.googleapis.com'],
+  },
 }

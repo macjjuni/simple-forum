@@ -8,12 +8,12 @@ export default async function handler(req, res){
 
     const { user } = req.query; 
     const target = req.body;
-    
+
     if(req.method === 'POST' && user[0] === target.user){
-        console.log('123')
+
         User.findOne({ nicname : user }, { profile_image : true}, (err, user) => {
             if(!err){
-                console.log(user)
+                console.log(user);
                 res.status(200).send({ error : null, profile : user.profile_image });
             }else{
                 console.log(err);

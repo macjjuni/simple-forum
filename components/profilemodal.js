@@ -1,11 +1,16 @@
-import { useEffect } from "react"
+import axios from "axios"
+import { useEffect, useState } from "react"
+import Image from "next/image"
 import Link from "next/link"
 import { FiUserX } from 'react-icons/fi'
 
 const ProfileModal = ({session, signOut, toggleModal}) => {    
 
+    const [profile, setProfile] = useState('/user_profile.png');
+
     useEffect(()=>{ //모달 외 클릭 체크
         document.addEventListener('click', clickCheck);
+        getProfile();
         return () => {
             document.removeEventListener("click", clickCheck);
         };
@@ -16,15 +21,27 @@ const ProfileModal = ({session, signOut, toggleModal}) => {
         if(chk_class === false) toggleModal();
     }
 
+    //이미지 url 가져오기
+    const getProfile = async() => {
+        const { data } = await axios({ method : 'POST', url : `/api/db/user/read/profile/${session.user.name.nicname}` ,
+                            data : { user : session.user.name.nicname }});
+
+        if(data.error === null){
+            if(data.profile !== 'not yet') setProfile(data.profile);
+        }else{
+            alert(data.error);
+        }
+    }
+
     return(
         <>  
             <div className='relative w-60 p-1.5 bg-[rgba(0,0,0,0.6)] rounded-sm shadow-xl z-[100] modal' style={{boxShadow : 'rgba(0, 0, 0, 0.24) 0px 3px 8px'}}>
             
-                <div className="p-2 modal">
+                <div className="p-2 modal text-center">
                 {
                     session ?
                     <>
-                        <div className="w-16 h-16 m-auto bg-white rounded-full modal"/>
+                        <Image src={profile} width='80px' height='80px' className="m-auto rounded-full modal"/>
                         <h4 className="text-sm text-white text-center pt-1 pb-2 modal">
                             {session.user.name.nicname}
                         </h4>
