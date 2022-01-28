@@ -1,16 +1,14 @@
-import axios from "axios"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
+import LazyImage from "./lazyImage"
 import Image from "next/image"
 import Link from "next/link"
 import { FiUserX } from 'react-icons/fi'
 
-const ProfileModal = ({session, signOut, toggleModal}) => {    
+const ProfileModal = ({session, signOut, toggleModal, profileURL}) => {    
 
-    const [profile, setProfile] = useState('/user_profile.png');
 
     useEffect(()=>{ //모달 외 클릭 체크
         document.addEventListener('click', clickCheck);
-        getProfile();
         return () => {
             document.removeEventListener("click", clickCheck);
         };
@@ -22,16 +20,6 @@ const ProfileModal = ({session, signOut, toggleModal}) => {
     }
 
     //이미지 url 가져오기
-    const getProfile = async() => {
-        const { data } = await axios({ method : 'POST', url : `/api/db/user/read/profile/${session.user.name.nicname}` ,
-                            data : { user : session.user.name.nicname }});
-
-        if(data.error === null){
-            if(data.profile !== 'not yet') setProfile(data.profile);
-        }else{
-            alert(data.error);
-        }
-    }
 
     return(
         <>  
@@ -41,7 +29,9 @@ const ProfileModal = ({session, signOut, toggleModal}) => {
                 {
                     session ?
                     <>
-                        <Image src={profile} width='80px' height='80px' className="m-auto rounded-full modal"/>
+                        <div className="rounded-full w-[80px] h-[80px] m-auto overflow-hidden">
+                            <LazyImage src={profileURL} width='80px' height='80px'/>
+                        </div>
                         <h4 className="text-sm text-white text-center pt-1 pb-2 modal">
                             {session.user.name.nicname}
                         </h4>

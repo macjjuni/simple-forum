@@ -43,7 +43,7 @@ const WysiwygEditor = ({confirm, init}) => {
         ['hr'],
         ['ul', 'ol', 'task'],
         ['table', 'link'], 
-        // 'image'
+        ['image'],
         ['code'],
         ['scrollSync'],
     ]

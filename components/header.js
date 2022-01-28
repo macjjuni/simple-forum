@@ -1,3 +1,4 @@
+import axios from "axios"
 import { useSession, signIn, signOut } from "next-auth/react"
 import { AnimatePresence, motion } from "framer-motion"
 import Link from "next/link"
@@ -12,7 +13,8 @@ const Header = () => {
 
     const { route, events } = useRouter();
     const [modal, setModal] = useState(null)
-    const { data: session } = useSession(); //로그인 정보
+    const [profileURL, setProfileURL] = useState('/user_profile.png');
+    const { data: session, status } = useSession(); //로그인 정보
 
     useEffect(()=> {
         //페이지 이동 체크
@@ -20,6 +22,20 @@ const Header = () => {
             setModal(null);
         })
     }, []);
+
+    useEffect(()=> {
+        if(session) getProfile();
+    }, [status]);
+
+    const getProfile = async() => {
+        const { data } = await axios({ method : 'POST', url : `/api/db/user/read/profile/${session.user.name.nicname}` ,
+                            data : { user : session.user.name.nicname }});
+        if(data.error === null){
+            if(data.profile !== 'not yet') setProfileURL(data.profile);
+        }else{
+            console.log(data.error);
+        }
+    }
 
 
     const toggleModal = (e) => {
@@ -81,7 +97,7 @@ const Header = () => {
                         {modal && (
                             <motion.div layoutId='profile-modal' initial={ani.init} animate={ani.ani} exit={ ani.exit } transition={{ ease : [0.17, 0.67, 0.83, 0.67], duration: 0.4 }}
                             className='modal'>
-                                <ProfileModal session={session} signIn={signIn} signOut={signOut} toggleModal={toggleModal}/>
+                                <ProfileModal session={session} signIn={signIn} signOut={signOut} toggleModal={toggleModal} profileURL={profileURL}/>
                             </motion.div>
                             )
                         }
@@ -96,8 +112,8 @@ const Header = () => {
 const ani = {
     init : {
         position: 'absolute',
-        top : '-300px', right : '1200px',
-        transform: 'rotate(600deg)',
+        top : '30px', right : '10px',
+        transform: 'rotate(0deg)',
         zIndex : 999,
         opacity: 0,
     },
@@ -110,8 +126,8 @@ const ani = {
     },
     exit : {
         position: 'absolute',
-        top : '500px', right : '1000px',
-        transform: 'rotate(300deg)',
+        top : '-200px', right : '10px',
+        transform: 'rotate(400deg)',
         zIndex : 999,
         opacity: 0,
     }

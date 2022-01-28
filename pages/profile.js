@@ -1,7 +1,8 @@
 import axios from "axios";
 import { useSession, getSession } from "next-auth/react"
 import { useEffect, useRef, useState } from "react"
-import Image from "next/image";
+import LazyImage from "../components/lazyImage";
+import Image from "next/image"
 import { useRouter } from "next/router";
 import { MdPhotoLibrary } from 'react-icons/md'
 import HeadInfo from "../components/headInfo"
@@ -117,27 +118,30 @@ const Profile = ({profile}) => {
             <HeadInfo title='프로필'/>
             {
                 load ?
-                <div className="profile-wrap w-full relative py-10 text-center">
-                    <div className="img-wrap relative flex justify-around">
+                <div className="profile-wrap w-full relative py-10 text-center min-h-[700px] pb-20">
+                    <div className="img-wrap relative flex flex-col sm:flex-row justify-around">
                         
-                        <div className="profile-img-wrap relative inline-block p-8 border border-gray-200 text-[0px] shadow-lg overflow-hidden">
+                        <div className="profile-img-wrap relative inline-block p-8 border border-gray-200 text-[0px] m-auto sm:shadow-lg shadow-none overflow-hidden">
                             <label htmlFor='profile_input' className="absolute top-2 right-2 w-6 h-6 hover:scale-[1.1] transition duration-100 cursor-pointer z-[9999]]">
                                 <input id='profile_input' type='file' onChange={uploadImg} accept="image/*" className="absolute w-0 h-0 opacity-0"/>
                                 <MdPhotoLibrary className="w-full h-full"/>
                             </label>
-                            <Image width='250px' height='250px' src={profile === 'not yet' ? '/user_profile.png' : profile} alt="user profile" />
+                            <LazyImage src={profile === 'not yet' ? '/user_profile.png' : profile} width={'250px'} height={'250px'} alt='profile_image'/>
                         </div>
-                        <div className="inline-block p-4">
-                            <input type="password" className="block w-64 px-2 py-1 mb-3 border" placeholder="기존 비밀번호" />
-                            <input type="password" className="block w-64 px-2 py-1 mb-3 border" placeholder="새 비밀번호" />
-                            <input type="password" className="block w-64 px-2 py-1 mb-3 border" placeholder="비밀번호 재입력" />
-                            <input type="text" className="block w-64 px-2 py-1 mb-3 border" placeholder="새 닉네임" />
+                        <div className="inline-block sm:p-0 p-8 m-auto">
+                            <input type="password" className="block w-64 px-2 py-1 mx-auto mb-3 border" placeholder="기존 비밀번호" />
+                            <input type="password" className="block w-64 px-2 py-1 mx-auto mb-3 border" placeholder="새 비밀번호" />
+                            <input type="password" className="block w-64 px-2 py-1 mx-auto mb-3 border" placeholder="비밀번호 재입력" />
+                            <input type="text" className="block w-64 px-2 py-1 mx-auto mb-3 border" placeholder="새 닉네임" />
                         </div>
                     </div>
                     <h2 className="block text-lg text-center my-3 py-0.5 px-5">{userId}</h2>
 
                     <div className="submit-wrap">
-                        <button ref={submitRef} disabled={!change} onClick={submit} className="block px-10 py-1.5 m-auto bg-gray-400 text-white rounded-sm transition duration-300">변경하기</button>
+                        <button ref={submitRef} disabled={!change} onClick={submit} className="block px-16 py-2.5 m-auto bg-gray-400 text-lg text-white 
+                                                                                            absolute bottom-4 left-[50%] translate-x-[-50%] rounded-sm transition duration-300">
+                            변경하기
+                        </button>
                     </div>
                 </div>
                     :
