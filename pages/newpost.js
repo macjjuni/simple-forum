@@ -25,21 +25,19 @@ const Newpost = () => {
         else if(status === 'authenticated') setLoad(true);
     }, [status]);
 
-    const confirm = async(content, check) => {
+    const uploadDB = async(post) => {
         
-        if(content.title !== '' && check !== '' ){
-            const newPost = {
-                ...content,
-                author : session.user.name.nicname,
-                comments : [],
-            }
-            //글 작성 API 
-            const res = await axios({ method : 'POST', url : '/api/db/post/create/post', data : { ...newPost, session } });
-            if(res.data.error === null) push(`/post/${res.data.no}`);
-            else console.log(res);
-        }else{
-            alert('제목 및 내용을 입력해주세요.');
+        const newPost = {
+            ...post,
+            author : session.user.name.nicname,
+            comments : [],
         }
+        console.log(newPost)
+        //글 작성 API 
+        const res = await axios({ method : 'POST', url : '/api/db/post/create/post', data : { ...newPost, session } });
+        if(res.data.error === null) push(`/post/${res.data.no}`);
+        else console.log(res);
+
     }
 
     return(
@@ -49,7 +47,7 @@ const Newpost = () => {
             <>  
                 <div className="post-wrap mx-auto my-4 max-w-screen-md">
                     <HeadInfo title='글쓰기'/>
-                    <NoSsrWysiwyg confirm={confirm}/>
+                    <NoSsrWysiwyg uploadDB={uploadDB}/>
                 </div>
             </>
                 :

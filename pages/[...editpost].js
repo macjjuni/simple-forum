@@ -39,17 +39,13 @@ const Editpost = () => {
     }
 
 
-    const confirm = async(content, check) => {
+    const uploadDB = async(post) => {
         
-        if(content.title !== '' && check !== '' ){
-              //글 수정 API 
-            const res = await axios({ method : 'POST', url : `/api/db/post/update/post/${query.editpost[1]}`, data : {...content, author : session.user.name.nicname} });
-            if(res.data.error === null) push(`/post/${query.editpost[1]}`);
-            else console.log(res);
+            //글 수정 API 
+        const res = await axios({ method : 'POST', url : `/api/db/post/update/post/${query.editpost[1]}`, data : {...post, author : session.user.name.nicname} });
+        if(res.data.error === null) push(`/post/${query.editpost[1]}`);
+        else console.log(res);
 
-        }else{
-            alert('제목 및 내용을 입력해주세요.');
-        }
     }
 
     return(
@@ -59,7 +55,7 @@ const Editpost = () => {
             <>  
                 <div className="post-wrap mx-auto my-4 max-w-screen-md">
                     <HeadInfo title='글쓰기'/>
-                    <NoSsrWysiwyg confirm={confirm} init={init}/>
+                    <NoSsrWysiwyg uploadDB={uploadDB} init={init}/>
                 </div>
             </>
                 :
