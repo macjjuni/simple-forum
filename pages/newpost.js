@@ -45,7 +45,7 @@ const Newpost = () => {
         {
             load ?
             <>  
-                <div className="post-wrap mx-auto my-4 max-w-screen-md">
+                <div className="post-wrap mx-auto max-w-screen-md">
                     <HeadInfo title='글쓰기'/>
                     <NoSsrWysiwyg uploadDB={uploadDB}/>
                 </div>

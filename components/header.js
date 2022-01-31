@@ -2,7 +2,7 @@ import axios from "axios"
 import { useSession, signIn, signOut } from "next-auth/react"
 import { AnimatePresence, motion } from "framer-motion"
 import Link from "next/link"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import { useRouter } from 'next/router'
 import { FiUserCheck, FiUserX } from 'react-icons/fi'
 import { BsPencil, BsFillSunFill } from 'react-icons/bs' 
@@ -11,32 +11,22 @@ import ProfileModal from "./profilemodal"
 
 const Header = () => {
 
+    const headerRef = useRef(null);
     const { route, events } = useRouter();
     const [modal, setModal] = useState(null)
-    const [profileURL, setProfileURL] = useState('/user_profile.png');
     const { data: session, status } = useSession(); //로그인 정보
+    const [profileURL, setProfileURL] = useState('user_profile.png');
 
     useEffect(()=> {
         //페이지 이동 체크
         events.on('routeChangeStart', ()=> {
             setModal(null);
-        })
+        });
     }, []);
 
     useEffect(()=> {
-        if(session) getProfile();
+        if(status === 'authenticated') setProfileURL(session.user.name.profile);
     }, [status]);
-
-    const getProfile = async() => {
-        const { data } = await axios({ method : 'POST', url : `/api/db/user/read/profile/${session.user.name.nicname}` ,
-                            data : { user : session.user.name.nicname }});
-        if(data.error === null){
-            if(data.profile !== 'not yet') setProfileURL(data.profile);
-        }else{
-            console.log(data.error);
-        }
-    }
-
 
     const toggleModal = (e) => {
         if(modal === null){ setModal('profile-modal'); }
@@ -56,7 +46,7 @@ const Header = () => {
 
     return(
         <>
-            <header className="relative w-full z-[999] shadow-sm lg:shadow-none">
+            <header ref={headerRef} className="relative w-full z-[999] shadow-sm lg:shadow-none">
                 <div className={`header-wrap relative h-full ${route==='/'?'max-w-screen-lg':'max-w-screen-md'} transition-[max-width] duration-500 ease-[cubic-bezier(0.17, 0.67, 0.83, 0.67)]
                 mx-auto h-20 lg:h-28 px-2 flex justify-between items-center`}>
                     
@@ -95,9 +85,9 @@ const Header = () => {
                     {/* 프로필 모달 */}
                     <AnimatePresence>   
                         {modal && (
-                            <motion.div layoutId='profile-modal' initial={ani.init} animate={ani.ani} exit={ ani.exit } transition={{ ease : [0.17, 0.67, 0.83, 0.67], duration: 0.4 }}
+                            <motion.div layoutId='profile-modal' initial={ani.init} animate={ani.ani} exit={ ani.exit } transition={{ ease : "easeInOut", duration: 0.4 }}
                             className='modal'>
-                                <ProfileModal session={session} signIn={signIn} signOut={signOut} toggleModal={toggleModal} profileURL={profileURL}/>
+                                <ProfileModal status={status} session={session} signIn={signIn} signOut={signOut} toggleModal={toggleModal}/>
                             </motion.div>
                             )
                         }
@@ -126,8 +116,8 @@ const ani = {
     },
     exit : {
         position: 'absolute',
-        top : '-200px', right : '10px',
-        transform: 'rotate(400deg)',
+        top : '30px', right : '10px',
+        transform: 'rotate(0deg)',
         zIndex : 999,
         opacity: 0,
     }

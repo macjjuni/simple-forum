@@ -71,57 +71,6 @@ const WysiwygEditor = ({uploadDB, init}) => {
         return editorIns.getMarkdown();
     }
 
-
-// ------------- write function -------------
-    const writePost = async() => {
-
-        if(validation_check()){ // 제목, 내용 유무 체크
-
-            if(images.length > 0){ //이미지가 있을 때 
-                console.log('이미지 있음');
-                for(const img of images){
-                    const url = await uploadImages(img.image);
-                    if(url !== false){
-                        console.log(url) //업로드 성공
-                        console.log('업로드 성공');
-                        End_Content = End_Content.replace(img.url, url);
-                        console.log(End_Content.includes(url));
-                    }
-                }
-                console.log(End_Content);
-                //post 객체 생성
-                const post = {
-                    title : titleRef.current.value.trim(),
-                    content : End_Content,
-                    tags : tags,
-                }
-
-                uploadDB(post);
-
-            }else{ //이미지가 없는 경우
-                console.log('이미지 없음');
-                const post = {
-                    title : titleRef.current.value.trim(),
-                    content : End_Content,
-                    tags : tags,
-                }
-                uploadDB(post);
-            }
-        }
-    }
-
-    const validation_check = () => {
-        const title = titleRef.current.value.trim();
-        const content = getMarkDown();
-        if(title === '' || content === ''){
-            console.log('제목 또는 내용을 입력해주세요.')
-            // 오류 표시 추가
-            return false;
-        }else{
-            return true;
-        }
-    }
-
 // ------------- image Function -------------
     // 에디터에 이미지 추가
     const addImage = async(blob, dropImage) => { 
@@ -140,17 +89,6 @@ const WysiwygEditor = ({uploadDB, init}) => {
             }
             return await imageCompression(blob, options);
         } catch(e){ console.log(e); }
-    }
-
-    //에디터에서 삭제된 이미지 images 배열에서 제거
-    const imageClear = () => { 
-        const content = getContent();
-        images.forEach((i, idx) => { 
-            const chk = content.indexOf(i.url);
-            if(chk === -1){
-                images.splice(idx, 1); 
-            }
-        })
     }
 
     //랜덤 파일명 생성
@@ -200,11 +138,38 @@ const WysiwygEditor = ({uploadDB, init}) => {
         setTag([...arr]);
     }
 
+// ------------- write function -------------
+    const writePost = async() => {
+
+        if(validation_check()){ // 제목, 내용 유무 체크
+
+            const post = {
+                title : titleRef.current.value.trim(),
+                content : getContent(),
+                tags : tags,
+            }
+            uploadDB(post);
+        
+        }
+    }
+
+    const validation_check = () => {
+        const title = titleRef.current.value.trim();
+        const content = getMarkDown();
+        if(title === '' || content === ''){
+            console.log('제목 또는 내용을 입력해주세요.')
+            // 오류 표시 추가
+            return false;
+        }else{
+            return true;
+        }
+    }
+
     return(
         <>
             {/* 제목 */}
             <input ref={titleRef} type="text" placeholder="제목을 입력해주세요." maxLength={50} 
-            className="w-full border dark:border-none bg-white text-black text-lg py-2 px-3 mb-3 rounded outline-none"/>
+            className="w-full border border-b-0 dark:border-none bg-white text-black text-lg py-3 px-3 rounded-t-sm outline-none"/>
             <Editor ref={editorRef}
                 initialValue={editData}
                 initialEditType='wysiwyg'
@@ -216,18 +181,18 @@ const WysiwygEditor = ({uploadDB, init}) => {
                 plugins={[colorSyntax, ]}
             />
             
-            <div className="tag-wrap flex my-2 py-2 px-3 border bg-white text-black rounded-sm ctd">
+            <div className="tag-wrap flex mb-3 py-2 px-1.5 border border-t-0 bg-white text-black rounded-b-sm ctd">
                 
                 <TagItem tags={tags} deleteTag={deleteTag}/>
                 <div ref={tagRef} className="block tag-input w-full relative ml-1">
                     <input type="text" placeholder='태그입력' onKeyDown={addTag} onChange={spaceRemove} 
-                    className="relative inline-block w-full p-1 pl-3.5 bg-white text-black outline-0 focus:outline-0 text-sm ctd"/>
+                    className="relative inline-block w-full p-1 pl-3 bg-white text-black outline-0 focus:outline-0 text-sm ctd"/>
                 </div>
                 
             </div>
 
-            <button onClick={writePost} className='w-full p-2 mt-2 text-gray-100 bg-blue-400 hover:bg-blue-500 transition duration-300 rounded-sm'>작성하기</button>
-            <button onClick={()=> console.log(getContent())} className='w-full p-2 mt-2 text-gray-100 bg-blue-400 hover:bg-blue-500 transition duration-300 rounded-sm'>내용확인</button>
+            <button onClick={writePost} className='w-full p-2 text-gray-100 bg-blue-400 hover:bg-blue-500 transition duration-300 rounded-sm'>작성하기</button>
+
         </>
     )
 

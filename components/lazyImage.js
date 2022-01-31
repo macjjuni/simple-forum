@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { useEffect } from "react";
 
 
 const LazyImage = ({src, alt, width, height}) => {
@@ -9,7 +10,7 @@ const LazyImage = ({src, alt, width, height}) => {
 
     return(
         <>
-            <Image src={src} alt={alt} onLoad={onLoadImg} width={width} height={height} style={{ opacity : 0 }} transition="opacity 1s ease" />
+            <Image src={src} alt={alt} className="opacity-0" onLoad={onLoadImg} width={width} height={height} />
         </>
     )
 }

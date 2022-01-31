@@ -1,11 +1,11 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import LazyImage from "./lazyImage"
-import Image from "next/image"
 import Link from "next/link"
 import { FiUserX } from 'react-icons/fi'
 
-const ProfileModal = ({session, signOut, toggleModal, profileURL}) => {    
+const ProfileModal = ({status, session, signOut, toggleModal }) => {    
 
+    const [profile, setProfile] = useState('/');
 
     useEffect(()=>{ //모달 외 클릭 체크
         document.addEventListener('click', clickCheck);
@@ -14,12 +14,15 @@ const ProfileModal = ({session, signOut, toggleModal, profileURL}) => {
         };
     }, []);
 
+    useEffect(()=> {
+        if(status === 'authenticated') setProfile(session.user.name.profile);
+    }, [status]);
+
     const clickCheck = (e) =>{
         const chk_class = e.target.classList.contains('modal');
         if(chk_class === false) toggleModal();
     }
 
-    //이미지 url 가져오기
 
     return(
         <>  
@@ -30,7 +33,9 @@ const ProfileModal = ({session, signOut, toggleModal, profileURL}) => {
                     session ?
                     <>
                         <div className="rounded-full w-[80px] h-[80px] m-auto overflow-hidden">
-                            <LazyImage src={profileURL} width='80px' height='80px'/>
+                            <div className="w-[80px] h-[80px]">
+                                <LazyImage src={profile} width='80px' height='80px'/>
+                            </div>
                         </div>
                         <h4 className="text-sm text-white text-center pt-1 pb-2 modal">
                             {session.user.name.nicname}

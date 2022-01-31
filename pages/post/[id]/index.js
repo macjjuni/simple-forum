@@ -174,10 +174,10 @@ const Index = ({post}) => {
                 </div>
 
                 {/* 본문 내용 */}
-                <div className="post-content-wrap relative min-h-[400px] sm:p-3.5 p-2 bg-slate-200 dark:bg-slate-700 ctd shadow-base overflow-hidden rounded shadow-md">
+                <div className="post-content-wrap relative min-h-[400px] p-8 bg-slate-200 dark:bg-slate-700 ctd shadow-base overflow-hidden rounded shadow-md">
                     <span className="absolute top-0 right-0 px-1.5 py-0.5 bg-white text-sm font-bold text-black rounded-bl shadow-md">📄 Content</span> 
                     
-                    <div className="post-content min-h-[400px] sm:p-3.5 p-2 bg-slate-50 dark:bg-slate-500 leading-6 text-black dark:text-white rounded-sm ctd"
+                    <div className="post-content min-h-[400px] leading-6 text-black dark:text-white rounded-sm ctd"
                     dangerouslySetInnerHTML={ {__html: post.content} } />
                 </div>
                 
