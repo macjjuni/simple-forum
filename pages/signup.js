@@ -217,7 +217,7 @@ const Signup = () => {
     //아이디 중복 체크
     const duplicateChk_id = debounce(() => {
         if(idTriger && !compId){ //유효성 O && 중복 체크 X
-            axios({ method : 'POST', url : '/api/db/user/duplicate/id', data : { id : idRef.current.value} })
+            axios({ method : 'GET', url : `/api/db/user/read/id/${idRef.current.value.trim()}` })
             .then(res=> { 
                 if(res.data.error === null){ //중복 id가 없을 경우
                     const msg = '사용할 수 있는 아이디입니다.';
@@ -235,7 +235,7 @@ const Signup = () => {
     const duplicateChk_email = debounce(() => {
         if(emailTriger && !compEmail){
             
-            axios({ method : 'POST', url : '/api/db/user/duplicate/email', data : { email : emailRef.current.value} })
+            axios({ method : 'GET', url : `/api/db/user/read/email/${emailRef.current.value.trim()}` })
             .then(res => {
                 if(res.data.error === null){ //중복 email이 없을 경우
                     const msg = '사용할 수 있는 이메일입니다.';
@@ -253,7 +253,7 @@ const Signup = () => {
     const duplicateChk_nic = debounce(() => {
         if(nicTriger && !compNic){
             
-            axios({ method : 'POST', url : '/api/db/user/duplicate/nicname', data : { nicname : nicRef.current.value} })
+            axios({ method : 'GET', url : `/api/db/user/read/nicname/${nicRef.current.value.trim()}`})
             .then(res => {
                 if(res.data.error === null){ //중복 nicname이 없을 경우
                     const msg = '사용할 수 있는 닉네임입니다.';

@@ -140,16 +140,13 @@ const WysiwygEditor = ({uploadDB, init}) => {
 
 // ------------- write function -------------
     const writePost = async() => {
-
         if(validation_check()){ // 제목, 내용 유무 체크
-
             const post = {
                 title : titleRef.current.value.trim(),
                 content : getContent(),
                 tags : tags,
             }
             uploadDB(post);
-        
         }
     }
 
