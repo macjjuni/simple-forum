@@ -10,7 +10,7 @@ export default async function handler(req, res) {
         if(post){
             res.status(200).send(post);
         }else{
-            res.status(400).send({ error : 'not found post'});
+            res.status(400).send({ error : 'NOT FOUND POST'});
         }
 
     }else{

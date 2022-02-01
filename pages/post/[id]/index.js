@@ -225,13 +225,15 @@ const Index = ({post}) => {
                 </div>
 
                 {/* 본문 내용 */}
-                <div className="post-content-wrap relative min-h-[400px] px-8 pt-8  bg-slate-200 dark:bg-slate-700 ctd shadow-base overflow-hidden rounded shadow-md">
+                <div className="post-content-wrap relative min-h-[400px] p-4  bg-slate-200 dark:bg-slate-700 ctd shadow-base overflow-hidden rounded shadow-md">
                     <span className="absolute top-0 right-0 px-1.5 py-0.5 bg-white text-sm font-bold text-black rounded-bl shadow-md">📄 Content</span> 
                     
-                    <div className="post-content min-h-[400px] leading-6 text-black dark:text-white rounded-sm ctd"
+                    <div className="post-content min-h-[400px] p-4 bg-white text-black dark:text-white rounded-md ctd"
                     dangerouslySetInnerHTML={ {__html: post.content} } />
                     <div className="text-center">
                         <div className="inline-block my-5">
+
+                            {/* 좋아요 */}
                             {
                                 status === 'authenticated' ?
                                 <>
@@ -242,14 +244,14 @@ const Index = ({post}) => {
                                             <BiLike className="inline-block mx-2 text-xl"/>
                                         </button>
                                             :
-                                        <button onClick={likePost} className="flex justify-around items-center px-3 py-1.5 bg-gray-400 text-white rounded-md">
+                                        <button onClick={likePost} className="flex justify-around items-center px-3 py-1.5 bg-gray-400 dark:bg-gray-800 text-white rounded-md">
                                             <span className="inline-block mx-3 align-center">{likeCnt}</span>
                                             <BiLike className="inline-block mx-2 text-xl"/>
                                         </button>
                                     }
                                 </>
                                     :
-                                <button onClick={likePost} className="flex justify-around items-center px-3 py-1.5 bg-gray-400 text-white rounded-md">
+                                <button onClick={likePost} className="flex justify-around items-center px-3 py-1.5 bg-gray-400 dark:bg-gray-800 text-white rounded-md">
                                     <span className="inline-block mx-3 align-center">{likeCnt}</span>
                                     <BiLike className="inline-block mx-2 text-xl"/>
                                 </button>
@@ -361,8 +363,6 @@ const Index = ({post}) => {
         </>
     )
 }
-
-
 
 export const getServerSideProps = async({query}) => {
     

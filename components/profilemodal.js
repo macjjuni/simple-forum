@@ -43,7 +43,7 @@ const ProfileModal = ({status, session, signOut, toggleModal }) => {
                     </>
                         :
                     <>
-                        <div className="w-16 h-16 m-auto flex justify-between items-center rounded-full bg-white overflow-hidden modal">
+                        <div className="w-16 h-16 m-auto flex justify-between items-center rounded-full bg-white dark:bg-black overflow-hidden modal">
                             <FiUserX className="w-1/2 h-1/2 m-auto modal"/>
                         </div>
                         <h4 className="text-sm text-white text-center pt-1 pb-2 modal">

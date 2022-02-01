@@ -1,7 +1,8 @@
 import HeadInfo from '../components/headInfo'
-import TopSection from '../components/topSection'
+import SeachBar from '../components/searchBar'
 import PostItem from "../components/postItem"
 import axios from 'axios'
+import { route } from 'next/dist/server/router'
 
 const Home = ({list}) => {  
 
@@ -9,21 +10,28 @@ const Home = ({list}) => {
     <>
       <HeadInfo/>
 
-        <TopSection/>
+        <SeachBar/>
 
         <h2 className='pt-8 pb-2 text-2xl'>📚 전체글</h2>
         <ul className="block w-full py-4">
           {
-            list.map((post, idx) =>
-              <PostItem key={post.title+idx} _id={post._id} title={post.title} author={post.author} tags={post.tags} date={post.date} comments={post.comments}/>
-            )
+            list !== null ?
+            <>
+            {
+              list.map((post, idx) =>
+                <PostItem key={post.title+idx} _id={post._id} title={post.title} author={post.author} tags={post.tags} date={post.date} comments={post.comments}/>
+              )
+            }
+            </>
+              :
+            <li className='py-5 text-lg text-center'>글이 없습니다.</li>              
           }
+          
           <li className="text-center py-3 text-gray-600">글이 없습니다. 글을 작성해주세요. 😄</li>
         </ul>
     </>
   )
 }
-
 
 export const getServerSideProps = async() => {
 
@@ -38,10 +46,9 @@ export const getServerSideProps = async() => {
     }
   }else{
     return{
-      props : { list : [{ _id : 0, title : '', date : '2022-01-01T14:26:06.859Z', author : '', tags : [], content : '', comments : [] }] }
+      props : { list : null }
     }
   }
-
   
 }
 
