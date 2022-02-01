@@ -1,8 +1,10 @@
 import axios from "axios"
+import { debounce } from "lodash"
 import HeadInfo from "../../../components/headInfo"
 import { useSession } from "next-auth/react"
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useRouter } from "next/router"
+import { BiLike } from 'react-icons/bi'
 
 const Index = ({post}) => {
 
@@ -12,9 +14,15 @@ const Index = ({post}) => {
     const commentsUl = useRef(null);
     const commentWriteRef = useRef(null);
 
+    const [likeCnt, setLikeCnt] = useState(0);
+    const [likeUser, setLikeUser] = useState([]);
     const [comments, setComments] = useState(post.comments);
     const [editMode, setEditMode] = useState('');
     
+    useEffect(()=>{
+        setLikeCnt(post.likeCount);
+        setLikeUser(post.likeUser);
+    }, [])
 
     const deletePost = async() => { //글 삭제
         let alert = confirm("글을 삭제하시겠습니까?");
@@ -31,6 +39,47 @@ const Index = ({post}) => {
     const editPost = () => { //글 수정
         push(`/editpost/${query.id}`);
     }
+
+    const likePost = debounce(async() => {
+        
+
+        if(status !== 'authenticated'){
+            push('/signin');
+        }else{
+            const visitorId = session.user.name.id;
+
+            if(!likeUser.includes(visitorId)){ //좋아요 증가
+                setLikeUser((prev)=> [...prev, visitorId]);
+                const plus = likeCnt + 1;
+                setLikeCnt(plus);
+                //좋아요 증가 api
+                const res = await axios({ method : 'POST', url : `/api/db/post/update/like/${query.id}`, data : { user : visitorId, check : 'plus' } })
+                if(res.data.error === null){
+                    // 좋아요 성공
+                    // console.log('좋아요');
+                }else{
+                    console.log(res);
+                }
+
+            }else{ //좋아요 감소                
+                const _likeUser = likeUser;
+                const idx = _likeUser.indexOf(visitorId);
+                _likeUser.splice(idx, 1);
+                setLikeUser(_likeUser);
+                const minus = likeCnt - 1;
+                setLikeCnt(minus);
+                //좋아요 감소 api
+                const res = await axios({ method : 'POST', url : `/api/db/post/update/like/${query.id}`, data : { user : visitorId, check : 'minus' } })
+                if(res.data.error === null){
+                    // 좋아요 성공
+                    // console.log('좋아요');
+                }else{
+                    console.log(res);
+                }
+            }
+        }
+
+    }, 150);
 
     const writeComment = async(e) => { //댓글 작성
         const txt = commentWriteRef.current.value.trim();
@@ -136,6 +185,8 @@ const Index = ({post}) => {
         return date.getFullYear() + '.'+ month + '.' + date.getDate();
     }
 
+    console.log()
+
     return(
         <>
             <HeadInfo title={post.title} />
@@ -174,11 +225,39 @@ const Index = ({post}) => {
                 </div>
 
                 {/* 본문 내용 */}
-                <div className="post-content-wrap relative min-h-[400px] p-8 bg-slate-200 dark:bg-slate-700 ctd shadow-base overflow-hidden rounded shadow-md">
+                <div className="post-content-wrap relative min-h-[400px] px-8 pt-8  bg-slate-200 dark:bg-slate-700 ctd shadow-base overflow-hidden rounded shadow-md">
                     <span className="absolute top-0 right-0 px-1.5 py-0.5 bg-white text-sm font-bold text-black rounded-bl shadow-md">📄 Content</span> 
                     
                     <div className="post-content min-h-[400px] leading-6 text-black dark:text-white rounded-sm ctd"
                     dangerouslySetInnerHTML={ {__html: post.content} } />
+                    <div className="text-center">
+                        <div className="inline-block my-5">
+                            {
+                                status === 'authenticated' ?
+                                <>
+                                    {
+                                        likeUser.includes(session.user.name.id) ?
+                                        <button onClick={likePost} className="flex justify-around items-center px-3 py-1.5 bg-blue-400 text-white rounded-md">
+                                            <span className="inline-block mx-3 align-center">{likeCnt}</span>
+                                            <BiLike className="inline-block mx-2 text-xl"/>
+                                        </button>
+                                            :
+                                        <button onClick={likePost} className="flex justify-around items-center px-3 py-1.5 bg-gray-400 text-white rounded-md">
+                                            <span className="inline-block mx-3 align-center">{likeCnt}</span>
+                                            <BiLike className="inline-block mx-2 text-xl"/>
+                                        </button>
+                                    }
+                                </>
+                                    :
+                                <button onClick={likePost} className="flex justify-around items-center px-3 py-1.5 bg-gray-400 text-white rounded-md">
+                                    <span className="inline-block mx-3 align-center">{likeCnt}</span>
+                                    <BiLike className="inline-block mx-2 text-xl"/>
+                                </button>
+                            }
+                            
+                        </div>
+                    </div>
+                    
                 </div>
                 
             
@@ -187,14 +266,15 @@ const Index = ({post}) => {
                 <div className="post-tag-wrap relative relative my-3 rounded shadow-md">
                 <span className="absolute top-0 right-0 px-1.5 py-0.5 bg-white text-sm font-bold text-black rounded-bl shadow-md">🏷 Tag</span> 
                 <ul className="text-sm text-gray-800 px-2.5 py-5 md:py-3.5 min-h-[60px] pr-9 bg-slate-200 dark:bg-slate-700 whitespace-nowrap overflow-scroll noScroll rounded ctd">
-                
-                {
-                    post.tags.map((t, idx)=>
-                        <li key={t + idx} className="post-tags inline-block mr-2.5 px-3 py-1.5 text-sm text-gray-800 dark:text-gray-300 bg-white dark:bg-gray-900 rounded-xl shadow-md ctd">
-                            {'#'+t}
-                        </li>
-                    )
-                }
+
+                    {
+                        post.tags.map((t, idx)=>
+                            <li key={t + idx} className="post-tags inline-block mr-2.5 px-3 py-1.5 text-sm text-gray-800 dark:text-gray-300 bg-white dark:bg-gray-900 rounded-xl shadow-md ctd">
+                                {'#'+t}
+                            </li>
+                        )
+                    }
+
                 </ul>
                 </div>
 

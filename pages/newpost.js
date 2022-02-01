@@ -26,18 +26,15 @@ const Newpost = () => {
     }, [status]);
 
     const uploadDB = async(post) => {
-        
         const newPost = {
             ...post,
-            author : session.user.name.nicname,
-            comments : [],
+            author : session.user.name.nicname
         }
         console.log(newPost)
         //글 작성 API 
         const res = await axios({ method : 'POST', url : '/api/db/post/create/post', data : { ...newPost, session } });
-        if(res.data.error === null) push(`/post/${res.data.no}`);
+        if(res.data.error === null) push(`/post/${res.data.id}`);
         else console.log(res);
-
     }
 
     return(

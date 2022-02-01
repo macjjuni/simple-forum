@@ -5,7 +5,7 @@ export default async function handler(req, res) {
     if(req.method === 'POST' && req.body.id === 'simple-forum'){
         
         const { id } = req.query;
-        const post = await Post.find({ no : id});
+        const post = await Post.find({ _id : id});
         
         if(post){
             res.status(200).send(post);

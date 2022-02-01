@@ -12,7 +12,7 @@ export default async function handler(req, res){
     if(req.method === 'POST' && id && author ){
 
         //기존 댓글 정보 가져오기
-        Post.findOne({ no : id }, {comments : true}, (err, post)=> {
+        Post.findOne({ _id : id }, {comments : true}, (err, post)=> {
             
             if(!err){
                 const data = req.body;
@@ -22,7 +22,7 @@ export default async function handler(req, res){
                 comments.push({content : data.comment, author : data.author});
                 
                 //해당 Post에 댓글 추가
-                Post.findOneAndUpdate( { no : id }, {$set : { comments : comments }}, { new : true }).then(_res=>{
+                Post.findOneAndUpdate( { _id : id }, {$set : { comments : comments }}, { new : true }).then(_res=>{
                     res.status(200).send({error : null});
                 }).catch(err=> {
                     res.status(404).send({ error : 'UPDATE FAILD' });

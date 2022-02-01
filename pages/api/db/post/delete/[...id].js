@@ -11,11 +11,11 @@ export default async function handler(req, res){
 
     if(req.method === 'POST' && id && author ){
         
-        const check = await Post.findOne({no : id}, { author : true});
+        const check = await Post.findOne({ _id : id }, { author : true});
 
         if(check.author === author){ //작성자 인증
 
-            const check = await Post.findOneAndDelete({ no : id});
+            const check = await Post.findOneAndDelete({ _id : id });
             if(check) res.status(200).send({ error : null }); //삭제 성공
             else res.status(404).send({ error : 'DELETE FAILED' }); //삭제 실패
 

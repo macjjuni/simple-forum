@@ -11,10 +11,10 @@ export default async function handler(req, res){
 
     if(req.method === 'POST' && data.author ){
 
-        const check = await Post.findOne({ no : id}, { author : true }); //작성자 인증
+        const check = await Post.findOne({ _id : id}, { author : true }); //작성자 인증
         if(check.author === data.author){
 
-            Post.findOneAndUpdate({ no : id }, { title : data.title, content : data.content, tags : data.tags }, { new : true }, (err, _res)=> {
+            Post.findOneAndUpdate({ _id : id }, { title : data.title, content : data.content, tags : data.tags }, { new : true }, (err, _res)=> {
                 if(!err){
                     res.status(200).send({ error: null});        
                 }else{

@@ -15,7 +15,7 @@ const Home = ({list}) => {
         <ul className="block w-full py-4">
           {
             list.map((post, idx) =>
-              <PostItem key={post.title+idx} no={post.no} title={post.title} author={post.author} tags={post.tags} date={post.date} comments={post.comments}/>
+              <PostItem key={post.title+idx} _id={post._id} title={post.title} author={post.author} tags={post.tags} date={post.date} comments={post.comments}/>
             )
           }
           <li className="text-center py-3 text-gray-600">글이 없습니다. 글을 작성해주세요. 😄</li>
@@ -38,7 +38,7 @@ export const getServerSideProps = async() => {
     }
   }else{
     return{
-      props : { list : [{ no : 0, title : '', date : '2022-01-01T14:26:06.859Z', author : '', tags : [], content : '', comments : [] }] }
+      props : { list : [{ _id : 0, title : '', date : '2022-01-01T14:26:06.859Z', author : '', tags : [], content : '', comments : [] }] }
     }
   }
 
