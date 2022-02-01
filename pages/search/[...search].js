@@ -11,7 +11,7 @@ const Search = ({list, txt}) => {
 
     useEffect(()=>{
         setList(list);
-        setSearchTxt(txt);
+        setSearchTxt(decodeURI(txt));
     }, [list])
 
     return(
