@@ -19,7 +19,6 @@ const SeachBar = ({init}) =>{
     const searchAction = (e) => {
         if(e.keyCode === 13 && e.target.value.trim() !== ''){
             const txt = searchRef.current.value.trim();
-            console.log(txt)
             const url = encodeURI(encodeURIComponent(txt));
             push('/search/'+url);
         }

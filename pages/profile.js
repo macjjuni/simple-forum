@@ -29,6 +29,7 @@ const Profile = () => {
     const submitRef = useRef(null);
 
     const [load, setLoad] = useState(false);
+    const [submitChk, setSubmitChk] = useState(true);
 
     const [blob, setBlob] = useState('');
     const [type, setType] = useState('');
@@ -61,6 +62,7 @@ const Profile = () => {
         //btn 스타일 수정
         setChange(true);
         submitRef.current.classList.replace('bg-gray-400', 'bg-blue-400');
+        submitRef.current.classList.replace('bg-green-500', 'bg-blue-400');
         submitRef.current.innerText = '변경하기';
         e.target.value = ''; //input 초기화
         
@@ -85,29 +87,32 @@ const Profile = () => {
 
     const submit = async() => {
         
-        //firebase Storage Create Reference  // 파일 경로 / 파일 명 . 확장자
-        const storageRef = ref(storage, `profile_images/${encodeURI(session.user.name.nicname) + '.' + type}`);
+        if(change){
+            setChange(false);
+            //firebase Storage Create Reference  // 파일 경로 / 파일 명 . 확장자
+            const storageRef = ref(storage, `profile_images/${encodeURI(session.user.name.nicname) + '.' + type}`);
 
-        //이미지 업로드
-        const snapshot = await uploadBytes(storageRef, blob);
+            //이미지 업로드
+            const snapshot = await uploadBytes(storageRef, blob);
 
-        if(snapshot.metadata.name){
-            try{
-                const url = await getDownloadURL(storageRef);
-                if(url){
-                    const { data } = await axios({ method : 'POST', url : `api/db/user/update/profileImg/${session.user.name.id}`, data : { url : url } });
-                    if(data.error === null){
-                        console.log('변경 성공');
-                        session.user.name.profile = url;
-                        setChange(false);
-                        submitRef.current.classList.replace('bg-blue-400', 'bg-green-500');
-                        submitRef.current.innerText = '변경 완료';
-                    }else{
-                        alert(data.error);
+            if(snapshot.metadata.name){
+                try{
+                    const url = await getDownloadURL(storageRef);
+                    if(url){
+                        const { data } = await axios({ method : 'POST', url : `api/db/user/update/profileImg/${session.user.name.id}`, data : { url : url } });
+                        if(data.error === null){
+                            console.log('변경 성공');
+                            session.user.name.profile = url;
+                            setChange(false);
+                            submitRef.current.classList.replace('bg-blue-400', 'bg-green-500');
+                            submitRef.current.innerText = '변경 완료';
+                        }else{
+                            alert(data.error);
+                        }
                     }
+                } catch (err){
+                    console.log(err);
                 }
-            } catch (err){
-                console.log(err);
             }
         }
 

@@ -166,7 +166,7 @@ const WysiwygEditor = ({uploadDB, init}) => {
         <>
             {/* 제목 */}
             <input ref={titleRef} type="text" placeholder="제목을 입력해주세요." maxLength={50} 
-            className="w-full border border-b-0 dark:border-none bg-white text-black text-lg py-3 px-3 rounded-t-sm outline-none"/>
+            className="w-full border border-b-0 dark:border-none bg-white text-black text-lg md:text-xl py-3 md:py-4 px-3 rounded-t-sm outline-none"/>
             <Editor ref={editorRef}
                 initialValue={editData}
                 initialEditType='wysiwyg'
@@ -178,10 +178,10 @@ const WysiwygEditor = ({uploadDB, init}) => {
                 plugins={[colorSyntax, ]}
             />
             
-            <div className="tag-wrap flex mb-3 py-2 px-1.5 border border-t-0 bg-white text-black rounded-b-sm ctd">
+            <div className="tag-wrap flex mb-3 py-2 px-4 border border-t-0 bg-white text-black rounded-b-sm ctd">
                 
                 <TagItem tags={tags} deleteTag={deleteTag}/>
-                <div ref={tagRef} className="block tag-input w-full relative ml-1">
+                <div ref={tagRef} className="block tag-input w-full relative">
                     <input type="text" placeholder='태그입력' onKeyDown={addTag} onChange={spaceRemove} 
                     className="relative inline-block w-full p-1 pl-3 bg-white text-black outline-0 focus:outline-0 text-sm ctd"/>
                 </div>

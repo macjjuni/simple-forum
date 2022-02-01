@@ -65,24 +65,31 @@ img{
   display: none;
 }
 
+.toastui-editor-contents{
+  font-size: 1em;
+}
+
 .post-content img, .toastui-editor-contents img{
   opacity: 1 !important;
 }
 
-.post-content h1, .post-content h2, .post-content h3, .post-content h4{
+.post-content h1, .post-content h2, .post-content h3, .post-content h4,
+.toastui-editor-contents h1, .toastui-editor-contents h2, .toastui-editor-contents h3, .toastui-editor-contents h4{
   padding-bottom: 1rem;
   margin-bottom: 1rem;
   border-bottom: 1px solid #eee;
 
 }
 
-.post-content h1{ font-size: 1.7em; }
-.post-content h2{ font-size: 1.6em; }
-.post-content h3{ font-size: 1.5em; }
-.post-content h4{ font-size: 1.4em; }
-.post-content p{ 
-  font-size: 1.1em; 
+.post-content h1, .toastui-editor-contents h1{ font-size: 1.7rem; }
+.post-content h2, .toastui-editor-contents h2{ font-size: 1.6rem; }
+.post-content h3, .toastui-editor-contents h3{ font-size: 1.5rem; }
+.post-content h4, .toastui-editor-contents h4{ font-size: 1.4rem; }
+.post-content p, .toastui-editor-contents p{
+  font-size: 1.1rem; 
 }
+
+
 .post-content img{
   transition: transform 0.4s ease;
 }

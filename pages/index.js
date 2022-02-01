@@ -27,7 +27,7 @@ const Home = ({list}) => {
             <li className='py-5 text-lg text-center'>글이 없습니다.</li>              
           }
           
-          <li className="text-center py-3 text-gray-600">글이 없습니다. 글을 작성해주세요. 😄</li>
+          <li className="text-center py-5 text-gray-600 text-black dark:text-white">글이 없습니다. 글을 작성해주세요. 😄</li>
         </ul>
     </>
   )

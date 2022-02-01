@@ -14,15 +14,10 @@ const Index = ({post}) => {
     const commentsUl = useRef(null);
     const commentWriteRef = useRef(null);
 
-    const [likeCnt, setLikeCnt] = useState(0);
-    const [likeUser, setLikeUser] = useState([]);
+    const [likeCnt, setLikeCnt] = useState(post.likeCount);
+    const [likeUser, setLikeUser] = useState(post.likeUser);
     const [comments, setComments] = useState(post.comments);
     const [editMode, setEditMode] = useState('');
-    
-    useEffect(()=>{
-        setLikeCnt(post.likeCount);
-        setLikeUser(post.likeUser);
-    }, [])
 
     const deletePost = async() => { //글 삭제
         let alert = confirm("글을 삭제하시겠습니까?");
@@ -53,7 +48,7 @@ const Index = ({post}) => {
                 const plus = likeCnt + 1;
                 setLikeCnt(plus);
                 //좋아요 증가 api
-                const res = await axios({ method : 'POST', url : `/api/db/post/update/like/${query.id}`, data : { user : visitorId, check : 'plus' } })
+                const res = await axios({ method : 'POST', url : `/api/db/post/update/like/${query.id}`, data : { user : visitorId, check : 'like' } })
                 if(res.data.error === null){
                     // 좋아요 성공
                     // console.log('좋아요');
@@ -69,10 +64,10 @@ const Index = ({post}) => {
                 const minus = likeCnt - 1;
                 setLikeCnt(minus);
                 //좋아요 감소 api
-                const res = await axios({ method : 'POST', url : `/api/db/post/update/like/${query.id}`, data : { user : visitorId, check : 'minus' } })
+                const res = await axios({ method : 'POST', url : `/api/db/post/update/like/${query.id}`, data : { user : visitorId, check : 'like' } })
                 if(res.data.error === null){
                     // 좋아요 성공
-                    // console.log('좋아요');
+                    // console.log('좋아요 취소');
                 }else{
                     console.log(res);
                 }
@@ -225,10 +220,10 @@ const Index = ({post}) => {
                 </div>
 
                 {/* 본문 내용 */}
-                <div className="post-content-wrap relative min-h-[400px] p-4  bg-slate-200 dark:bg-slate-700 ctd shadow-base overflow-hidden rounded shadow-md">
+                <div className="post-content-wrap relative min-h-[400px] p-4 pb-0  bg-slate-200 dark:bg-slate-700 ctd shadow-base overflow-hidden rounded shadow-md">
                     <span className="absolute top-0 right-0 px-1.5 py-0.5 bg-white text-sm font-bold text-black rounded-bl shadow-md">📄 Content</span> 
                     
-                    <div className="post-content min-h-[400px] p-4 bg-white text-black dark:text-white rounded-md ctd"
+                    <div className="post-content min-h-[400px] p-4 bg-white dark:bg-gray-800 text-black dark:text-white rounded-md ctd"
                     dangerouslySetInnerHTML={ {__html: post.content} } />
                     <div className="text-center">
                         <div className="inline-block my-5">

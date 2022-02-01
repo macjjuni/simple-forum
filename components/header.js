@@ -47,7 +47,7 @@ const Header = () => {
     return(
         <>
             <header ref={headerRef} className="relative w-full z-[999] shadow-sm lg:shadow-none">
-                <div className={`header-wrap relative h-full ${route==='/' || route.includes('search') ?'max-w-screen-lg':'max-w-screen-md'} transition-[max-width] duration-500 ease-[cubic-bezier(0.17, 0.67, 0.83, 0.67)]
+                <div className={`header-wrap relative h-full ${route==='/'||route.includes('search')||route.includes('newpost') ?'max-w-screen-lg':'max-w-screen-md'} transition-[max-width] duration-500 ease-[cubic-bezier(0.17, 0.67, 0.83, 0.67)]
                 mx-auto h-20 lg:h-28 px-2 flex justify-between items-center`}>
                     
                     <h1 className='inline-block text-3xl md:text-5xl h-10 lg:h-14'>

@@ -9,24 +9,23 @@ export default async function handler(req, res){
     const id = req.query.like[0];
     const data = req.body;
 
-    if(req.method === 'POST' && data.user ){
+    if(req.method === 'POST' && data.user && data.like === 'like' ){
 
-        const user = await User.findOne({ id : data.user }); // User 계정 인증
         const post = await Post.findOne({ _id : id }, { _id : true, likeCount : true, likeUser : true }); // Post 데이터
         
-        if(user.id === data.user && post.id === id ){
-            //좋아요 숫자는 프론트단에서 계산 후 값을 가져옴 
-            const likeUser = post.likeUser;
+        if( post.id === id ){
             let count = post.likeCount;
-            if(data.check === 'plus'){//좋아요 && 좋아요 취소 체크 
-                likeUser.push(data.user); //좋아요 배열에 아이디 삽입
-                count++;
-            }else{ //좋아요 배열에서 제거
-                const idx = likeUser.indexOf(data.user);
+            const likeUser = post.likeUser;
+
+            if(likeUser.includes(data.user)){ //좋아요 리스트 체크
+                const idx = likeUser.indexOf(data.user); //좋아요 배열에 아이디 제거
                 likeUser.splice(idx, 1);
-                count--;
+                count--; //좋아요 감소
+            }else{
+                likeUser.push(data.user); //좋아요 배열에 아이디 삽입
+                count++; //좋아요 증가
             }
-            console.log(likeUser)
+
             //좋아요 정보 업데이트
             Post.findOneAndUpdate({ _id : id }, { likeCount : count , likeUser : likeUser }, { new : false }, (err, _res)=> {
                 if(!err){
