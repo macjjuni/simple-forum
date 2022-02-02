@@ -1,7 +1,8 @@
 import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useRouter } from "next/router";
 import HeadInfo from "../components/headInfo"
+import { PostContext } from "../context/PostContext";
 import dynamic from "next/dynamic"
 import axios from "axios"
 import NewPostSkeleton from "../components/newpostSkeleton";
@@ -18,6 +19,7 @@ const Newpost = () => {
     const { data: session, status } = useSession();
     const { push, replace } = useRouter();
 
+    const { List, setList } = useContext(PostContext);
     const [load, setLoad] = useState(false);
 
     useEffect(()=>{//로그인 상태면 페이지 강제 이동
@@ -33,7 +35,9 @@ const Newpost = () => {
         console.log(newPost)
         //글 작성 API 
         const res = await axios({ method : 'POST', url : '/api/db/post/create/post', data : { ...newPost, session } });
-        if(res.data.error === null) push(`/post/${res.data.id}`);
+        if(res.data.error === null){
+            push(`/post/${res.data.post._id}`);
+        }
         else console.log(res);
     }
 

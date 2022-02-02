@@ -5,7 +5,7 @@ const PostItem = ({_id, title, author, tags, date, comments}) => {
     return(
         <> 
             <li className="bg-slate-100 dark:bg-slate-700 hover:bg-blue-100 dark:hover:bg-slate-800 truncate shadow-md hover:scale-[1.02] transition-[transform] ctd">
-                <Link href={`/post/${_id}`} passHref>
+                <Link href={`/post/${_id}`} scroll={true} passHref>
                 <a className="block">
                     <div className="p-3">
                         {/* 제목 & 댓글 수 */}

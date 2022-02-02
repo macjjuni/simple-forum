@@ -89,7 +89,6 @@ img{
   font-size: 1.1rem; 
 }
 
-
 .post-content img{
   transition: transform 0.4s ease;
 }
@@ -97,8 +96,20 @@ img{
 .post-content img:hover{
   transform: scale(1.01);
 }
+
+.spinner{
+  transform: rotate(0deg);
+  animation: spin ease-in-out 1.3s infinite;
+}
+
 @keyframes skeletonAni {
   0%{ opacity: 1; }
   50%{ opacity: 0.3; }
   100%{ opacity: 1; }
 }
+
+@keyframes spin {
+  from{ transform: rotate(0deg); }
+  to{ transform: rotate(720deg); }
+}
+

@@ -9,7 +9,8 @@ export default async function handler(req, res){
     const id = req.query.like[0];
     const data = req.body;
 
-    if(req.method === 'POST' && data.user && data.like === 'like' ){
+
+    if(req.method === 'POST' && data.user && data.check === 'like' ){
 
         const post = await Post.findOne({ _id : id }, { _id : true, likeCount : true, likeUser : true }); // Post 데이터
         

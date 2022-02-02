@@ -29,9 +29,8 @@ const WysiwygEditor = ({uploadDB, init}) => {
     const titleRef = useRef(null);
     const tagRef = useRef(null);
     const editorRef = useRef(null);
-    const [editData, setEditData] = useState(init === undefined ? '' : init.content);
+    const [editData, setEditData] = useState(()=> init === undefined ? '' : init.content);
     const [tags, setTag] = useState([]);
-
 
     const toolbarItems = [
         ['heading', 'bold', 'italic', 'strike'],
@@ -51,7 +50,7 @@ const WysiwygEditor = ({uploadDB, init}) => {
             titleRef.current.value = init.title;
             setTag(init.tags);
         }
-    }, [])
+    }, []);
 
     useEffect(()=> {
         if(tags.length > 4){
@@ -60,7 +59,6 @@ const WysiwygEditor = ({uploadDB, init}) => {
             tagRef.current.classList.replace('hidden', 'block');
         }
     }, [tags])
-
 
     const getContent = () => { //글 내용 HTML 문자열로 불러오기
         const editorIns = editorRef.current.getInstance();
@@ -168,11 +166,10 @@ const WysiwygEditor = ({uploadDB, init}) => {
             <input ref={titleRef} type="text" placeholder="제목을 입력해주세요." maxLength={50} 
             className="w-full border border-b-0 dark:border-none bg-white text-black text-lg md:text-xl py-3 md:py-4 px-3 rounded-t-sm outline-none"/>
             <Editor ref={editorRef}
-                initialValue={editData}
+                    initialValue={editData}
                 initialEditType='wysiwyg'
                 hideModeSwitch={true}
                 height='500px'
-                theme={''}
                 usageStatistics={false}
                 toolbarItems={toolbarItems}
                 plugins={[colorSyntax, ]}

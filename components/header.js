@@ -1,4 +1,3 @@
-import axios from "axios"
 import { useSession, signIn, signOut } from "next-auth/react"
 import { AnimatePresence, motion } from "framer-motion"
 import Link from "next/link"
@@ -15,7 +14,6 @@ const Header = () => {
     const { route, events } = useRouter();
     const [modal, setModal] = useState(null)
     const { data: session, status } = useSession(); //로그인 정보
-    const [profileURL, setProfileURL] = useState('user_profile.png');
 
     useEffect(()=> {
         //페이지 이동 체크
@@ -24,9 +22,6 @@ const Header = () => {
         });
     }, []);
 
-    useEffect(()=> {
-        if(status === 'authenticated') setProfileURL(session.user.name.profile);
-    }, [status]);
 
     const toggleModal = (e) => {
         if(modal === null){ setModal('profile-modal'); }

@@ -20,7 +20,7 @@ export default async function handler(req, res){
         
         newPost.save().then( (post) => { //글 저장
             console.log(post);
-            res.status(200).send({ error : null, id : newPost._id });
+            res.status(200).send({ error : null, post : newPost });
         }).catch((err)=>{
             console.log(err);
             res.status(404).send({ error : 'error' });
