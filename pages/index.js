@@ -1,83 +1,69 @@
-import { PostContext } from '../context/PostContext'
 import HeadInfo from '../components/headInfo'
 import SeachBar from '../components/searchBar'
 import PostItem from "../components/postItem"
 import axios from 'axios'
-import { useState, useEffect, useRef, useContext, useCallback } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { CgSpinner } from 'react-icons/cg'
 
-const options = {
-  root: null,
-  threshold: 0
-}
 
 const Home = ({list, total}) => {  
   
-  const { List, setList } = useContext(PostContext);
-  const loadedRef = useRef(Number(List.length));
-  const bottomRef = useRef(null);
-  const spinnerRef = useRef(null);
+  const [List, setList] = useState(()=> list);
+  // const [obs, InView] = useInView()
+  
+  const [page, setPage] = useState(1);
+  const [load, setLoad] = useState(false);
+  
   const noPostRef = useRef(null);
+  const obsRef = useRef(null);
+  const duple_prevent = useRef(true); //observer
+  const endRef = useRef(false);
 
-  useEffect(()=> { // 무한 스크롤 옵저버 선언 및 타겟 지정
-    if(!List.length || List[0]._id !== list[0]._id  ) { //글 작성 시 리스트 초기화
-      setList([...list]); 
-    }
-    const observer = new IntersectionObserver(handler, options);
-    if(bottomRef.current) observer.observe(bottomRef.current);
-    if(total === loadedRef.current) noPostShow(); //모든 포스트가 로드된 경우
+  
+  useEffect(()=> {
+    if(page !== 1) getPost();
+  }, [page])
 
-    return() =>{
-      observer.disconnect(); //옵저버 해제
-    }
-  }, []);
-
-
-  useEffect(()=> { //로드된 게시글 수 담기
-    loadedRef.current = Number(List.length);
-  }, [List]);
+  useEffect(()=> {
+    const observer = new IntersectionObserver(handler, { threshold : 0.5 });
+    if(obsRef.current) observer.observe(obsRef.current);
+    return () => { observer.disconnect(); }
+  }, [])
 
   const handler = ((entries) => {
-    if(total > loadedRef.current){
     const target = entries[0];
-      if(target.isIntersecting){ //뷰포트 침범
-          spinnerShow();
-          getPost();
-      }
+    if(!endRef.current && target.isIntersecting && duple_prevent.current){ 
+      console.log('DB 조회')
+      duple_prevent.current = false;
+      setPage(prev => prev+1 );
     }
-  });
+  })
 
-
-  const getPost = async() => { //글 불러오기  
-
-    if(total > loadedRef.current){ //전체 글 개수와 로딩된 글 개수 비교
-      const res = await axios({method : 'GET', url : `/api/db/post/read/list/?limit=${10}&skip=${loadedRef.current}`});
+  const getPost = useCallback(async() => { //글 불러오기  
+      setLoad(true); //로딩 시작
+      const res = await axios({method : 'GET', url : `/api/db/post/read/list/?page=${page}`});
       if(res.data){
-
-        if(res.data.list.length === 10) setList(prev => [...prev, ...res.data.list]);
-        else {
-          setList(prev => [...prev, ...res.data.list]);
-          noPostShow();
-          spinnerHide();
-        }
-
+          if(res.data.end){
+            endRef.current = true;
+            noPostShow();
+          }
+          setList(prev => [...prev, ...res.data.list]); //리스트 추가
+          duple_prevent.current = true;
       }else{
         console.log(res); //에러
       }
-    }
-  }
+      setLoad(false); //로딩 종료
+  }, [page]);
 
   const noPostShow = () => { noPostRef.current.classList.replace('hidden', 'block'); }
-  const spinnerShow = () => { spinnerRef.current.classList.replace('hidden', 'block'); }
-  const spinnerHide = () => { spinnerRef.current.classList.replace('block', 'hidden'); }
-  
+
   
   return (
     <>
       <HeadInfo/>
         <button onClick={()=> console.log(List)}>123</button>
         <SeachBar/>
-        <h2 className='pt-8 pb-2 text-2xl'>📚 전체글</h2>
+        <h2 className='pt-8 pb-2 text-2xl'>📚 전체글({total})</h2>
         <ul className="block w-full py-4">
           {
             List &&
@@ -92,15 +78,19 @@ const Home = ({list, total}) => {
             }
             </>            
           }
-          <li ref={spinnerRef} className="hidden text-center py-5 text-gray-600 text-center text-3xl text-black dark:text-white">
-            <div className='spinner inline-block spinner m-auto'>
-              <CgSpinner/>
-            </div>  
-          </li>
-
-          <li className='py-3' ref={bottomRef}></li>
-
+          
+          {
+            load ?
+            <li className="block text-center py-5 text-gray-600 text-center text-3xl text-black dark:text-white">
+              <div className='spinner inline-block spinner m-auto'>
+                <CgSpinner/>
+              </div>  
+            </li>
+            :
+            <></>
+          }
           <div ref={noPostRef} className='hidden w-full py-2.5 text-white text-xl text-center bg-blue-400 dark:bg-slate-800 rounded-sm'>더 이상 글이 없습니다.</div>
+          <li className='' ref={obsRef}></li>
         </ul>
     </>
   )
@@ -110,8 +100,8 @@ export const getServerSideProps = async() => {
 
   const res = await axios({ //게시글 목록 불러오기
     method : 'GET',
-    url : `http://localhost:${process.env.PORT}/api/db/post/read/list?limit=${10}&skip=${0}`,
-  });
+    url : `http://localhost:${process.env.PORT}/api/db/post/read/list?page=${1}`,
+  })
 
   if(res.status === 200){
     return{

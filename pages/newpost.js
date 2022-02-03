@@ -19,7 +19,6 @@ const Newpost = () => {
     const { data: session, status } = useSession();
     const { push, replace } = useRouter();
 
-    const { List, setList } = useContext(PostContext);
     const [load, setLoad] = useState(false);
 
     useEffect(()=>{//로그인 상태면 페이지 강제 이동

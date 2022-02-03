@@ -10,46 +10,30 @@ export default async function handler(req, res) {
     if(req.method === 'GET' && data ){
 
         const total = Number(await Post.countDocuments());
-        const limit = Number(data.limit);
-        const skip = Number(data.skip);        
-        
+        const page = Number(data.page);
+        const listNum = 10; // 페이지 당 보낼 개수
+        const skip = page === 1 ? 0 : ( page - 1 ) * listNum;
+        // 페이지 당 보낼 개수 보다 적을 경우;
+        const limit = total > page*listNum ? 10 : total-( (page-1) * listNum);
+                //ex 29(total) > 3(page) * 10(listNum) 
+        console.log(`total = ${total} | limit = ${limit} | skip = ${skip} | page = ${page}`)
 
-        console.log(`total : ${total}, limit : ${limit}, skip : ${skip}`)
-
-        // 38  >   10 + 30
-        if( total > (limit+skip) ){ // 로드될 글이 10개 이상 남았을 경우
-
-            Post.find({}, { _id : true, title : true, author : true, tags : true, date : true, comments : true }).sort({ date : '-1'})
-            .limit(limit).skip(skip).then((post, err)=>{ //모든 post 조회
-                if(!err){
-                    res.status(200).send({ list : post, total : total });
-                }else{
-                    console.log(err);
-                    res.status(404).send({ error : 'NOT FOUND POST' });   
-                }
-            }).catch((err)=>{
+        Post.find({}, { _id : true, title : true, author : true, tags : true, date : true, comments : true }).sort({ date : '-1'})
+        .limit(limit).skip(skip).then((post, err)=>{ //모든 post 조회
+            if(!err){
+                const end = post.length === 10 ? false : true; //마지막 페이지 요청의 경우
+                console.log(end)
+                console.log(post.length)
+                res.status(200).send({ list : post, total : total, end : end });
+            }else{
                 console.log(err);
-                res.status(404).send({ error : 'DB ERROR' });
-            });
+                res.status(404).send({ error : 'NOT FOUND POST' });   
+            }
+        }).catch((err)=>{
+            console.log(err);
+            res.status(404).send({ error : 'DB ERROR' });
+        });
 
-        }else{  8
-            const _limit = total-skip;
-            
-            Post.find({}, { _id : true, title : true, author : true, tags : true, date : true, comments : true }).sort({ date : '-1'})
-            .skip(skip).limit(_limit).then((post, err)=>{ //모든 post 조회
-                if(!err){
-                    res.status(200).send({ list : post, total : total });
-                }else{
-                    console.log(err);
-                    res.status(404).send({ error : 'NOT FOUND POST' });   
-                }
-            }).catch((err)=>{
-                console.log(err);
-                res.status(404).send({ error : 'DB ERROR' });
-            });
-
-        }
-        
     }else{
         res.status(404).send({ error : 'NOT FOUND POST' });
     }
