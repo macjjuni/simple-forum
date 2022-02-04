@@ -31,8 +31,7 @@ const Newpost = () => {
             ...post,
             author : session.user.name.nicname
         }
-        console.log(newPost)
-        //글 작성 API 
+        //글 저장 API 
         const res = await axios({ method : 'POST', url : '/api/db/post/create/post', data : { ...newPost, session } });
         if(res.data.error === null){
             push(`/post/${res.data.post._id}`);
