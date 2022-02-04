@@ -5,6 +5,7 @@ import { useEffect, useState, useRef } from "react"
 import { useRouter } from "next/router"
 import { signIn } from "next-auth/react"
 import Link from "next/link"
+import { FcGoogle } from 'react-icons/fc'
 
 const NoSsrReC = dynamic(()=> import('../components/recaptchaV2'), { ssr : false});
 
@@ -72,7 +73,10 @@ const Signin = () => {
                             <NoSsrReC setReCaptchaChk={setReCaptchaChk}/>
 
                             <button ref={submitRef} disabled={!reCaptchaChk} onClick={submit} className="block w-full mt-6 mb-2 p-2.5 bg-gray-400 text-white rounded-md">로그인</button>
-
+                            <button onClick={()=> signIn('google')} className="block flex justify-center items-center w-full mb-2 p-2.5 border-2 border-gray-300 dark:border-gray-50 bg-white text-black text-md rounded-md">
+                                <FcGoogle className="inline-block text-2xl mr-2"/>
+                                Google 로그인
+                            </button>
                             <Link href='/signup'><a className="block w-full mt-2 mb-10 p-2.5 bg-blue-400 text-white rounded-md">회원가입</a></Link>
                         </div>
                     </div>

@@ -1,5 +1,6 @@
 import NextAuth from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
+import GoogleProvider from "next-auth/providers/google"
 import dbConnect from "../../../utils/dbConnect"
 import User from '../../../model/userSchema'
 import bcrypt from "bcryptjs/dist/bcrypt";
@@ -9,6 +10,10 @@ dbConnect();
 export default NextAuth({
 
     providers: [
+        GoogleProvider({
+            clientId: process.env.GOOGLE_CLIENT_ID,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET
+        }),
         CredentialsProvider({
         // The name to display on the sign in form (e.g. "Sign in with...")
         id : 'id-pw-credentials',
@@ -35,10 +40,9 @@ export default NextAuth({
                 console.log('로그인 체크' + verify);
 
                 if(verify){
-                    const user = { name : { id : userInfo.id, 
-                                            nicname : userInfo.nicname, 
-                                            email : userInfo.email,
-                                            profile : userInfo.profile_image } };
+                    const user = {  name : userInfo.nicname, 
+                                    email : userInfo.email,
+                                    image : userInfo.profile_image };
                                             
                     return user;
                 }else{
@@ -49,7 +53,7 @@ export default NextAuth({
         })
     ],
     pages:{
-        signIn : '/signin'
+
     },
 
     secret: process.env.SECRET

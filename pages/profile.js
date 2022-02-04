@@ -22,9 +22,9 @@ const firebaseApp = initializeApp(firebaseConfig);
 const storage = getStorage(firebaseApp);
 
 const Profile = () => {
-
+   
     const { data: session, status } = useSession(); 
-    
+    console.log(status)
     const { replace } = useRouter();
     const submitRef = useRef(null);
     
@@ -40,8 +40,8 @@ const Profile = () => {
     useEffect(()=>{//로그인 상태면 페이지 강제 이동
         if(status === 'unauthenticated') replace('/');
         else if(status === 'authenticated'){
-            if(!session.user.name.profile) setUserImage('/user_profile.png');
-            else setUserImage(session.user.name.profile);
+            if(!session.user.image) setUserImage('/user_profile.png');
+            else setUserImage(session.user.image);
             setLoad(true);      
         }
     }, [status]);
@@ -98,7 +98,7 @@ const Profile = () => {
                         const { data } = await axios({ method : 'POST', url : `api/db/user/update/profileImg/${session.user.name.id}`, data : { url : url } });
                         if(data.error === null){
                             console.log('변경 성공');
-                            session.user.name.profile = url;
+                            session.user.image = url;
                             setChange(false);
                             submitRef.current.classList.replace('bg-blue-400', 'bg-green-500');
                             submitRef.current.innerText = '변경 완료';
@@ -147,9 +147,8 @@ const Profile = () => {
                                 {
                                     status === 'authenticated' &&
                                     <>
-                                        <p className="user-id py-1.5">아이디 : {session.user.name.id}</p>
-                                        <p className="user-nic py-1.5">닉네임 : {session.user.name.nicname}</p>
-                                        <p className="user-email py-1.5">이메일 : {session.user.name.email}</p>
+                                        <p className="user-nic py-1.5">닉네임 : {session.user.name}</p>
+                                        <p className="user-email py-1.5">이메일 : {session.user.email}</p>
                                     </>
                                 }
                                 
@@ -170,24 +169,5 @@ const Profile = () => {
         </>
     )
 }
-
-// export const getServerSideProps = async(req) => {
-    
-//     const session = await getSession(req);
-    
-//     const { data } = await axios({ method : 'POST', url : `http://localhost:${process.env.PORT}/api/db/user/read/profile/${encodeURI(session.user.name.nicname)}` ,
-//                             data : { user : session.user.name.nicname }});
-
-//     if(data.error === null){
-//         return{
-//             props : { profile : data.profile }
-//         }
-//     }else{
-//         return{
-//             props : { profile : 'not yet' }
-//         }
-//     }
-
-// }
 
 export default Profile

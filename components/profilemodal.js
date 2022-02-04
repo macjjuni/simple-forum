@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import LazyImage from "./lazyImage"
+import { signIn } from "next-auth/react"
 import Link from "next/link"
 import { FiUserX } from 'react-icons/fi'
 
@@ -13,9 +14,9 @@ const ProfileModal = ({status, session, signOut, toggleModal }) => {
             document.removeEventListener("click", clickCheck);
         };
     }, []);
-
+    
     useEffect(()=> {
-        if(status === 'authenticated' && session.user.name.profile ) setProfile(session.user.name.profile);
+        if(status === 'authenticated' && session.user.image ) setProfile(session.user.image);
     }, [status]);
 
     const clickCheck = (e) =>{
@@ -38,7 +39,7 @@ const ProfileModal = ({status, session, signOut, toggleModal }) => {
                             </div>
                         </div>
                         <h4 className="text-sm text-white text-center pt-1 pb-2 modal">
-                            {session.user.name.nicname}
+                            {session.user.name}
                         </h4>
                     </>
                         :
@@ -64,6 +65,7 @@ const ProfileModal = ({status, session, signOut, toggleModal }) => {
                             <Link href="/signin" passHref>
                                 <a className="w-full mx-1 py-1.5 text-center bg-white text-black rounded-sm">로그인</a>
                             </Link>
+                        
                         </>
                             :
                         <>

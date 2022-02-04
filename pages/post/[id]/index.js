@@ -24,7 +24,7 @@ const Index = ({post}) => {
     const deletePost = async() => { //글 삭제
         let alert = confirm("글을 삭제하시겠습니까?");
         if (alert) {
-            const check = await axios({ method : 'POST', url : `/api/db/post/delete/${query.id}`, data : { author : session.user.name.nicname } });
+            const check = await axios({ method : 'POST', url : `/api/db/post/delete/${query.id}`, data : { author : session.user.name } });
             if(check.data.error === null){ 
                 push('/');
             }else{
@@ -42,7 +42,7 @@ const Index = ({post}) => {
         if(status !== 'authenticated'){
             push('/signin');
         }else{
-            const visitorId = session.user.name.id;
+            const visitorId = session.user.name;
 
             if(!likeUser.includes(visitorId)){ //좋아요 증가
                 setLikeUser((prev)=> [...prev, visitorId]);
@@ -75,12 +75,12 @@ const Index = ({post}) => {
                 const res = await axios({ 
                     method : 'POST', 
                     url : `/api/db/comment/create/${query.id}`, 
-                    data : { author : session.user.name.nicname, 
+                    data : { author : session.user.name, 
                             comment : txt } 
                 });
                 
                 if(res.data.error === null){
-                    setComments([...comments, {content : txt, author : session.user.name.nicname, date : getDate() }]); //업데이트 완료 후 댓글 추가
+                    setComments([...comments, {content : txt, author : session.user.name, date : getDate() }]); //업데이트 완료 후 댓글 추가
                     commentWriteRef.current.value = '';
                     console.log('댓글 작성');
                     
@@ -107,7 +107,7 @@ const Index = ({post}) => {
             const target = Number(e.target.dataset.index);
             const res = await axios({ 
                 method : 'POST', url : `/api/db/comment/delete/${query.id}`, 
-                data : { author : session.user.name.nicname, target : target } 
+                data : { author : session.user.name, target : target } 
             });
 
             if(res.data.error === null){
@@ -137,12 +137,12 @@ const Index = ({post}) => {
         const _comments = comments;
         
         const res = await axios({ method : 'POST', url : `/api/db/comment/update/${query.id}`, 
-                                data : { index : index, content : txt, author : session.user.name.nicname } }); 
+                                data : { index : index, content : txt, author : session.user.name } }); 
         
         if(res.data.error === null){ //댓글 수정 성공
             commentsUl.current.classList.remove('edit-mode');
             commentsUl.current.children[index].classList.remove('edit-on');
-            _comments.splice(index, 1 , {content : txt, author : session.user.name.nicname, date : getDate() });
+            _comments.splice(index, 1 , {content : txt, author : session.user.name, date : getDate() });
             setComments([..._comments]);
             setEditMode('');
         }else{ //댓글 수정 실패
@@ -182,7 +182,7 @@ const Index = ({post}) => {
                 {/* 제목 / 작성자 / 작성일 */}
                 <div className="post-header relative px-2 pt-8 pb-2 lg:pb-6 my-3 rounded">
                 <span className="absolute top-0 right-0 px-1.5 py-0.5 text-sm font-bold bg-slate-500 text-white rounded shadow-md">Title</span> 
-                    <h2 className="mb-2 text-2xl text-black dark:text-white ctd">
+                    <h2 className="mb-2 text-2xl text-black dark:text-white text-ellipsis overflow-hidden whitespace-nowrap	ctd">
                         {post.title}
                     </h2>
 
@@ -196,7 +196,7 @@ const Index = ({post}) => {
                                 :
                             <>
                                 {
-                                    session.user.name.nicname === post.author ?
+                                    session.user.name === post.author ?
                                     <div className="master-wrap inline-block text-black dark:text-white ctd">
                                         <button onClick={deletePost} className="hover:underline">삭제</button>
                                         <button onClick={editPost} className="ml-3 hover:underline">수정</button>
@@ -211,7 +211,7 @@ const Index = ({post}) => {
                 </div>
 
                 {/* 본문 내용 */}
-                <div className="post-content-wrap relative min-h-[400px] p-2.5 md:p-4 pb-0  bg-slate-200 dark:bg-slate-700 ctd shadow-base overflow-hidden rounded shadow-md">
+                <div className="post-content-wrap relative min-h-[400px] pt-1.5 px-1.5 md:px-4 md:pt-4  bg-slate-200 dark:bg-slate-700 ctd shadow-base overflow-hidden rounded shadow-md">
                     <span className="absolute top-0 right-0 px-1.5 py-0.5 bg-white text-sm font-bold text-black rounded-bl shadow-md">Content</span> 
                     
                     <div className="post-content min-h-[400px] p-4 bg-white dark:bg-gray-800 text-black dark:text-white rounded-md ctd"
@@ -224,7 +224,7 @@ const Index = ({post}) => {
                                 status === 'authenticated' ?
                                 <>
                                     {
-                                        likeUser.includes(session.user.name.id) ?
+                                        likeUser.includes(session.user.name) ?
                                         <button onClick={likePost} className="flex justify-around items-center px-3 py-1.5 bg-blue-400 text-white rounded-md">
                                             <span className="inline-block mx-3 align-center">{likeCnt}</span>
                                             <BiLike className="inline-block mx-2 text-xl"/>
@@ -300,7 +300,7 @@ const Index = ({post}) => {
                                         :
                                     <>
                                     {
-                                        session.user.name.nicname === c.author 
+                                        session.user.name === c.author 
                                             ?
                                         <div className="flex justify-end min-h-[30px] pt-1.5">
                                             <div className="comments-editBtn-wrap">
@@ -333,7 +333,7 @@ const Index = ({post}) => {
                     {
                         status === 'authenticated'
                             ?
-                        <>{session.user.name.nicname}</>
+                        <>{session.user.name}</>
                             :
                         <>Stranger</>
                     }

@@ -7,7 +7,7 @@ import { CgSpinner } from 'react-icons/cg'
 import { FcOpenedFolder } from 'react-icons/fc'
 
 
-const Home = ({list, total}) => {  
+const Home = ({list, total}) => {
   
   const [List, setList] = useState(()=> list);
   // const [obs, InView] = useInView()

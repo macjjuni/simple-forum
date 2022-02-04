@@ -1,8 +1,7 @@
 import { useSession } from "next-auth/react";
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import HeadInfo from "../components/headInfo"
-import { PostContext } from "../context/PostContext";
 import dynamic from "next/dynamic"
 import axios from "axios"
 import NewPostSkeleton from "../components/newpostSkeleton";

@@ -45,9 +45,9 @@ const Header = () => {
                 <div className={`header-wrap relative h-full ${route==='/'||route.includes('search')||route.includes('newpost') ?'max-w-screen-lg':'max-w-screen-md'} transition-[max-width] duration-500 ease-[cubic-bezier(0.17, 0.67, 0.83, 0.67)]
                 mx-auto h-20 lg:h-28 px-2 flex justify-between items-center`}>
                     
-                    <h1 className='inline-block text-3xl md:text-5xl h-10 lg:h-14'>
+                    <h1 className='inline-block text-2xl lg:text-5xl lg:h-10 lg:h-14'>
                         <Link href='/' passHref>
-                            <a>Simple Forum</a>
+                            <a className="block h-full">Simple Forum</a>
                         </Link>
                     </h1>
 
@@ -59,14 +59,14 @@ const Header = () => {
                         </button>
                         
                         <Link href='/newpost' passHref>
-                            <a className='inline-block w-11 h-11 ml-2 inline-flex items-center align-top text-lg rounded-full
+                            <a className='inline-block w-11 h-11 ml-0.5 lg:ml-2 inline-flex items-center align-top text-lg rounded-full
                             hover:bg-slate-200 dark:hover:bg-slate-500 ctd'>
                                 <BsPencil className='mx-auto h-10 text-black dark:text-white scale-110 ctd'/>
                             </a>
                         </Link>
 
                         <button onClick={toggleModal} className={`${modal !== null ? 'bg-slate- 200 dark:bg-slate-400 text-white' : ''} text-lg 
-                        rounded-full w-11 h-11 ml-2 overflow-hidden hover:bg-slate-200 dark:hover:bg-slate-500 ctd`}>
+                        rounded-full w-11 h-11 ml-0.5 lg:ml-2 overflow-hidden hover:bg-slate-200 dark:hover:bg-slate-500 ctd`}>
                             {
                                 !session
                                     ?
