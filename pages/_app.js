@@ -10,7 +10,7 @@ export default function App({ Component, pageProps: { session, ...pageProps } })
   const [List, setList] = useState([]);
 
   useEffect(()=> {
-    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches) && isDark === true) {
+    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
       document.documentElement.classList.add('dark');
     } else {
       document.documentElement.classList.remove('dark')

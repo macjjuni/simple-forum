@@ -2,9 +2,10 @@ import axios from "axios"
 import { debounce } from "lodash"
 import HeadInfo from "../../../components/headInfo"
 import { useSession } from "next-auth/react"
-import { useEffect, useRef, useState } from "react"
+import { useRef, useState } from "react"
 import { useRouter } from "next/router"
 import { BiLike } from 'react-icons/bi'
+
 
 const Index = ({post}) => {
 
@@ -18,6 +19,7 @@ const Index = ({post}) => {
     const [likeUser, setLikeUser] = useState(post.likeUser);
     const [comments, setComments] = useState(post.comments);
     const [editMode, setEditMode] = useState('');
+
 
     const deletePost = async() => { //글 삭제
         let alert = confirm("글을 삭제하시겠습니까?");
@@ -36,8 +38,7 @@ const Index = ({post}) => {
     }
 
     const likePost = debounce(async() => {
-        
-
+    
         if(status !== 'authenticated'){
             push('/signin');
         }else{
@@ -47,15 +48,6 @@ const Index = ({post}) => {
                 setLikeUser((prev)=> [...prev, visitorId]);
                 const plus = likeCnt + 1;
                 setLikeCnt(plus);
-                //좋아요 증가 api
-                const res = await axios({ method : 'POST', url : `/api/db/post/update/like/${query.id}`, data : { user : visitorId, check : 'like' } })
-                if(res.data.error === null){
-                    // 좋아요 성공
-                    // console.log('좋아요');
-                }else{
-                    console.log(res);
-                }
-
             }else{ //좋아요 감소                
                 const _likeUser = likeUser;
                 const idx = _likeUser.indexOf(visitorId);
@@ -63,14 +55,13 @@ const Index = ({post}) => {
                 setLikeUser(_likeUser);
                 const minus = likeCnt - 1;
                 setLikeCnt(minus);
-                //좋아요 감소 api
-                const res = await axios({ method : 'POST', url : `/api/db/post/update/like/${query.id}`, data : { user : visitorId, check : 'like' } })
-                if(res.data.error === null){
-                    // 좋아요 성공
-                    // console.log('좋아요 취소');
-                }else{
-                    console.log(res);
-                }
+            }
+            const res = await axios({ method : 'POST', url : `/api/db/post/update/like/${query.id}`, data : { user : visitorId, check : 'like' } })
+            if(res.data.error === null){
+                // 좋아요 성공
+                // console.log('좋아요');
+            }else{
+                console.log(res);
             }
         }
 
@@ -190,7 +181,7 @@ const Index = ({post}) => {
 
                 {/* 제목 / 작성자 / 작성일 */}
                 <div className="post-header relative px-2 pt-8 pb-2 lg:pb-6 my-3 rounded">
-                <span className="absolute top-0 right-0 px-1.5 py-0.5 text-sm font-bold bg-slate-500 text-white rounded shadow-md">🪧 Title</span> 
+                <span className="absolute top-0 right-0 px-1.5 py-0.5 text-sm font-bold bg-slate-500 text-white rounded shadow-md">Title</span> 
                     <h2 className="mb-2 text-2xl text-black dark:text-white ctd">
                         {post.title}
                     </h2>
@@ -220,13 +211,13 @@ const Index = ({post}) => {
                 </div>
 
                 {/* 본문 내용 */}
-                <div className="post-content-wrap relative min-h-[400px] p-4 pb-0  bg-slate-200 dark:bg-slate-700 ctd shadow-base overflow-hidden rounded shadow-md">
-                    <span className="absolute top-0 right-0 px-1.5 py-0.5 bg-white text-sm font-bold text-black rounded-bl shadow-md">📄 Content</span> 
+                <div className="post-content-wrap relative min-h-[400px] p-2.5 md:p-4 pb-0  bg-slate-200 dark:bg-slate-700 ctd shadow-base overflow-hidden rounded shadow-md">
+                    <span className="absolute top-0 right-0 px-1.5 py-0.5 bg-white text-sm font-bold text-black rounded-bl shadow-md">Content</span> 
                     
                     <div className="post-content min-h-[400px] p-4 bg-white dark:bg-gray-800 text-black dark:text-white rounded-md ctd"
                     dangerouslySetInnerHTML={ {__html: post.content} } />
                     <div className="text-center">
-                        <div className="inline-block my-5">
+                        <div className="inline-block my-2.5 md:my-4">
 
                             {/* 좋아요 */}
                             {
@@ -261,7 +252,7 @@ const Index = ({post}) => {
                 {/* 태그 */}
                 
                 <div className="post-tag-wrap relative relative my-3 rounded shadow-md">
-                <span className="absolute top-0 right-0 px-1.5 py-0.5 bg-white text-sm font-bold text-black rounded-bl shadow-md">🏷 Tag</span> 
+                <span className="absolute top-0 right-0 px-1.5 py-0.5 bg-white text-sm font-bold text-black rounded-bl shadow-md">Tag</span> 
                 <ul className="text-sm text-gray-800 px-2.5 py-5 md:py-3.5 min-h-[60px] pr-9 bg-slate-200 dark:bg-slate-700 whitespace-nowrap overflow-scroll noScroll rounded ctd">
 
                     {
@@ -285,7 +276,7 @@ const Index = ({post}) => {
                     {
                         comments.map((c, idx) => 
                         <li key={idx} className="relative block mb-2.5 sm:p-3.5 p-2 bg-slate-200 dark:bg-slate-700 text-black dark:text-white rounded shadow-md ctd">
-                            <span className="absolute top-0 right-0 px-1.5 py-0.5 bg-white text-sm font-bold text-black rounded-bl shadow-md">✉️ Comments</span>     
+                            <span className="absolute top-0 right-0 px-1.5 py-0.5 bg-white text-sm font-bold text-black rounded-bl shadow-md">Comments</span>     
                             <div className="inline-block comment-profile mb-2.5 px-2.5 py-1 text-sm bg-slate-50 dark:bg-slate-500 text-black dark:text-white rounded-md ctd">
                                 {c.author}
                                 <span className="inline-block border-l border-gray-400 text-sm text-black dark:text-white ctd mx-1.5 h-2.5" />
@@ -337,10 +328,10 @@ const Index = ({post}) => {
 
                 {/* 댓글입력창 */}
                 <div className="write-comment-wrap relative my-3 sm:p-3.5 p-2 bg-slate-200 dark:bg-slate-700 rounded ctd">
-                <span className="absolute top-0 right-0 px-1.5 py-0.5 bg-white text-sm font-bold text-black rounded-bl shadow-md">✏️ Write</span> 
+                <span className="absolute top-0 right-0 px-1.5 py-0.5 bg-white text-sm font-bold text-black rounded-bl shadow-md">Write</span> 
                     <div className="inline-block comment-profile px-2 py-1 text-sm bg-white dark:bg-slate-400 text-black dark:text-white rounded ctd">
                     {
-                        session
+                        status === 'authenticated'
                             ?
                         <>{session.user.name.nicname}</>
                             :

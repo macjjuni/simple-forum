@@ -29,7 +29,7 @@ const WysiwygEditor = ({uploadDB, init}) => {
     const titleRef = useRef(null);
     const tagRef = useRef(null);
     const editorRef = useRef(null);
-    const [editData, setEditData] = useState(()=> init === undefined ? '' : init.content);
+
     const [tags, setTag] = useState([]);
 
     const toolbarItems = [
@@ -118,13 +118,17 @@ const WysiwygEditor = ({uploadDB, init}) => {
     }
 
     //태그 추가
-    const addTag = (e) => { 
+    const addnDek_Tag = (e) => { 
         const txt = e.target.value;
         if( e.keyCode === 13 && e.target.value !== ''){
             if(tags.indexOf(txt) === -1){
                 setTag([...tags, txt])
                 e.target.value = '';
             }else{ e.target.value = ''; }
+        }else if( e.keyCode === 8 && e.target.value === '' ){
+            const _tags = tags;
+            _tags.splice(_tags.length-1, 1);
+            setTag([..._tags]);
         }
     }
 
@@ -152,7 +156,7 @@ const WysiwygEditor = ({uploadDB, init}) => {
         const title = titleRef.current.value.trim();
         const content = getMarkDown();
         if(title === '' || content === ''){
-            console.log('제목 또는 내용을 입력해주세요.')
+            alert('제목 또는 내용을 입력해주세요.')
             // 오류 표시 추가
             return false;
         }else{
@@ -166,7 +170,7 @@ const WysiwygEditor = ({uploadDB, init}) => {
             <input ref={titleRef} type="text" placeholder="제목을 입력해주세요." maxLength={50} 
             className="w-full border border-b-0 dark:border-none bg-white text-black text-lg md:text-xl py-3 md:py-4 px-3 rounded-t-sm outline-none"/>
             <Editor ref={editorRef}
-                    initialValue={editData}
+                    initialValue={init === undefined ? '' : init.content}
                 initialEditType='wysiwyg'
                 hideModeSwitch={true}
                 height='500px'
@@ -179,7 +183,7 @@ const WysiwygEditor = ({uploadDB, init}) => {
                 
                 <TagItem tags={tags} deleteTag={deleteTag}/>
                 <div ref={tagRef} className="block tag-input w-full relative">
-                    <input type="text" placeholder='태그입력' onKeyDown={addTag} onChange={spaceRemove} 
+                    <input type="text" placeholder='태그입력' onKeyDown={addnDek_Tag} onChange={spaceRemove} 
                     className="relative inline-block w-full p-1 pl-3 bg-white text-black outline-0 focus:outline-0 text-sm ctd"/>
                 </div>
                 

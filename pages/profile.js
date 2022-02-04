@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useSession, signIn } from "next-auth/react"
+import { useSession } from "next-auth/react"
 import { useEffect, useRef, useState } from "react"
 import LazyImage from "../components/lazyImage";
 import { useRouter } from "next/router";
@@ -27,25 +27,21 @@ const Profile = () => {
     
     const { replace } = useRouter();
     const submitRef = useRef(null);
-
+    
     const [load, setLoad] = useState(false);
     const [submitChk, setSubmitChk] = useState(true);
 
+    const [userImage, setUserImage] = useState();
     const [blob, setBlob] = useState('');
     const [type, setType] = useState('');
-    const [userId, setUserId] = useState();
-    const [userNic, setUserNic] = useState();
-    const [userEmail, setUserEmail] = useState();
-    const [userImage, setUserImage] = useState();
+
     const [change, setChange] = useState(false);
         
     useEffect(()=>{//로그인 상태면 페이지 강제 이동
         if(status === 'unauthenticated') replace('/');
         else if(status === 'authenticated'){
-            setUserId(session.user.name.id);
-            setUserNic(session.user.name.nicname);
-            setUserEmail(session.user.name.email);
-            setUserImage(session.user.name.profile);
+            if(!session.user.name.profile) setUserImage('/user_profile.png');
+            else setUserImage(session.user.name.profile);
             setLoad(true);      
         }
     }, [status]);
@@ -78,11 +74,11 @@ const Profile = () => {
         } catch(e){ console.log(e); }
     }
 
-    const getfileSize = (x) => { //파일 사이즈 표현
-        var s = ['bytes', 'KB', 'MB', 'GB', 'TB', 'PB'];
-        var e = Math.floor(Math.log(x) / Math.log(1024));
-        return (x / Math.pow(1024, e)).toFixed(2) + s[e];
-    };
+    // const getfileSize = (x) => { //파일 사이즈 표현
+    //     var s = ['bytes', 'KB', 'MB', 'GB', 'TB', 'PB'];
+    //     var e = Math.floor(Math.log(x) / Math.log(1024));
+    //     return (x / Math.pow(1024, e)).toFixed(2) + s[e];
+    // };
 
 
     const submit = async() => {
@@ -123,17 +119,19 @@ const Profile = () => {
             <HeadInfo title='프로필'/>
             {
                 load ?
-                <div className="profile-wrap relative text-center">
+                <div className="profile-wrap relative text-center pb-10">
                     <div className="img-wrap relative flex flex-col md:flex-row justify-around">
                         
                         <div className="profile-img-wrap relative w-full md:w-1/2 py-8 md:py-0">
                             
-                            <div className="relative inline-block p-8 border border-gray-200 dark:border-gray-700 text-[0px] m-auto bg-transparent shadow-lg overflow-hidden">
+                            <div className="relative inline-block p-9 border border-gray-200 dark:border-gray-700 text-[0px] m-auto bg-transparent shadow-lg overflow-hidden">
                                 <label htmlFor='profile_input' className="absolute top-2 right-2 w-6 h-6 hover:scale-[1.1] transition duration-100 cursor-pointer z-[9999]]">
                                     <input id='profile_input' type='file' onChange={selectImage} accept="image/*" className="absolute w-0 h-0 opacity-0"/>
                                     <MdPhotoLibrary className="w-full h-full"/>
                                 </label>
-                                <LazyImage src={userImage} width={'250px'} height={'250px'} alt='profile_image'/>
+
+                                <LazyImage className='rounded-full' src={userImage} width={'240px'} height={'240px'} alt='profile_image'/>
+
                             </div>
 
                         </div>
@@ -146,10 +144,15 @@ const Profile = () => {
                                     <div className="py-2">Profile</div>
                                 </h2>
 
-                                <div className=""></div>
-                                <p className="user-id py-1.5">아이디 : {userId}</p>
-                                <p className="user-nic py-1.5">닉네임 : {userNic}</p>
-                                <p className="user-email py-1.5">이메일 : {userEmail}</p>
+                                {
+                                    status === 'authenticated' &&
+                                    <>
+                                        <p className="user-id py-1.5">아이디 : {session.user.name.id}</p>
+                                        <p className="user-nic py-1.5">닉네임 : {session.user.name.nicname}</p>
+                                        <p className="user-email py-1.5">이메일 : {session.user.name.email}</p>
+                                    </>
+                                }
+                                
                             </div>
                         </div>
                     </div>

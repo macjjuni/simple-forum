@@ -5,9 +5,9 @@ import { FiUserX } from 'react-icons/fi'
 
 const ProfileModal = ({status, session, signOut, toggleModal }) => {    
 
-    const [profile, setProfile] = useState('/');
+    const [profile, setProfile] = useState('/user_profile.png');
 
-    useEffect(()=>{ //모달 외 클릭 체크
+    useEffect(()=>{ //모달 외 클릭 체크 
         document.addEventListener('click', clickCheck);
         return () => {
             document.removeEventListener("click", clickCheck);
@@ -15,7 +15,7 @@ const ProfileModal = ({status, session, signOut, toggleModal }) => {
     }, []);
 
     useEffect(()=> {
-        if(status === 'authenticated') setProfile(session.user.name.profile);
+        if(status === 'authenticated' && session.user.name.profile ) setProfile(session.user.name.profile);
     }, [status]);
 
     const clickCheck = (e) =>{

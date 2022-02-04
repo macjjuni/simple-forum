@@ -4,17 +4,17 @@ const PostItem = ({_id, title, author, tags, date, comments}) => {
 
     return(
         <> 
-            <li className="bg-slate-100 dark:bg-slate-700 hover:bg-blue-100 dark:hover:bg-slate-800 truncate shadow-md hover:scale-[1.02] transition-[transform] ctd">
+            <li className="bg-slate-100 dark:bg-slate-700 hover:bg-blue-100 dark:hover:bg-slate-800 truncate shadow-md hover:scale-[1.02]  ctd">
                 <Link href={`/post/${_id}`} scroll={true} passHref>
-                <a className="block">
-                    <div className="p-3">
+                <a className="block p-3">
+
                         {/* 제목 & 댓글 수 */}
-                        <div className="title-comment-wrap flex justify-between justify-items-center mb-2">
+                        <div className="flex justify-between justify-items-center mb-2">
                             <h3 className="inline-block text-lg w-full text-ellipsis text-black dark:text-white overflow-hidden ctd">{title}</h3>
                             <p className="inline-block px-1.5 py-0.5 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 rounded-lg ctd">{'+'+comments.length}</p>
                         </div>
                         {/* 태그 */}
-                        <div className="tag-wrap flex justify-between justify-items-center w-full h-fit text-xs sm:text-sm">
+                        <div className="flex justify-between justify-items-center w-full h-fit text-xs sm:text-sm">
                             <ul className="inline-block w-full overflow-scroll mr-1 noScroll leading-tight">
                                 {
                                     tags.map((t, idx) => 
@@ -27,12 +27,11 @@ const PostItem = ({_id, title, author, tags, date, comments}) => {
                             {/* 작성일 */}
                             <p className="author-date-wrap flex justify-around items-center min-w-[100px] text-xs text-gray-800 dark:text-gray-300 text-right">
                                 {author} 
-                                <span className="inline-block border-l border-gray-400 text-sm text-black dark:text-white ctd mx-1.5 h-2.5" />
+                                <span className="mx-1.5 h-2.5 border-l border-gray-400 text-sm text-black dark:text-white ctd" />
                                 {date.substr(0, 10).replace(/-/g, '.')}
                             </p>
                         </div>
 
-                    </div>
                 </a>
                 </Link>
             </li>

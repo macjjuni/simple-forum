@@ -4,6 +4,7 @@ import PostItem from "../components/postItem"
 import axios from 'axios'
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { CgSpinner } from 'react-icons/cg'
+import { FcOpenedFolder } from 'react-icons/fc'
 
 
 const Home = ({list, total}) => {  
@@ -16,7 +17,7 @@ const Home = ({list, total}) => {
   
   const noPostRef = useRef(null);
   const obsRef = useRef(null);
-  const duple_prevent = useRef(true); //observer
+  const preventRef = useRef(true); 
   const endRef = useRef(false);
 
   
@@ -25,16 +26,16 @@ const Home = ({list, total}) => {
   }, [page])
 
   useEffect(()=> {
-    const observer = new IntersectionObserver(handler, { threshold : 0.5 });
+    const observer = new IntersectionObserver(obsHandler, { threshold : 0.5 });
     if(obsRef.current) observer.observe(obsRef.current);
     return () => { observer.disconnect(); }
   }, [])
 
-  const handler = ((entries) => {
+  const obsHandler = ((entries) => {
     const target = entries[0];
-    if(!endRef.current && target.isIntersecting && duple_prevent.current){ 
+    if(!endRef.current && target.isIntersecting && preventRef.current){ 
       console.log('DB 조회')
-      duple_prevent.current = false;
+      preventRef.current = false;
       setPage(prev => prev+1 );
     }
   })
@@ -48,7 +49,7 @@ const Home = ({list, total}) => {
             noPostShow();
           }
           setList(prev => [...prev, ...res.data.list]); //리스트 추가
-          duple_prevent.current = true;
+          preventRef.current = true;
       }else{
         console.log(res); //에러
       }
@@ -61,9 +62,11 @@ const Home = ({list, total}) => {
   return (
     <>
       <HeadInfo/>
-        <button onClick={()=> console.log(List)}>123</button>
+        {/* <button onClick={()=> console.log(List)}>List Check</button> */}
         <SeachBar/>
-        <h2 className='pt-8 pb-2 text-2xl'>📚 전체글({total})</h2>
+        <h2 className='flex justify-start items-center pt-8 pb-2 text-xl md:text-2xl '> 
+          <FcOpenedFolder className='inline-block mr-2'/>
+          전체글({total})</h2>
         <ul className="block w-full py-4">
           {
             List &&
@@ -89,8 +92,14 @@ const Home = ({list, total}) => {
             :
             <></>
           }
-          <div ref={noPostRef} className='hidden w-full py-2.5 text-white text-xl text-center bg-blue-400 dark:bg-slate-800 rounded-sm'>더 이상 글이 없습니다.</div>
-          <li className='' ref={obsRef}></li>
+          {
+            total === 0 ?
+            <li ref={noPostRef} className='hidden w-full mt-5 py-2.5 text-white dark:text-black text-xl text-center bg-blue-400 dark:bg-slate-800 rounded-sm'>글을 불러올 수 없습니다.</li>
+              :
+            <></>
+          }
+          <li ref={noPostRef} className='hidden w-full mt-5 py-2.5 text-white text-md md:text-xl text-center bg-blue-400 dark:bg-slate-800 rounded-sm'>더 이상 글이 없습니다.</li>
+          <li className='py-3' ref={obsRef}></li>
         </ul>
     </>
   )
@@ -109,7 +118,7 @@ export const getServerSideProps = async() => {
     }
   }else{
     return{
-      props : { list : null }
+      props : { list : null, total : 0 }
     }
   }
   
