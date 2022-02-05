@@ -62,7 +62,7 @@ const Home = ({list, total}) => {
         {/* <button onClick={()=> console.log(List)}>List Check</button> */}
         <SeachBar/>
         <h2 className='flex justify-start items-center pt-8 pb-2 text-xl md:text-2xl '> 
-          <FcOpenedFolder className='inline-block mr-2'/>
+          <FcOpenedFolder className='inline-block text-3xl mr-2'/>
           전체글({total})</h2>
         <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 py-6">
           {

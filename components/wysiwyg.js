@@ -177,7 +177,7 @@ const WysiwygEditor = ({uploadDB, init}) => {
         <>
             {/* 제목 */}
             <input ref={titleRef} type="text" placeholder="제목을 입력해주세요." maxLength={50} 
-            className="w-full border border-b-0 dark:border-none bg-white text-black text-lg md:text-xl py-3 md:py-4 px-3 rounded-t-sm outline-none"/>
+            className="w-full border border-b-0 dark:border-none bg-white text-black text-lg md:text-xl py-3 px-3 rounded-t-sm outline-none"/>
             <Editor ref={editorRef}
                     initialValue={init === undefined ? '' : init.content}
                 initialEditType='wysiwyg'
