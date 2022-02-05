@@ -175,18 +175,18 @@ const Index = ({post}) => {
         <>
             <HeadInfo title={post.title} />
 
-            <div className="post-wrap mx-auto my-4 max-w-screen-md ctd">
+            <div className="post-wrap mx-auto my-4 max-w-screen-md ">
 
                 {/* 제목 / 작성자 / 작성일 */}
                 <div className="post-header relative px-2 pt-8 pb-2 lg:pb-6 my-3 rounded">
                 <span className="absolute top-0 right-0 px-1.5 py-0.5 text-sm font-bold bg-slate-500 text-white rounded shadow-md">Title</span> 
-                    <h2 className="mb-2 text-2xl text-black dark:text-white text-ellipsis overflow-hidden whitespace-nowrap	ctd">
+                    <h2 className="mb-2 text-2xl text-black dark:text-white text-ellipsis overflow-hidden whitespace-nowrap	">
                         {post.title}
                     </h2>
 
                     <div className="post-info-wrap flex justify-between">
-                        <div className="master-left inline-block text-black dark:text-white ctd">
-                        {post.author} <span className="inline-block border-l border-gray-400 text-sm text-black dark:text-white ctd mx-1.5 h-2.5" /> {post.date.substr(0, 10).replace(/-/g, '.')}
+                        <div className="master-left inline-block text-black dark:text-white ">
+                        {post.author} <span className="inline-block border-l border-gray-400 text-sm text-black dark:text-white  mx-1.5 h-2.5" /> {post.date.substr(0, 10).replace(/-/g, '.')}
                         </div>
                         {
                             status === 'loading' || status === 'unauthenticated' ? //로그인 여부 및 작성자 체크
@@ -195,7 +195,7 @@ const Index = ({post}) => {
                             <>
                                 {
                                     session.user.name === post.author ?
-                                    <div className="master-wrap inline-block text-black dark:text-white ctd">
+                                    <div className="master-wrap inline-block text-black dark:text-white ">
                                         <button onClick={deletePost} className="hover:underline">삭제</button>
                                         <button onClick={editPost} className="ml-3 hover:underline">수정</button>
                                     </div>
@@ -209,10 +209,10 @@ const Index = ({post}) => {
                 </div>
 
                 {/* 본문 내용 */}
-                <div className="post-content-wrap relative min-h-[400px] pt-1.5 px-1.5 md:px-4 md:pt-4  bg-slate-200 dark:bg-slate-700 ctd shadow-base overflow-hidden rounded shadow-md">
+                <div className="post-content-wrap relative min-h-[400px] sm:pt-1.5 sm:px-1.5 md:px-4 md:pt-4  bg-slate-200 dark:bg-slate-700  shadow-base overflow-hidden rounded shadow-md">
                     <span className="absolute top-0 right-0 px-1.5 py-0.5 bg-white text-sm font-bold text-black rounded-bl shadow-md">Content</span> 
                     
-                    <div className="post-content min-h-[400px] p-4 bg-white dark:bg-gray-800 text-black dark:text-white rounded-md ctd"
+                    <div className="post-content min-h-[400px] p-3 ms:p-4 bg-white dark:bg-gray-800 text-black dark:text-white rounded-md "
                     dangerouslySetInnerHTML={ {__html: post.content} } />
                     <div className="text-center">
                         <div className="inline-block my-2.5 md:my-4">
@@ -251,11 +251,11 @@ const Index = ({post}) => {
                 
                 <div className="post-tag-wrap relative relative my-3 rounded shadow-md">
                 <span className="absolute top-0 right-0 px-1.5 py-0.5 bg-white text-sm font-bold text-black rounded-bl shadow-md">Tag</span> 
-                <ul className="text-sm text-gray-800 px-2.5 py-5 md:py-3.5 min-h-[60px] pr-9 bg-slate-200 dark:bg-slate-700 whitespace-nowrap overflow-scroll noScroll rounded ctd">
+                <ul className="text-sm text-gray-800 px-2.5 py-5 md:py-3.5 min-h-[60px] pr-9 bg-slate-200 dark:bg-slate-700 whitespace-nowrap overflow-scroll noScroll rounded ">
 
                     {
                         post.tags.map((t, idx)=>
-                            <li key={t + idx} className="post-tags inline-block mr-2.5 px-3 py-1.5 text-sm text-gray-800 dark:text-gray-300 bg-white dark:bg-gray-900 rounded-xl shadow-md ctd">
+                            <li key={t + idx} className="post-tags inline-block mr-2.5 px-3 py-1.5 text-sm text-gray-800 dark:text-gray-300 bg-white dark:bg-gray-900 rounded-xl shadow-md ">
                                 {'#'+t}
                             </li>
                         )
@@ -273,23 +273,23 @@ const Index = ({post}) => {
                     <>
                     {
                         comments.map((c, idx) => 
-                        <li key={idx} className="relative block mb-2.5 sm:p-3.5 p-2 bg-slate-200 dark:bg-slate-700 text-black dark:text-white rounded shadow-md ctd">
+                        <li key={idx} className="relative block mb-2.5 sm:p-3.5 p-2 bg-slate-200 dark:bg-slate-700 text-black dark:text-white rounded shadow-md ">
                             <span className="absolute top-0 right-0 px-1.5 py-0.5 bg-white text-sm font-bold text-black rounded-bl shadow-md">Comments</span>     
-                            <div className="inline-block comment-profile mb-2.5 px-2.5 py-1 text-sm bg-slate-50 dark:bg-slate-500 text-black dark:text-white rounded-md ctd">
+                            <div className="inline-block comment-profile mb-2.5 px-2 py-1 text-sm bg-slate-50 dark:bg-slate-500 text-black dark:text-white rounded-sm ">
                                 {c.author}
-                                <span className="inline-block border-l border-gray-400 text-sm text-black dark:text-white ctd mx-1.5 h-2.5" />
+                                <span className="inline-block border-l border-gray-400 text-sm text-black dark:text-white  mx-1.5 h-2.5" />
                                 {c.date.substr(0,10).replace(/-/g,'.')}
                             </div>
 
                             
                             <div className="edit-wrap hidden">
-                                <textarea className="comment-profile block w-full min-h-[50px] p-2 my-2.5 text-sm bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 ctd
+                                <textarea className="comment-profile block w-full min-h-[50px] p-2 my-2.5 text-sm bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 
                         outline-none resize-none text-sm rounded-sm" defaultValue={c.content}/>
-                                <button onClick={updateComment} data-index={idx} className="w-full py-1.5 text-gray-100 bg-green-400 hover:bg-green-500 rounded-sm ctd">
+                                <button onClick={updateComment} data-index={idx} className="w-full py-1.5 text-gray-100 bg-green-400 hover:bg-green-500 rounded-sm ">
                                     수정하기
                                 </button>
                             </div>
-                            <pre className="block comment-content-wrap sm:p-3.5 p-2 text-md bg-slate-50 dark:bg-slate-500 text-black dark:text-white rounded-sm whitespace-pre-wrap overflow-auto break-all ctd">
+                            <pre className="block comment-content-wrap sm:p-3.5 p-2 text-md bg-slate-50 dark:bg-slate-500 text-black dark:text-white rounded-sm whitespace-pre-wrap overflow-auto break-all ">
                                 {c.content}
                                 
                                 {
@@ -318,16 +318,16 @@ const Index = ({post}) => {
                     }
                     </>
                         :      
-                    <div className="no-comment my-3 p-3 text-sm text-gray-700 dark:text-gray-300 bg-slate-200 dark:bg-slate-700 text-center rounded shadow-md ctd">
+                    <div className="no-comment my-3 p-3 text-sm text-gray-700 dark:text-gray-300 bg-slate-200 dark:bg-slate-700 text-center rounded shadow-md ">
                         댓글이 없습니다. 댓글을 남겨보세요.😆
                     </div>
                 }
                 </ul>
 
                 {/* 댓글입력창 */}
-                <div className="write-comment-wrap relative my-3 sm:p-3.5 p-2 bg-slate-200 dark:bg-slate-700 rounded ctd">
+                <div className="write-comment-wrap relative my-3 sm:p-3.5 p-2 bg-slate-200 dark:bg-slate-700 rounded ">
                 <span className="absolute top-0 right-0 px-1.5 py-0.5 bg-white text-sm font-bold text-black rounded-bl shadow-md">Write</span> 
-                    <div className="inline-block comment-profile px-2 py-1 text-sm bg-white dark:bg-slate-400 text-black dark:text-white rounded ctd">
+                    <div className="inline-block comment-profile px-2 py-1 text-sm bg-white dark:bg-slate-400 text-black dark:text-white rounded-sm ">
                     {
                         status === 'authenticated'
                             ?
@@ -336,10 +336,10 @@ const Index = ({post}) => {
                         <>Stranger</>
                     }
                     </div>
-                    <textarea ref={commentWriteRef} className="comment-profile block w-full min-h-[50px] p-2 my-2.5  text-sm bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 ctd
+                    <textarea ref={commentWriteRef} className="comment-profile block w-full min-h-[50px] p-2 my-2.5  text-sm bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 
                     outline-none resize-none text-sm rounded-sm"/>
                     
-                    <button onClick={writeComment} className="w-full py-1.5 text-gray-100 bg-blue-400 hover:bg-blue-500 rounded-sm ctd">
+                    <button onClick={writeComment} className="w-full py-1.5 text-gray-100 bg-blue-400 hover:bg-blue-500 rounded-sm ">
                         댓글 쓰기
                     </button>
                 </div>

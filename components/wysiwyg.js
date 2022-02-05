@@ -177,7 +177,7 @@ const WysiwygEditor = ({uploadDB, init}) => {
         <>
             {/* 제목 */}
             <input ref={titleRef} type="text" placeholder="제목을 입력해주세요." maxLength={50} 
-            className="w-full border border-b-0 dark:border-none bg-white text-black text-lg md:text-xl py-3 px-3 rounded-t-sm outline-none"/>
+            className="w-full border border-b-0 dark:border-none bg-white text-black text-lg md:text-xl py-3 px-3 rounded-t-sm rounded-b-none outline-none"/>
             <Editor ref={editorRef}
                     initialValue={init === undefined ? '' : init.content}
                 initialEditType='wysiwyg'
@@ -188,17 +188,17 @@ const WysiwygEditor = ({uploadDB, init}) => {
                 plugins={[colorSyntax, ]}
             />
             
-            <div className="tag-wrap flex mb-3 py-2 px-4 border border-t-0 bg-white text-black rounded-b-sm ctd">
+            <div className="tag-wrap flex mb-3 py-2 px-4 border border-t-0 bg-white text-black rounded-b-sm ">
                 
                 <TagItem tags={tags} deleteTag={deleteTag}/>
                 <div ref={tagRef} className="block tag-input w-full relative">
                     <input type="text" placeholder='태그입력' onKeyDown={addnDek_Tag} onChange={spaceRemove} 
-                    className="relative inline-block w-full p-1 pl-3 bg-white text-black outline-0 focus:outline-0 text-sm ctd"/>
+                    className="relative inline-block w-full p-1 pl-3 bg-white text-black outline-0 focus:outline-0 text-sm "/>
                 </div>
                 
             </div>
 
-            <button onClick={writePost} className='w-full p-2 text-gray-100 bg-blue-400 hover:bg-blue-500 transition duration-300 rounded-sm'>작성하기</button>
+            <button onClick={writePost} className='w-full mb-6 p-2 text-gray-100 bg-blue-400 hover:bg-blue-500 transition duration-300 rounded-sm'>작성하기</button>
 
         </>
     )

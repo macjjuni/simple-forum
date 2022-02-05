@@ -50,24 +50,24 @@ a {
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
-.none-thumb-wrap{
+.thumb-img{
   height: 181px;
 }
 
 @media screen and (max-width: 1004px) {
-  .none-thumb-wrap{
+  .thumb-img{
     height: calc(  ((100vw - 3.75rem) / 3 ) / 5.3 * 3   );
   }
 }
 
 @media screen and (max-width: 767px) {
-  .none-thumb-wrap{
+  .thumb-img{
     height: calc(  ((100vw - 1.875rem) / 2 ) / 5.5 * 3   );
   }  
 }
 
 @media screen and (max-width: 639px) {
-  .none-thumb-wrap{
+  .thumb-img{
     height: calc( (100vw - 20px) / 6 * 3 );
   }  
 }

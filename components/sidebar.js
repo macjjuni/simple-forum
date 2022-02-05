@@ -40,7 +40,7 @@ const Sidebar = () => {
     return(
         <>
             <nav ref={sidebar} onMouseEnter={slideup} onMouseLeave={slidedown}
-            className='fixed top-0 left-0 inline-block w-20 h-full pt-20 pl-4 pb-4 min-w-20 transition-all duration-200 z-[99] on'>
+            className='fixed top-0 left-0 inline-block w-20 h-full pt-20 pl-4 pb-4 min-w-20 z-[99] on'>
 
                 <ul className="inline-block flex flex-col flex-wrap justify-start content-start align-center 
                 w-16 h-full m-0 py-3.5 px-3 h-[calc(100% - 2rem)px] bg-blue-500 bg-[rgba(0,0,0,0.45)] rounded-lg">
@@ -48,7 +48,7 @@ const Sidebar = () => {
                     <li className="mb-3.5">
                         <Link href="/" passHref onClick={toggleModal} >
                             <a className="inline-block text-center">
-                                <div className="inline-block flex justify-center items-center w-[38px] h-[38px] bg-white overflow-hidden rounded-full hover:scale-[1.15] transition-width duration-300">
+                                <div className="inline-block flex justify-center items-center w-[38px] h-[38px] bg-white overflow-hidden rounded-full hover:scale-[1.15]">
                                     <TiHome size='30' className='m-0 text-sm'/>
                                 </div>
                             </a>
@@ -58,7 +58,7 @@ const Sidebar = () => {
                     <li className="mb-3.5">
                         <Link href="/" passHref onClick={toggleModal} >
                             <a className="inline-block text-center">
-                                <div className="inline-block flex justify-center items-center w-[38px] h-[38px] bg-white overflow-hidden rounded-full hover:scale-[1.15] transition-scale duration-300">
+                                <div className="inline-block flex justify-center items-center w-[38px] h-[38px] bg-white overflow-hidden rounded-full hover:scale-[1.15]">
                                     <TiHome size='30' className='m-0 text-sm'/>
                                 </div>
                             </a>

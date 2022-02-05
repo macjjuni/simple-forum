@@ -1,4 +1,3 @@
-import Image from "next/image";
 
 const LazyImage = ({src, alt, width, height}) => {
 
@@ -16,10 +15,10 @@ const LazyImage = ({src, alt, width, height}) => {
 
     return(
         <>
-            <Image src={src} 
+            <img src={src} 
                 alt={alt} 
                 onLoad={onLoadImg}
-                className="opacity-0 inline-block" 
+                className="thumb-img opacity-0 inline-block" 
                 width={width} height={height} />
         </>
     )

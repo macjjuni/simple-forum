@@ -10,9 +10,9 @@ const Layout = ({children}) => {
     return(
         <>
 
-        <div className='relative bg-white dark:bg-slate-600 dark:text-white transition-bg duration-300 ease-in-out'>
+        <div className='relative bg-white dark:bg-slate-600 dark:text-white'>
         
-            <div className={`wraper max-w-screen-lg ease-in-out mx-auto `}>
+            <div className={`wraper max-w-screen-lg ease-in-out mx-auto`}>
                 <Header/>
                 <div className="wrap w-full min-h-[calc(100vh-5rem)] lg:min-h-[calc(100vh-7rem)] px-2.5 pt-3.5 pb-10 ">
                     <AnimatePresence exitBeforeEnter={true}> 
