@@ -46,6 +46,33 @@ a {
   transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, width 0.3s ease !important; 
 }
 
+.post-item{
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.none-thumb-wrap{
+  height: 181px;
+}
+
+@media screen and (max-width: 1004px) {
+  .none-thumb-wrap{
+    height: calc(  ((100vw - 3.75rem) / 3 ) / 5.3 * 3   );
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .none-thumb-wrap{
+    height: calc(  ((100vw - 1.875rem) / 2 ) / 5.5 * 3   );
+  }  
+}
+
+@media screen and (max-width: 639px) {
+  .none-thumb-wrap{
+    height: calc( (100vw - 20px) / 6 * 3 );
+  }  
+}
+
+
 img{
   opacity: 0;
   transition: opacity 0.7s ease;
@@ -69,8 +96,9 @@ img{
   font-size: 1em;
 }
 
-.post-content img, .toastui-editor-contents img{
+.post-content p>img, .toastui-editor-contents p>img{
   opacity: 1 !important;
+  margin: 1em 0;
 }
 
 .post-content h1, .post-content h2, .post-content h3, .post-content h4,
@@ -78,8 +106,9 @@ img{
   padding-bottom: 1rem;
   margin-bottom: 1rem;
   border-bottom: 1px solid #eee;
-
 }
+
+
 
 .post-content h1, .toastui-editor-contents h1{ font-size: 1.7rem; }
 .post-content h2, .toastui-editor-contents h2{ font-size: 1.6rem; }

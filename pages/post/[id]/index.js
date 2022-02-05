@@ -171,8 +171,6 @@ const Index = ({post}) => {
         return date.getFullYear() + '.'+ month + '.' + date.getDate();
     }
 
-    console.log(session.user.name)
-
     return(
         <>
             <HeadInfo title={post.title} />

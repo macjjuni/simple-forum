@@ -36,7 +36,7 @@ const Newpost = () => {
             push(`/post/${res.data.post._id}`);
         }
         else console.log(res);
-        console.log(post);
+        // console.log(post);
     }
 
     return(

@@ -7,7 +7,7 @@ const PostItem = ({_id, title, author, tags, date, comments, thumbnail}) => {
 
     return(
         <> 
-            <li className="bg-slate-100 dark:bg-gray-700 truncate shadow-md rounded-sm overflow-hidden ctd">
+            <li className="post-item bg-slate-100 dark:bg-gray-700 truncate rounded-sm overflow-hidden ctd">
                 <Link href={`/post/${_id}`} scroll={true} passHref>
                 <a className="block">
                 
@@ -17,7 +17,7 @@ const PostItem = ({_id, title, author, tags, date, comments, thumbnail}) => {
                         <LazyImage src={thumbnail} alt='thumbnail' width='620' height='350'/>   
                     </div>
                         :
-                    <div className="thumb-wrap flex justify-center items-center h-[180px] bg-white">
+                    <div className="none-thumb-wrap flex justify-center items-center bg-white dark:bg-gray-800 ctd">
                         <BsImage className="text-[6rem] text-gray-300"/>   
                     </div>
                 }

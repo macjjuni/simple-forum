@@ -23,17 +23,18 @@ const storage = getStorage(firebaseApp);
 
 const Profile = () => {
    
-    const { data: session, status } = useSession(); 
-    console.log(status)
+    const { data: session, status } = useSession();
+
     const { replace } = useRouter();
     const submitRef = useRef(null);
+    const pwRef = useRef(null);
+    const chance = useRef(0);
     
     const [load, setLoad] = useState(false);
-    const [submitChk, setSubmitChk] = useState(true);
 
     const [userImage, setUserImage] = useState();
     const [blob, setBlob] = useState('');
-    const [type, setType] = useState('');
+    const type = useRef();
 
     const [change, setChange] = useState(false);
         
@@ -49,9 +50,8 @@ const Profile = () => {
     const selectImage = async(e) =>{
         
         const img = await compressImg(e.target.files[0]);
-
         setBlob(img);
-        setType(img.type.substring(6, 10));
+        type.current = img.type.substring(6, 10);
 
         setUserImage(URL.createObjectURL(img));
 
@@ -74,19 +74,41 @@ const Profile = () => {
         } catch(e){ console.log(e); }
     }
 
-    // const getfileSize = (x) => { //파일 사이즈 표현
-    //     var s = ['bytes', 'KB', 'MB', 'GB', 'TB', 'PB'];
-    //     var e = Math.floor(Math.log(x) / Math.log(1024));
-    //     return (x / Math.pow(1024, e)).toFixed(2) + s[e];
-    // };
+    const userDelete = async() => {
+        const password = pwRef.current.value.trim();
 
+        if(password !== ''){
+            let _alert = confirm("회원 탈퇴를 진행하시겠습니까?");
+            
+            if (_alert) {
+                const res = await axios({ method : 'POST', url : `/api/db/user/delete/user`, data : { nicname : session.user.name, pw : password } });
+                if(res.data.error === null){  //회원탈퇴 성공
+                    replace('/');
+                }else if(res.data.error === 'INCORRECT PASSWORD'){
+                    chance.current = chance.current+1;
+                    alert('잘못된 비밀번호입니다.' + `${chance.current + '/5'}`);
+                    if(chance.current === 5) replace('/');
+                    incorrectPW();
+                }else{
+                    console.log(res);
+                }
+            }
+        }else{
+            alert('비밀번호를 입력해주세요.');
+            incorrectPW();
+        }
+    }
+
+    const incorrectPW = () => {
+        pwRef.current.classList.replace('border-blue-300', 'border-red-400')
+    }
 
     const submit = async() => {
         
         if(change){
             setChange(false);
             //firebase Storage Create Reference  // 파일 경로 / 파일 명 . 확장자
-            const storageRef = ref(storage, `profile_images/${encodeURI(session.user.name.nicname) + '.' + type}`);
+            const storageRef = ref(storage, `profile_images/${encodeURI(session.user.name.nicname) + '.' + type.current}`);
 
             //이미지 업로드
             const snapshot = await uploadBytes(storageRef, blob);
@@ -97,7 +119,7 @@ const Profile = () => {
                     if(url){
                         const { data } = await axios({ method : 'POST', url : `api/db/user/update/profileImg/${session.user.name.id}`, data : { url : url } });
                         if(data.error === null){
-                            console.log('변경 성공');
+                            // console.log('변경 성공');
                             session.user.image = url;
                             setChange(false);
                             submitRef.current.classList.replace('bg-blue-400', 'bg-green-500');
@@ -135,8 +157,8 @@ const Profile = () => {
                             </div>
 
                         </div>
-                        <div className="profile-Info-wrap block md:w-1/2 px-0 md:px-8 py-8 md:py-0 text-left">
-                            <div className="m-auto max-w-[320px] md:w-full">
+                        <div className="profile-Info-wrap relative block md:w-1/2 px-0 md:px-8 py-8 md:py-0 text-left">
+                            <div className="relative m-auto max-w-[320px] h-full md:w-full">
                                 <h2 className="flex justify-start items-center text-3xl bold pb-3 mb-5 border-b">
                                     <div className="inline-block p-1 mt-1 mr-2 bg-slate-100 rounded-full">
                                         <FiUser className="w-[20px] h-[20px]"/> 
@@ -149,16 +171,22 @@ const Profile = () => {
                                     <>
                                         <p className="user-nic py-1.5">닉네임 : {session.user.name}</p>
                                         <p className="user-email py-1.5">이메일 : {session.user.email}</p>
+                                        <input ref={pwRef} type="password" placeholder="비밀번호 입력" className="block w-full mt-10 px-3 py-2 border border-blue-300 bg-transparent outline-0 focus:outline-none rounded-none" maxLength={15} />
                                     </>
                                 }
                                 
                             </div>
                         </div>
                     </div>
-                    <div className="submit-wrap mt-5 md:mt-32">
+                    <div className="submit-wrap flex justify-center flex-col mx-0 mt-5 md:mt-28">
                         <button ref={submitRef} disabled={!change} onClick={submit} 
-                        className="inline-block max-w-[330px] md:max-w-[200px] w-full py-2.5 m-auto bg-gray-400 text-lg text-white text-center rounded-sm transition duration-300">
+                        className="inline-block max-w-[330px] md:max-w-[200px] w-full mx-auto my-2 py-2.5 bg-gray-400 text-lg text-white text-center rounded-sm transition duration-300">
                             변경하기
+                        </button>
+
+                        <button onClick={userDelete}
+                        className="inline-block max-w-[330px] md:max-w-[200px] w-full mx-auto my-2 py-2.5 bg-blue-400 text-lg text-white text-center rounded-sm transition duration-300">
+                            회원탈퇴
                         </button>
                     </div>
 

@@ -68,15 +68,15 @@ const Signin = () => {
                         <h2 className="text-2xl mb-10 text-blue-400 underline underline-offset-8">Login</h2>
                         <div className="login-wrap w-[260px] mx-auto">
                             <input type="text" ref={idRef} placeholder="아이디 입력" maxLength={15} className="block w-full my-2 px-3 py-2 border-b border-b-blue-300 bg-transparent outline-0 focus:outline-none rounded-none"/>
-                            <input type="password" ref={pwRef}  placeholder="비밀번호 입력" className="block w-full my-2 px-3 py-2 border-b border-b-blue-300 bg-transparent outline-0 focus:outline-none rounded-none"/>
+                            <input type="password" ref={pwRef}  placeholder="비밀번호 입력" maxLength={15} className="block w-full my-2 px-3 py-2 border-b border-b-blue-300 bg-transparent outline-0 focus:outline-none rounded-none"/>
                             <p ref={errMsgRef} className="h-[16px] text-xs text-red-400"></p>
                             <NoSsrReC setReCaptchaChk={setReCaptchaChk}/>
 
                             <button ref={submitRef} disabled={!reCaptchaChk} onClick={submit} className="block w-full mt-6 mb-2 p-2.5 bg-gray-400 text-white rounded-md">로그인</button>
-                            <button onClick={()=> signIn('google')} className="block flex justify-center items-center w-full mb-2 p-2.5 border-2 border-gray-300 dark:border-gray-50 bg-white text-black text-md rounded-md">
+                            {/* <button onClick={()=> signIn('google')} className="block flex justify-center items-center w-full mb-2 p-2.5 border-2 border-gray-300 dark:border-gray-50 bg-white text-black text-md rounded-md">
                                 <FcGoogle className="inline-block text-2xl mr-2"/>
                                 Google 로그인
-                            </button>
+                            </button> */}
                             <Link href='/signup'><a className="block w-full mt-2 mb-10 p-2.5 bg-blue-400 text-white rounded-md">회원가입</a></Link>
                         </div>
                     </div>

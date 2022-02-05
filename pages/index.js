@@ -81,7 +81,7 @@ const Home = ({list, total}) => {
         </ul>
         {
             load ?
-            <li className="block text-center py-5 text-gray-600 text-center text-3xl text-black dark:text-white">
+            <li className="block text-center py-5 text-blue-700 dark:text-blue-500 text-center text-3xl text-black">
               <div className='spinner inline-block spinner m-auto'>
                 <CgSpinner/>
               </div>  
