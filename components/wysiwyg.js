@@ -147,9 +147,18 @@ const WysiwygEditor = ({uploadDB, init}) => {
                 title : titleRef.current.value.trim(),
                 content : getContent(),
                 tags : tags,
+                thumbnail : getThumbnail(),
             }
             uploadDB(post);
         }
+    }
+
+    const getThumbnail = () => {
+        const reg = /<img[^>]+src="([^">]+)/g;
+        const target = getContent();
+        const chk = reg.exec(target);
+        const thumbURL = chk !== null ? chk[1] : 'null';
+        return thumbURL;
     }
 
     const validation_check = () => {

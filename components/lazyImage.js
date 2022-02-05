@@ -19,7 +19,7 @@ const LazyImage = ({src, alt, width, height}) => {
             <Image src={src} 
                 alt={alt} 
                 onLoad={onLoadImg}
-                className="opacity-0" 
+                className="opacity-0 inline-block" 
                 width={width} height={height} />
         </>
     )

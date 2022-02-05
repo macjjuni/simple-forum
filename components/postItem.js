@@ -1,24 +1,40 @@
 import Link from "next/link"
+import LazyImage from '../components/lazyImage'
+import Image from "next/image"
+import { BsImage } from 'react-icons/bs'
 
-const PostItem = ({_id, title, author, tags, date, comments}) => {
+const PostItem = ({_id, title, author, tags, date, comments, thumbnail}) => {
 
     return(
         <> 
-            <li className="bg-slate-100 dark:bg-slate-700 hover:bg-blue-100 dark:hover:bg-slate-800 truncate shadow-md hover:scale-[1.02]  ctd">
+            <li className="bg-slate-100 dark:bg-gray-700 truncate shadow-md rounded-sm overflow-hidden ctd">
                 <Link href={`/post/${_id}`} scroll={true} passHref>
-                <a className="block p-3">
-
-                        {/* 제목 & 댓글 수 */}
-                        <div className="flex justify-between justify-items-center mb-2">
-                            <h3 className="inline-block text-lg w-full text-ellipsis text-black dark:text-white overflow-hidden ctd">{title}</h3>
-                            <p className="inline-block px-1.5 py-0.5 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 rounded-lg ctd">{'+'+comments.length}</p>
+                <a className="block">
+                
+                {
+                    thumbnail !== 'null' && thumbnail !== undefined ?
+                    <div className="thumb-wrap text-[0] bg-white">
+                        <LazyImage src={thumbnail} alt='thumbnail' width='620' height='350'/>   
+                    </div>
+                        :
+                    <div className="thumb-wrap flex justify-center items-center h-[180px] bg-white">
+                        <BsImage className="text-[6rem] text-gray-300"/>   
+                    </div>
+                }
+                
+                
+                <div className="subtitle py-2.5 px-2">
+                    {/* 제목 & 댓글 수 */}
+                    <div className="flex justify-between justify-items-center mb-2">
+                            <h3 className="inline-block text-md sm:text-md w-full text-ellipsis text-black dark:text-white overflow-hidden ctd">{title}</h3>
+                            <p className="inline-block py-1 px-1.5 text-gray-800 dark:text-gray-100 text-xs bg-white dark:bg-gray-800 font-medium rounded-lg ctd">{'+'+comments.length}</p>
                         </div>
                         {/* 태그 */}
                         <div className="flex justify-between justify-items-center w-full h-fit text-xs sm:text-sm">
-                            <ul className="inline-block w-full overflow-scroll mr-1 noScroll leading-tight">
+                            <ul className="inline-block w-full overflow-hidden mr-1 text-ellipsis leading-tight">
                                 {
                                     tags.map((t, idx) => 
-                                    <li key={t+idx} className="tags-wrap inline-block mr-2 px-1.5 py-1 rounded-lg bg-slate-400 dark:bg-slate-900 text-xs text-white shadow-lg ctd">
+                                    <li key={t+idx} className="tags-wrap inline-block mr-2 px-1.5 py-1 bg-slate-400 dark:bg-slate-900 text-xs text-white rounded-sm shadow-sm ctd">
                                         {t}
                                     </li>
                                     )        
@@ -31,6 +47,8 @@ const PostItem = ({_id, title, author, tags, date, comments}) => {
                                 {date.substr(0, 10).replace(/-/g, '.')}
                             </p>
                         </div>
+                </div>
+                        
 
                 </a>
                 </Link>

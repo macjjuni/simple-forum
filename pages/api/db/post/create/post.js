@@ -16,6 +16,7 @@ export default async function handler(req, res){
         newPost.title = data.title;
         newPost.content = data.content;
         newPost.tags = data.tags;
+        newPost.thumbnail = data.thumbnail;
 
         
         newPost.save().then( (post) => { //글 저장

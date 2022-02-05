@@ -28,14 +28,15 @@ const Newpost = () => {
     const uploadDB = async(post) => {
         const newPost = {
             ...post,
-            author : session.user.name.nicname
+            author : session.user.name
         }
-        //글 저장 API 
+        // 글 저장 API 
         const res = await axios({ method : 'POST', url : '/api/db/post/create/post', data : { ...newPost, session } });
         if(res.data.error === null){
             push(`/post/${res.data.post._id}`);
         }
         else console.log(res);
+        console.log(post);
     }
 
     return(

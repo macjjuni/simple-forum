@@ -18,7 +18,7 @@ export default async function handler(req, res) {
 
         console.log(`total = ${total} | limit = ${limit} | skip = ${skip} | page = ${page}`)
 
-        Post.find({}, { _id : true, title : true, author : true, tags : true, date : true, comments : true }).sort({ date : '-1'})
+        Post.find({}, { _id : true, title : true, author : true, tags : true, date : true, comments : true, thumbnail : true }).sort({ date : '-1'})
         .limit(limit).skip(skip).then((post, err)=>{ //모든 post 조회
             if(!err){
                 //마지막 페이지 요청의 경우 true

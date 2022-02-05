@@ -20,7 +20,6 @@ const Home = ({list, total}) => {
   const preventRef = useRef(true); 
   const endRef = useRef(false);
 
-  
   useEffect(()=> {
     if(page !== 1) getPost();
   }, [page])
@@ -34,7 +33,6 @@ const Home = ({list, total}) => {
   const obsHandler = ((entries) => {
     const target = entries[0];
     if(!endRef.current && target.isIntersecting && preventRef.current){ 
-      console.log('DB 조회')
       preventRef.current = false;
       setPage(prev => prev+1 );
     }
@@ -57,7 +55,6 @@ const Home = ({list, total}) => {
   }, [page]);
 
   const noPostShow = () => { noPostRef.current.classList.replace('hidden', 'block'); }
-
   
   return (
     <>
@@ -67,22 +64,22 @@ const Home = ({list, total}) => {
         <h2 className='flex justify-start items-center pt-8 pb-2 text-xl md:text-2xl '> 
           <FcOpenedFolder className='inline-block mr-2'/>
           전체글({total})</h2>
-        <ul className="block w-full py-4">
+        <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 py-6">
           {
             List &&
             <>
             {
               List.map((post, idx) =>
-                <PostItem key={post._id + idx} _id={post._id} 
-                          title={post.title} author={post.author} tags={post.tags} 
-                          date={post.date} comments={post.comments}
+                <PostItem key={post._id + idx} _id={post._id}
+                    title={post.title} author={post.author} tags={post.tags} 
+                    date={post.date} comments={post.comments} thumbnail={post.thumbnail}
                 />
               )
             }
             </>            
           }
-          
-          {
+        </ul>
+        {
             load ?
             <li className="block text-center py-5 text-gray-600 text-center text-3xl text-black dark:text-white">
               <div className='spinner inline-block spinner m-auto'>
@@ -94,13 +91,12 @@ const Home = ({list, total}) => {
           }
           {
             total === 0 ?
-            <li ref={noPostRef} className='hidden w-full mt-5 py-2.5 text-white dark:text-black text-xl text-center bg-blue-400 dark:bg-slate-800 rounded-sm'>글을 불러올 수 없습니다.</li>
+            <div ref={noPostRef} className='hidden w-full mt-5 py-2.5 text-white dark:text-black text-xl text-center bg-blue-400 dark:bg-slate-800 rounded-sm'>글을 불러올 수 없습니다.</div>
               :
             <></>
           }
-          <li ref={noPostRef} className='hidden w-full mt-5 py-2.5 text-white text-md md:text-xl text-center bg-blue-400 dark:bg-slate-800 rounded-sm'>더 이상 글이 없습니다.</li>
-          <li className='py-3' ref={obsRef}></li>
-        </ul>
+          <div ref={noPostRef} className='hidden w-full mt-5 py-2.5 text-xs text-gray-800 dark:text-white md:text-[1rem] md:py-3 text-center bg-slate-100 dark:bg-slate-700 rounded-sm'>더 이상 글이 없습니다.</div>
+          <div className='py-3' ref={obsRef}></div>
     </>
   )
 }

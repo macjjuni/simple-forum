@@ -171,7 +171,7 @@ const Index = ({post}) => {
         return date.getFullYear() + '.'+ month + '.' + date.getDate();
     }
 
-    console.log()
+    console.log(session.user.name)
 
     return(
         <>

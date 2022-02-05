@@ -6,6 +6,7 @@ const postSchema = new Schema({
         content : String,
         tags : [ { type : String, length : 4 } ],
         comments : [ { content : String,  author : String, date : { type : Date, default: Date.now } }],
+        thumbnail : { type : String },
         likeCount : { type : Number, default : 0 },
         likeUser : [{ type: String }],
         date : { type: Date, default: Date.now }
