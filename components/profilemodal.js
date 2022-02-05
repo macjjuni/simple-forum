@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react"
-import LazyImage from "./lazyImage"
-import { signIn } from "next-auth/react"
+import Image from "next/image"
 import Link from "next/link"
 import { FiUserX } from 'react-icons/fi'
 
@@ -35,7 +34,7 @@ const ProfileModal = ({status, session, signOut, toggleModal }) => {
                     <>
                         <div className="rounded-full w-[80px] h-[80px] m-auto overflow-hidden">
                             <div className="w-[80px] h-[80px]">
-                                <LazyImage src={profile} width='80px' height='80px'/>
+                                <Image className="opacity-100 " src={profile} width='80px' height='80px'/>
                             </div>
                         </div>
                         <h4 className="text-sm text-white text-center pt-1 pb-2 modal">
