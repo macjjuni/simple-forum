@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useSession } from "next-auth/react"
 import { useEffect, useRef, useState } from "react"
-import LazyImage from "../components/lazyImage";
+import Image from 'next/image'
 import { useRouter } from "next/router";
 import { MdPhotoLibrary } from 'react-icons/md'
 import { FiUser } from 'react-icons/fi'
@@ -152,7 +152,7 @@ const Profile = () => {
                                     <MdPhotoLibrary className="w-full h-full"/>
                                 </label>
 
-                                <LazyImage className='rounded-full' src={userImage} width={'240px'} height={'240px'} alt='profile_image'/>
+                                <Image className='rounded-full opacity-100' src={userImage} width={'240px'} height={'240px'} alt='profile_image'/>
 
                             </div>
 

@@ -212,7 +212,7 @@ const Index = ({post}) => {
                 <div className="post-content-wrap relative min-h-[400px] sm:pt-1.5 sm:px-1.5 md:px-4 md:pt-4  bg-slate-200 dark:bg-slate-700  shadow-base overflow-hidden rounded shadow-md">
                     <span className="absolute top-0 right-0 px-1.5 py-0.5 bg-white text-sm font-bold text-black rounded-bl shadow-md">Content</span> 
                     
-                    <div className="post-content min-h-[400px] p-3 ms:p-4 bg-white dark:bg-gray-800 text-black dark:text-white rounded-md "
+                    <div className="post-content min-h-[400px] px-3 py-8 ms:p-4 bg-white dark:bg-gray-800 text-black dark:text-white rounded-md "
                     dangerouslySetInnerHTML={ {__html: post.content} } />
                     <div className="text-center">
                         <div className="inline-block my-2.5 md:my-4">
@@ -283,13 +283,13 @@ const Index = ({post}) => {
 
                             
                             <div className="edit-wrap hidden">
-                                <textarea className="comment-profile block w-full min-h-[50px] p-2 my-2.5 text-sm bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 
-                        outline-none resize-none text-sm rounded-sm" defaultValue={c.content}/>
-                                <button onClick={updateComment} data-index={idx} className="w-full py-1.5 text-gray-100 bg-green-400 hover:bg-green-500 rounded-sm ">
+                                <textarea className="comment-profile block w-full min-h-[50px] p-3 mb-2 text-md bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 
+                        outline-none resize-none rounded-sm" defaultValue={c.content}/>
+                                <button onClick={updateComment} data-index={idx} className="w-full py-1 text-md text-gray-100 bg-green-400 hover:bg-green-500 rounded-sm ">
                                     수정하기
                                 </button>
                             </div>
-                            <pre className="block comment-content-wrap sm:p-3.5 p-2 text-md bg-slate-50 dark:bg-slate-500 text-black dark:text-white rounded-sm whitespace-pre-wrap overflow-auto break-all ">
+                            <pre className="block comment-content-wrap sm:p-3 p-2 text-md bg-slate-50 dark:bg-slate-500 text-black dark:text-white rounded-sm whitespace-pre-wrap overflow-auto break-all ">
                                 {c.content}
                                 
                                 {
@@ -336,8 +336,8 @@ const Index = ({post}) => {
                         <>Stranger</>
                     }
                     </div>
-                    <textarea ref={commentWriteRef} className="comment-profile block w-full min-h-[50px] p-2 my-2.5  text-sm bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 
-                    outline-none resize-none text-sm rounded-sm"/>
+                    <textarea ref={commentWriteRef} className="comment-profile block w-full min-h-[50px] p-3 my-2.5  text-md bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 
+                    outline-none resize-none rounded-sm"/>
                     
                     <button onClick={writeComment} className="w-full py-1.5 text-gray-100 bg-blue-400 hover:bg-blue-500 rounded-sm ">
                         댓글 쓰기

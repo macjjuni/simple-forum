@@ -4,7 +4,7 @@ const userSchema = new Schema({
         no : Number,
         id : { type : String, maxlength : 15 },
         pw : { type : String },
-        email : { type : String },
+        email : { type : String, maxlength : 30 },
         nicname : { type : String, maxlength : 10 },
         profile_image : { type : String },
         date: { type: Date, default: Date.now },

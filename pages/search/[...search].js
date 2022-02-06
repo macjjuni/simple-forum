@@ -6,11 +6,9 @@ import { GoSearch } from 'react-icons/go'
 
 const Search = ({list, txt}) => {
 
-    const [_list, setList] = useState(list);
     const [searchTxt, setSearchTxt] = useState(decodeURI(txt))
 
     useEffect(()=>{
-        setList(list);
         setSearchTxt(decodeURI(txt));
     }, [list])
 
@@ -18,13 +16,13 @@ const Search = ({list, txt}) => {
     <>
         <SeachBar init={searchTxt}/>
         <h2 className="pt-8 pb-2 text-2xl">
-            <GoSearch className="inline-block mr-2"/>
-            검색 결과 &#34;{searchTxt}&#34;
+            <GoSearch className="inline-block mr-2 mb-1"/>
+            검색 결과 : {list.length}
         </h2>
 
-        <ul className="block w-full py-4">
+        <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 py-6">
         {
-            _list.map((post, idx) =>
+            list.map((post, idx) =>
                 <PostItem key={post.title+idx} _id={post._id} title={post.title} author={post.author} tags={post.tags} date={post.date} comments={post.comments}/>
             )
         }
