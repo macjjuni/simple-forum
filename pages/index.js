@@ -6,11 +6,9 @@ import { useState, useEffect, useRef, useCallback } from 'react'
 import { CgSpinner } from 'react-icons/cg'
 import { FcOpenedFolder } from 'react-icons/fc'
 
-
 const Home = ({list, total}) => {
-  
+
   const [List, setList] = useState(()=> list);
-  // const [obs, InView] = useInView()
   
   const [page, setPage] = useState(1);
   const [load, setLoad] = useState(false);
