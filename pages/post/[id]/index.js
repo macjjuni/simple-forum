@@ -111,7 +111,7 @@ const Index = ({post}) => {
             });
 
             if(res.data.error === null){
-                console.log('댓글 삭제');
+                // console.log('댓글 삭제');
                 const _comments = comments;
                 _comments.splice(target, 1);
                 setComments([..._comments]);  //댓글 삭제 렌더링
@@ -351,17 +351,24 @@ const Index = ({post}) => {
 export const getServerSideProps = async({query}) => {
     
     const { id } = query;
-    const res = await axios({ //게시글 목록 불러오기
-        method : 'POST',
-        url : `http://localhost:${process.env.PORT}/api/db/post/read/${id}`,
-        data : { id : 'simple-forum' }
-    });
 
-    if(res.status === 200 && res.data[0] ){
-        return{
-            props : { post : res.data[0] }
+    try{
+        const res = await axios({ //게시글 목록 불러오기
+            method : 'POST',
+            url : `http://localhost:${process.env.PORT}/api/db/post/read/${id}`,
+            data : { id : 'simple-forum' }
+        });
+
+        if(res.status === 200 && res.data[0] ){
+            return{
+                props : { post : res.data[0] }
+            }
+        }else{
+            return{
+                notFound : true    
+            }
         }
-    }else{
+    }catch(err) {
         return{
             notFound : true    
         }

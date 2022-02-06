@@ -1,5 +1,5 @@
 import HeadInfo from '../components/headInfo'
-import SeachBar from '../components/searchBar'
+import SeacrhBar from '../components/searchBar'
 import PostItem from "../components/postItem"
 import axios from 'axios'
 import { useState, useEffect, useRef, useCallback } from 'react'
@@ -58,7 +58,7 @@ const Home = ({list, total}) => {
     <>
       <HeadInfo/>
         {/* <button onClick={()=> console.log(List)}>List Check</button> */}
-        <SeachBar/>
+        <SeacrhBar/>
         <h2 className='flex justify-start items-center pt-8 pb-2 text-xl md:text-2xl '> 
           <FcOpenedFolder className='inline-block text-3xl mr-2'/>
           전체글({total})</h2>
@@ -99,20 +99,28 @@ const Home = ({list, total}) => {
   )
 }
 
-export const getServerSideProps = async() => {
+export const getServerSideProps = async({param}) => {
+  console.log(param)
+  try{
+    const res = await axios({ //게시글 목록 불러오기
+      method : 'GET',
+      url : `http://localhost:${process.env.PORT}/api/db/post/read/list?page=${1}`,
+    })
 
-  const res = await axios({ //게시글 목록 불러오기
-    method : 'GET',
-    url : `http://localhost:${process.env.PORT}/api/db/post/read/list?page=${1}`,
-  })
-
-  if(res.status === 200){
-    return{
-      props : { list : res.data.list, total : res.data.total }
+    if(res.status === 200){
+      return{
+        props : { list : res.data.list, total : res.data.total }
+      }
+    }else{
+      return {
+        notFound: true,
+      }
     }
-  }else{
-    return{
-      props : { list : null, total : 0 }
+    
+  } catch(err) {
+    console.log(err)
+    return {
+      notFound: true,
     }
   }
   

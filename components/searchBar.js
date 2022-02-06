@@ -2,7 +2,7 @@ import { useRef, useEffect } from 'react'
 import { useRouter } from 'next/router';
 import { GoSearch } from 'react-icons/go'
 
-const SeachBar = ({init}) =>{
+const SeacrhBar = ({init}) =>{
 
     const { push } = useRouter();
     const searchRef = useRef(null); //검색 input Element
@@ -41,4 +41,4 @@ const SeachBar = ({init}) =>{
     )
 }
 
-export default SeachBar
+export default SeacrhBar

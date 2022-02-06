@@ -1,5 +1,4 @@
 import Head from "next/head"
-import Script from "next/script"
 
 const HeadInfo = ({title, keyword, content}) => {
 
@@ -14,9 +13,10 @@ const HeadInfo = ({title, keyword, content}) => {
             <Head>
             <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
             <meta name="HandheldFriendly" content="true" />
-            <meta name="theme-color" content="#000000" />
             <meta name="description" content={headInfo._content}/>
             <meta name="keywords" content={headInfo._keyword} />
+
+            <link rel="shortcut icon" href="/public/favicon/favicon.ico" />
 
             <meta property="og:title" content={headInfo._title} />
             <meta property="og:site_name" content={headInfo._title} />
@@ -24,7 +24,15 @@ const HeadInfo = ({title, keyword, content}) => {
             <meta property="og:description" content={headInfo._content} />
             <meta name="keywords" content={headInfo._keyword} />
             <meta property="og:type" content="website" />
-            <meta property="og:image" content="https://www.juni-official.com/static/media/logo.06f29f67.png"></meta>
+            <meta property="og:image" content="/public/logo.06f29f67.png"></meta>
+
+            <link rel="apple-touch-icon" sizes="180x180" href="public/apple-touch-icon.png" />
+            <link rel="icon" type="image/png" sizes="32x32" href="public/favicon-32x32.png" />
+            <link rel="icon" type="image/png" sizes="16x16" href="public/favicon-16x16.png" />
+            <link rel="manifest" href="public/site.webmanifest" />
+            <link rel="mask-icon" href="public/safari-pinned-tab.svg" color="#000000" />
+            <meta name="msapplication-TileColor" content="#000000" />
+            <meta name="theme-color" content="#ffffff" />
 
             <link rel="preconnect" href="https://fonts.googleapis.com" />
             <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
