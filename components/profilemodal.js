@@ -75,7 +75,7 @@ const ProfileModal = ({status, session, signOut, toggleModal }) => {
                                 <a className="w-full mx-1 py-1 text-center bg-white text-black rounded-sm">글쓰기</a>
                             </Link>
                             <button className="w-full mx-1 py-1 text-center bg-white text-black rounded-sm" 
-                                onClick={()=> { signOut({callbackUrl: "/"}); }}>로그아웃</button>
+                                onClick={()=> signOut() }>로그아웃</button>
                         </>
                     }
                     
