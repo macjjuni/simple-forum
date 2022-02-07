@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { useRouter } from "next/router"
 import Image from "next/image"
 import Link from "next/link"
 import { FiUserX } from 'react-icons/fi'
@@ -6,6 +7,7 @@ import { FiUserX } from 'react-icons/fi'
 const ProfileModal = ({status, session, signOut, toggleModal }) => {    
 
     const [profile, setProfile] = useState('/user_profile.png');
+    const { push } = useRouter(null);
 
     useEffect(()=>{ //모달 외 클릭 체크 
         document.addEventListener('click', clickCheck);
@@ -21,6 +23,11 @@ const ProfileModal = ({status, session, signOut, toggleModal }) => {
     const clickCheck = (e) =>{
         const chk_class = e.target.classList.contains('modal');
         if(chk_class === false) toggleModal();
+    }
+
+    const logout = async() => {
+        const data = await signOut({redirect: false, callbackUrl: "/"});
+        push(data.url);
     }
 
 
@@ -75,7 +82,7 @@ const ProfileModal = ({status, session, signOut, toggleModal }) => {
                                 <a className="w-full mx-1 py-1 text-center bg-white text-black rounded-sm">글쓰기</a>
                             </Link>
                             <button className="w-full mx-1 py-1 text-center bg-white text-black rounded-sm" 
-                                onClick={()=> signOut({callbackUrl: "/"}) }>로그아웃</button>
+                                onClick={logout}>로그아웃</button>
                         </>
                     }
                     

@@ -58,11 +58,11 @@ export default NextAuth({
     },
     callbacks: {
         redirect({ url, baseUrl   }) {
-            if (url.startsWith(baseUrl)) return url
+          if (url.startsWith(baseUrl)) return url
           // Allows relative callback URLs
-            else if (url.startsWith("/")) return new URL(url, baseUrl).toString()
-            return baseUrl
+          else if (url.startsWith("/")) return new URL(url, baseUrl).toString()
+          return baseUrl
         }
-    },
+    }
     secret: process.env.SECRET
 })
