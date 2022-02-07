@@ -6,7 +6,7 @@ const PostItem = ({_id, title, author, tags, date, comments, thumbnail}) => {
 
     return(
         <> 
-            <li className="post-item bg-slate-100 dark:bg-gray-700 truncate rounded-sm overflow-hidden ">
+            <li className="post-item bg-slate-100 dark:bg-gray-700 truncate rounded-sm overflow-hidden hover:scale-[1.05] transition-[transform]">
                 <Link href={`/post/${_id}`} scroll={true} passHref>
                 <a className="block">
                 
