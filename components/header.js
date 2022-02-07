@@ -84,7 +84,7 @@ const Header = () => {
                         {modal && (
                             <motion.div layoutId='profile-modal' initial={ani.init} animate={ani.ani} exit={ ani.exit } transition={{ ease : "easeInOut", duration: 0.4 }}
                             className='modal'>
-                                <ProfileModal status={status} session={session} signIn={signIn} signOut={()=> signOut({callbackUrl : '/'})} toggleModal={toggleModal}/>
+                                <ProfileModal status={status} session={session} signIn={signIn} signOut={()=> signOut({callbackUrl : 'https://www.simple-forum.site'})} toggleModal={toggleModal}/>
                             </motion.div>
                             )
                         }
