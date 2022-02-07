@@ -1,5 +1,5 @@
 
-<h2><strong>Simple-Forum</strong></h2>
+<h2><strong>Simple-Forum</strong>  -> <a href='https://www.simple-forum.site/' target="_black">🔗 Link</a></h2>
 <br>
 Simple Forum은 Next.js로 제작한 SSR 방식의 회원 전용 게시판 웹사이트입니다. 이전 텍스트 작성만 가능했던 CSR 방식의 Simple React Board를 개편하여 회원가입/로그인, 위지윅 텍스트 에디터, 이미지 업로드, 무한 스크롤 기능을 추가하였습니다.
 
