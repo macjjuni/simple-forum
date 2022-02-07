@@ -55,25 +55,25 @@ const Header = () => {
                     <div className="text-[0px]">
 
                         <button onClick={toggleTheme} className='inline-block w-11 h-11 inline-flex items-center align-top text-lg rounded-full
-                            hover:bg-slate-200 dark:hover:bg-slate-500 '>
-                            <BsFillSunFill className='mx-auto h-10 text-black dark:text-white scale-110'/>
+                            hover:text-white hover:bg-blue-400 transition'>
+                            <BsFillSunFill className='mx-auto h-10 text-inhrit dark:text-white scale-110'/>
                         </button>
                         
                         <Link href='/newpost' passHref>
                             <a className='inline-block w-11 h-11 ml-0.5 lg:ml-2 inline-flex items-center align-top text-lg rounded-full
-                            hover:bg-slate-200 dark:hover:bg-slate-500 '>
-                                <BsPencil className='mx-auto h-10 text-black dark:text-white scale-110 '/>
+                            hover:text-white hover:bg-blue-400  transition'>
+                                <BsPencil className='mx-auto h-10 text-inhrit scale-110 '/>
                             </a>
                         </Link>
 
                         <button onClick={toggleModal} className={`${modal !== null ? 'bg-slate- 200 dark:bg-slate-400 text-white' : ''} text-lg 
-                        rounded-full w-11 h-11 ml-0.5 lg:ml-2 overflow-hidden hover:bg-slate-200 dark:hover:bg-slate-500 `}>
+                        rounded-full w-11 h-11 ml-0.5 lg:ml-2 overflow-hidden hover:text-white hover:bg-blue-400 transition`}>
                             {
                                 !session
                                     ?
-                                <FiUserX className='text-black dark:text-white m-auto h-full scale-110 '/>
+                                <FiUserX className='text-inhrit m-auto h-full scale-110 '/>
                                     :
-                                <FiUserCheck className='text-black dark:text-white m-auto h-full scale-110 '/>
+                                <FiUserCheck className='text-inhrit m-auto h-full scale-110 '/>
                             }
                         </button>
                     </div>

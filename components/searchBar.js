@@ -30,7 +30,7 @@ const SeacrhBar = ({init}) =>{
 
             <div className='relative inline-block align-top'>
                 <input ref={searchRef} type="text" onKeyDown={searchAction} className="w-[130px] sm:w-[150px] h-10 pl-9 pr-2 py-2 outline-0 bg-gray-100 dark:bg-gray-500
-                hover:bg-gray-200 dark:hover:bg-gray-400 focus:w-[180px] sm:focus:w-[200px] text-md shadow-sm rounded-3xl outline-none text-ellipsis transition-all"/>
+                hover:bg-gray-200 dark:hover:bg-gray-400 focus:w-[180px] sm:focus:w-[200px] text-md shadow-sm rounded-3xl outline-none text-ellipsis transition-[width]"/>
                 <div onClick={searchClick} className='absolute top-0 lop-0 w-9 h-10 flex items-center justify-evenly text-black dark:text-white cursor-pointer'>
                     <GoSearch/>
                 </div>
