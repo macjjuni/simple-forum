@@ -1,5 +1,5 @@
 import Link from "next/link"
-import LazyImage from '../components/lazyImage'
+import LazyThumb from './lazyThumb'
 import { BsImage } from 'react-icons/bs'
 
 const PostItem = ({_id, title, author, tags, date, comments, thumbnail}) => {
@@ -12,8 +12,8 @@ const PostItem = ({_id, title, author, tags, date, comments, thumbnail}) => {
                 
                 {
                     thumbnail !== 'null' && thumbnail !== undefined ?
-                    <div className="thumb-wrap text-[0] bg-white">
-                        <LazyImage src={thumbnail} alt='thumbnail' width='620' height='350'/>   
+                    <div className="thumb-wrap bg-white dark:bg-slate-800">
+                        <LazyThumb src={thumbnail} alt='thumbnail' width='620' height='380'/>   
                     </div>
                         :
                     <div className="thumb-img flex justify-center items-center bg-white dark:bg-gray-800 ">

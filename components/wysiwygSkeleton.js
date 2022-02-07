@@ -1,6 +1,6 @@
 
 
-const NewPostSkeleton = () => {
+const WysiwygSkeleton = () => {
 
     return(
         <>
@@ -11,4 +11,4 @@ const NewPostSkeleton = () => {
         </>
     )
 }
-export default NewPostSkeleton
+export default WysiwygSkeleton

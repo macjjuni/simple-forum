@@ -23,7 +23,10 @@ const Search = ({list, txt}) => {
         <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 py-6">
         {
             list.map((post, idx) =>
-                <PostItem key={post.title+idx} _id={post._id} title={post.title} author={post.author} tags={post.tags} date={post.date} comments={post.comments}/>
+                <PostItem key={post._id + idx} _id={post._id}
+                    title={post.title} author={post.author} tags={post.tags} 
+                    date={post.date} comments={post.comments} thumbnail={post.thumbnail}
+                />
             )
         }
         </ul>           

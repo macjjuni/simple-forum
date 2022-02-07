@@ -4,11 +4,11 @@ import { useRouter } from "next/router";
 import HeadInfo from "../components/headInfo"
 import dynamic from "next/dynamic"
 import axios from "axios"
-import NewPostSkeleton from "../components/newpostSkeleton";
+import WysiwygSkeleton from "../components/wysiwygSkeleton";
 
 const NoSsrWysiwyg = dynamic(()=> import('../components/wysiwyg'),
     { 
-        loading: () => <NewPostSkeleton/>,
+        loading: () => <WysiwygSkeleton/>,
         ssr : false
     }
 )

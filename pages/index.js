@@ -3,7 +3,7 @@ import SeacrhBar from '../components/searchBar'
 import PostItem from "../components/postItem"
 import axios from 'axios'
 import { useState, useEffect, useRef, useCallback } from 'react'
-import { CgSpinner } from 'react-icons/cg'
+import PostItemSkeleton from '../components/postItemSkeleton'
 import { FcOpenedFolder } from 'react-icons/fc'
 
 const Home = ({list, total}) => {
@@ -38,6 +38,7 @@ const Home = ({list, total}) => {
 
   const getPost = useCallback(async() => { //글 불러오기  
       setLoad(true); //로딩 시작
+      
       const res = await axios({method : 'GET', url : `/api/db/post/read/list/?page=${page}`});
       if(res.data){
           if(res.data.end){
@@ -57,7 +58,7 @@ const Home = ({list, total}) => {
   return (
     <>
       <HeadInfo/>
-        {/* <button onClick={()=> console.log(List)}>List Check</button> */}
+      
         <SeacrhBar/>
         <h2 className='flex justify-start items-center pt-8 pb-2 text-xl md:text-2xl '> 
           <FcOpenedFolder className='inline-block text-3xl mr-2'/>
@@ -76,17 +77,11 @@ const Home = ({list, total}) => {
             }
             </>            
           }
-        </ul>
-        {
-            load ?
-            <li className="block text-center py-5 text-blue-700 dark:text-blue-500 text-center text-3xl text-black">
-              <div className='spinner inline-block spinner m-auto'>
-                <CgSpinner/>
-              </div>  
-            </li>
-            :
-            <></>
+          {
+            load &&
+            <PostItemSkeleton/>
           }
+        </ul>
           {
             total === 0 ?
             <div ref={noPostRef} className='hidden w-full mt-5 py-2.5 text-white dark:text-black text-xl text-center bg-blue-400 dark:bg-slate-800 rounded-sm'>글을 불러올 수 없습니다.</div>
@@ -99,8 +94,8 @@ const Home = ({list, total}) => {
   )
 }
 
-export const getServerSideProps = async({param}) => {
-  console.log(param)
+export const getServerSideProps = async() => {
+
   try{
     const res = await axios({ //게시글 목록 불러오기
       method : 'GET',
