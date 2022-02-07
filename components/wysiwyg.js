@@ -198,7 +198,7 @@ const WysiwygEditor = ({uploadDB, init}) => {
                 </div>
                 
             </div>
-
+            <button onClick={()=> console.log(getMarkDown())} className='w-full mb-6 p-2 text-gray-100 bg-blue-400 hover:bg-blue-500 transition duration-300 rounded-sm'>get</button>
             <button onClick={writePost} className='w-full mb-6 p-2 text-gray-100 bg-blue-400 hover:bg-blue-500 transition duration-300 rounded-sm'>작성하기</button>
 
         </>
