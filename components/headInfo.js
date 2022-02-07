@@ -16,21 +16,21 @@ const HeadInfo = ({title, keyword, content}) => {
             <meta name="description" content={headInfo._content}/>
             <meta name="keywords" content={headInfo._keyword} />
 
-            <link rel="shortcut icon" href="/public/favicon/favicon.ico" />
+            <link rel="shortcut icon" href="/favicon/favicon.ico" />
 
             <meta property="og:title" content={headInfo._title} />
             <meta property="og:site_name" content={headInfo._title} />
-            <meta property="og:url" content="https://www.juni-official.com/" />
+            <meta property="og:url" content="https://www.simple-forun.com/" />
             <meta property="og:description" content={headInfo._content} />
             <meta name="keywords" content={headInfo._keyword} />
             <meta property="og:type" content="website" />
-            <meta property="og:image" content="/public/logo.06f29f67.png"></meta>
+            <meta property="og:image" content="/favicon/logo.06f29f67.png"></meta>
 
-            <link rel="apple-touch-icon" sizes="180x180" href="public/apple-touch-icon.png" />
-            <link rel="icon" type="image/png" sizes="32x32" href="public/favicon-32x32.png" />
-            <link rel="icon" type="image/png" sizes="16x16" href="public/favicon-16x16.png" />
-            <link rel="manifest" href="public/site.webmanifest" />
-            <link rel="mask-icon" href="public/safari-pinned-tab.svg" color="#000000" />
+            <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
+            <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png" />
+            <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png" />
+            <link rel="manifest" href="favicon/site.webmanifest" />
+            <link rel="mask-icon" href="favicon/safari-pinned-tab.svg" color="#000000" />
             <meta name="msapplication-TileColor" content="#000000" />
             <meta name="theme-color" content="#ffffff" />
 
