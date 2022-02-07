@@ -10,7 +10,7 @@ const ReCaptchaV2 = ({setReCaptchaChk}) => {
         const token = await recaptchaRef.current.getValue();
         const { data } = await axios({
             method : 'post',   
-            url : '/api/recaptchachk',
+            url : '/api/recaptcha',
             data : {
                 token : token
             }

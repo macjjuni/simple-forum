@@ -33,7 +33,7 @@ const WysiwygEditor = ({uploadDB, init}) => {
     const [tags, setTag] = useState([]);
 
     const toolbarItems = [
-        ['heading', 'bold', 'italic', 'strike'],
+        ['heading', 'bold', 'italic', 'strike',],
         ['hr'],
         ['ul', 'ol', 'task'],
         ['table', 'link'], 
@@ -186,6 +186,7 @@ const WysiwygEditor = ({uploadDB, init}) => {
                 usageStatistics={false}
                 toolbarItems={toolbarItems}
                 plugins={[colorSyntax, ]}
+                placeholder='내용을 입력해주세요.'
             />
             
             <div className="tag-wrap flex mb-3 py-2 px-4 border border-t-0 bg-white text-black rounded-b-sm ">

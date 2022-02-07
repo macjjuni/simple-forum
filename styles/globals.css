@@ -120,26 +120,28 @@ img{
   font-size: 1.1rem; 
 }
 
-.post-content img{
-  transition: transform 0.4s ease;
+.post-content img{ transition: transform 0.4s ease; }
+.post-content img:hover{ transform: scale(1.01); }
+
+.post-content ul{
+  padding: 0.5em 0 0.5em 1.5em;
+  list-style: disc;
+}
+.post-content ul>li{
+  padding: 0.25em 0;
+}
+.post-content a{
+  text-decoration-line: underline;
+
+  text-decoration-style: solid;
+  text-decoration-color: inherit;
+  text-decoration-thickness: auto;
+  text-underline-offset: 1px;
 }
 
-.post-content img:hover{
-  transform: scale(1.01);
-}
-
-.spinner{
-  transform: rotate(0deg);
-  animation: spin ease-in-out 1.3s infinite;
-}
 
 @keyframes skeletonAni {
   0%{ opacity: 1; }
   50%{ opacity: 0.2; }
   100%{ opacity: 1; }
-}
-
-@keyframes spin {
-  from{ transform: rotate(0deg); }
-  to{ transform: rotate(720deg); }
 }
