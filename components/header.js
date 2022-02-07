@@ -38,7 +38,8 @@ const Header = () => {
             localStorage.theme = 'dark';
         }
     }
-
+    
+    
     return(
         <>
             <header ref={headerRef} className="relative w-full z-[999] shadow-sm lg:shadow-none">
@@ -83,7 +84,7 @@ const Header = () => {
                         {modal && (
                             <motion.div layoutId='profile-modal' initial={ani.init} animate={ani.ani} exit={ ani.exit } transition={{ ease : "easeInOut", duration: 0.4 }}
                             className='modal'>
-                                <ProfileModal status={status} session={session} signIn={signIn} signOut={signOut} toggleModal={toggleModal}/>
+                                <ProfileModal status={status} session={session} signIn={signIn} signOut={()=> signOut({callbackUrl : '/'})} toggleModal={toggleModal}/>
                             </motion.div>
                             )
                         }
