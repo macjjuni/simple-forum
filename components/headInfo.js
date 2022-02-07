@@ -35,8 +35,8 @@ const HeadInfo = ({title, keyword, content}) => {
             <meta name="theme-color" content="#ffffff" />
 
             <link rel="preconnect" href="https://fonts.googleapis.com" />
-            <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
-            <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;900&family=Open+Sans:wght@400;500;800&display=swap" rel="stylesheet" />
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin={true} />
+            <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;900&family=Open+Sans:wght@400;500;800&family=Saira&display=swap" rel="stylesheet" />
 
             <title>{headInfo._title}</title>
             

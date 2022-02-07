@@ -49,7 +49,7 @@ const Header = () => {
                     
                     <h1 className='inline-block text-2xl lg:text-5xl lg:h-10 lg:h-14'>
                         <Link href='/' passHref>
-                            <a className="block h-full">Simple Forum</a>
+                            <a className="block h-full logo">Simple Forum</a>
                         </Link>
                     </h1>
 

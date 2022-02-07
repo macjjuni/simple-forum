@@ -27,6 +27,10 @@ a {
 
 .skeleton{ animation: skeletonAni 2s ease infinite; }
 
+.logo{
+  font-family: 'Saira', sans-serif !important;
+}
+
 .toastui-editor-defaultUI .ProseMirror{ padding: 15px !important; }
 .toastui-editor-defaultUI{ border-radius: 0 !important; }
 .toastui-editor-defaultUI-toolbar{ border-radius: 0 !important; }
