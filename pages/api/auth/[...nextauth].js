@@ -63,6 +63,6 @@ export default NextAuth({
           else if (url.startsWith("/")) return new URL(url, baseUrl).toString()
           return baseUrl
         }
-    }
+    },
     secret: process.env.SECRET
 })
