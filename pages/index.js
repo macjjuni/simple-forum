@@ -4,7 +4,7 @@ import PostItem from "../components/postItem"
 import axios from 'axios'
 import { useState, useEffect, useRef, useCallback } from 'react'
 import PostItemSkeleton from '../components/postItemSkeleton'
-import { FcOpenedFolder } from 'react-icons/fc'
+import { RiFileList2Fill } from 'react-icons/ri'
 
 const Home = ({list, total}) => {
 
@@ -61,7 +61,7 @@ const Home = ({list, total}) => {
       
         <SeacrhBar/>
         <h2 className='flex justify-start items-center pt-8 pb-2 text-xl md:text-2xl '> 
-          <FcOpenedFolder className='inline-block text-3xl mr-2'/>
+          <RiFileList2Fill className='inline-block mr-2 text-3xl text-blue-400'/>
           전체글({total})</h2>
         <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 py-6">
           {
