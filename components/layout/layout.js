@@ -35,15 +35,15 @@ const Layout = ({children}) => {
 
 const animate = {
     initial :{ //none use
-        transform : `translateX(50px)`,
+        // transform : `translateX(50px)`,
         opacity : 0,
     },
     animate : {
-        transform : `translateX(0px)`,
+        // transform : `translateX(0px)`,
         opacity: 1,
     },
     exit : {
-        transform : `translateX(-50px)`,
+        // transform : `translateX(-50px)`,
         opacity: 0,
     }
 }

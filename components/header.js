@@ -99,21 +99,21 @@ const Header = () => {
 const ani = {
     init : {
         position: 'absolute',
-        top : '30px', right : '10px',
+        top : '70px', right : '10px',
         transform: 'rotate(0deg)',
         zIndex : 999,
         opacity: 0,
     },
     ani : {
         position: 'absolute',
-        top : '90px', right : '10px',
+        top : '100px', right : '10px',
         transform: 'rotate(0deg)',
         zIndex : 999,
         opacity: 1,
     },
     exit : {
         position: 'absolute',
-        top : '30px', right : '10px',
+        top : '70px', right : '10px',
         transform: 'rotate(0deg)',
         zIndex : 999,
         opacity: 0,
