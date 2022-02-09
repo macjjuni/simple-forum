@@ -44,7 +44,7 @@ const Header = () => {
         <>
             <header ref={headerRef} className="relative w-full z-[999] shadow-sm lg:shadow-none">
                 <div className={`header-wrap relative h-full ${route==='/'||route.includes('search')|| route.includes('editpost') ||route.includes('newpost') ?'max-w-screen-lg':'max-w-screen-md'} 
-                transition-[max-width] duration-500 ease-[cubic-bezier(0.17, 0.67, 0.83, 0.67)]
+                transition-[max-width] duration-300 ease-[cubic-bezier(0.17, 0.67, 0.83, 0.67)]
                 mx-auto h-20 lg:h-28 px-2 flex justify-between items-center`}>
                     
                     <h1 className='inline-block text-2xl lg:text-5xl lg:h-10 lg:h-14'>
@@ -82,7 +82,7 @@ const Header = () => {
                     {/* 프로필 모달 */}
                     <AnimatePresence>   
                         {modal && (
-                            <motion.div layoutId='profile-modal' initial={ani.init} animate={ani.ani} exit={ ani.exit } transition={{ ease : "easeInOut", duration: 0.4 }}
+                            <motion.div layoutId='profile-modal' initial={ani.init} animate={ani.ani} exit={ ani.exit } transition={{ ease : "easeInOut", duration: 0.3 }}
                             className='modal'>
                                 <ProfileModal status={status} session={session} signIn={signIn} signOut={signOut} toggleModal={toggleModal}/>
                             </motion.div>
