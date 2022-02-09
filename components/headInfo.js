@@ -24,7 +24,7 @@ const HeadInfo = ({title, keyword, content}) => {
             <meta property="og:description" content={headInfo._content} />
             <meta name="keywords" content={headInfo._keyword} />
             <meta property="og:type" content="website" />
-            <meta property="og:image" content="favicon.png"></meta>
+            <meta property="og:image" content="https://www.simple-forum.site/favicon.png"></meta>
 
             <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
             <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png" />
