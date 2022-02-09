@@ -10,7 +10,7 @@ const HeadInfo = ({title, keyword, content}) => {
 
     return(
         <>
-            <Head>
+            <Head lang='ko'>
             <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
             <meta name="HandheldFriendly" content="true" />
             <meta name="description" content={headInfo._content}/>

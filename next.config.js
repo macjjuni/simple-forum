@@ -1,4 +1,8 @@
 module.exports = {
+  i18n: {
+    locales: ["ko"],
+    defaultLocale: "ko",
+  },
   reactStrictMode: true,
   api: {
     externalResolver: true,
