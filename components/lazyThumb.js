@@ -27,7 +27,7 @@ const LazyThumb = ({src, alt, width, height}) => {
 
     return(
         <>
-            <img src={''} ref={imgRef} data-src={src}
+            <img src={'/'} ref={imgRef} data-src={src}
                 alt={alt}
                 className="thumb-img opacity-0 inline-block" 
                 width={width} height={height} />
