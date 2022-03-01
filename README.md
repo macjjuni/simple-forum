@@ -1,3 +1,4 @@
+<img src="https://user-images.githubusercontent.com/38034518/156158206-a8cde8a0-ad0a-4288-8348-5073bc39c162.png" alt="simple-forum.png">
 
 <h2><strong>Simple-Forum</strong>  -> <a href='https://www.simple-forum.site/' target="_black">🔗 Link</a></h2>
 <br>
