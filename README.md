@@ -19,7 +19,8 @@ Simple Forum은 Next.js로 제작한 SSR 방식의 회원 전용 게시판 웹�
 
 
 <br>
-<img src="https://firebasestorage.googleapis.com/v0/b/simple-forum-f9e1c.appspot.com/o/post_images%2Ffpbw2ej9_202211722121253.png?alt=media&amp;amp;token=d76dd6ec-ad8d-4e56-b81f-ae12572cdfab" alt="image.png">
+<img src="https://user-images.githubusercontent.com/38034518/156157389-dfe935b6-584b-4e81-835f-0a7246b4f26d.png" alt="image.png">
+
 
 프론트 단은 Next.js, TailWind CSS로 구현됐으며, 로그인 인증은 Next.js/서버리스(Server less)에 유연한 Next-Auth 라이브러리와 bCrypt 암호화/reCaptcha를 사용해 회원 유저 검증을 진행합니다.
 
