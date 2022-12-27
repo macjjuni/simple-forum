@@ -1,5 +1,21 @@
-<h2><strong>Simple-Forum</strong>  -> <a href='https://www.simple-forum.site/' target="_black">🔗 Link</a></h2>
+<h2><strong>Simple-Forum  </strong> <a href='https://www.simple-forum.site/' target="_black">🔗 Link</a></h2>
+<br><br>
+<div align="center">
+  <img src="https://img.shields.io/badge/Next.js-000000?style=flat&logo=Next.js&logoColor=white" />
+	<img src="https://img.shields.io/badge/React-61DAFB?style=flat&logo=React&logoColor=white" />
+	<img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=JavaScript&logoColor=white" />
+  <img src="https://img.shields.io/badge/MUI-007FFF?style=flat&logo=MUI&logoColor=white" />
+	<img src="https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=HTML5&logoColor=white" />
+  	<img src="https://img.shields.io/badge/Tailwind CSS-06B6D4?style=flat&logo=TailwindCSS&logoColor=white" />
+	<img src="https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=CSS3&logoColor=white" />
+  	<img src="https://img.shields.io/badge/Firebase-FFCA28?style=flat&logo=Firebase&logoColor=white" />
+  	<img src="https://img.shields.io/badge/Amazon EC2-FF9900?style=flat&logo=AmazonEC2&logoColor=white" />
+</div>
+
 <br>
+<br>
+<h2><strong>📸 Initial Screen</strong></h2>
+
 <img src="https://user-images.githubusercontent.com/38034518/156158206-a8cde8a0-ad0a-4288-8348-5073bc39c162.png" alt="simple-forum.png">
 <br>
 Simple Forum은 Next.js로 제작한 SSR 방식의 회원 전용 게시판 웹사이트입니다. 이전 텍스트 작성만 가능했던 CSR 방식의 Simple React Board를 개편하여 회원가입/로그인, 위지윅 텍스트 에디터, 이미지 업로드, 무한 스크롤 기능을 추가하였습니다.
