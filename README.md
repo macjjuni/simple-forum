@@ -1,4 +1,4 @@
-<h2><strong>Simple-Forum  </strong> <a href='https://www.simple-forum.site/' target="_black">🔗 Link</a></h2>
+<h2><strong>Simple-Forum  </strong> <a href='ec2-52-79-197-201.ap-northeast-2.compute.amazonaws.com' target="_black">🔗 Link</a></h2>
 <br><br>
 <div align="center">
   <img src="https://img.shields.io/badge/Next.js-000000?style=flat&logo=Next.js&logoColor=white" />
