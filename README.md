@@ -1,4 +1,4 @@
-<h2><strong>Simple-Forum  </strong> <a href='http://ec2-52-79-197-201.ap-northeast-2.compute.amazonaws.com/' target="_black">🔗 Link</a></h2>
+<h2><strong>Simple-Forum</strong></h2>
 <br><br>
 <div align="center">
   <img src="https://img.shields.io/badge/Next.js-000000?style=flat&logo=Next.js&logoColor=white" />
@@ -18,11 +18,11 @@
 
 <img src="https://user-images.githubusercontent.com/38034518/156158206-a8cde8a0-ad0a-4288-8348-5073bc39c162.png" alt="simple-forum.png">
 <br>
-Simple Forum은 Next.js로 제작한 SSR 방식의 회원 전용 게시판 웹사이트입니다. 이전 텍스트 작성만 가능했던 CSR 방식의 Simple React Board를 개편하여 회원가입/로그인, 위지윅 텍스트 에디터, 이미지 업로드, 무한 스크롤 기능을 추가하였습니다.
+Simple Forum은 Next.js를 사용한 SSR 방식에 회원 전용 게시판입니다. 이전 텍스트 작성만 가능했던 CSR 방식의 Simple React Board를 개편하여 회원가입/로그인, 위지윅 텍스트 에디터, 이미지 업로드, 무한 스크롤 기능을 추가했습니다.
 
 <br/><br/>
 
-<ul><li>Simpe Forum -> 🔗 <strong><a href="https://github.com/junheeleeme/simple-forum"><span style="color: #0070ff" data-raw-html="span">Github</span></a></strong></li><li>Simple React Board -> 🔗 <strong><a href="https://github.com/junheeleeme/Simple-React-Board"><span style="color: #0070ff" data-raw-html="span">Github</span></a></strong></li></ul>
+<ul><li>Simple React Board -> 🔗 <strong><a href="https://github.com/junheeleeme/Simple-React-Board"><span style="color: #0070ff" data-raw-html="span">Github</span></a></strong></li></ul>
 
 
 <br>
@@ -31,19 +31,19 @@ Simple Forum은 Next.js로 제작한 SSR 방식의 회원 전용 게시판 웹�
 
 
 <br>
-<h3><strong><span style="color: rgb(38, 38, 38); font-family: -apple-system, 'system-ui', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;" data-raw-html="span">📌</span> 사용한 스킬 및 라이브러리</strong></h3>
-<ul><li>React(Next.js), TailWind CSS, MongoDB, Firebase, Next-Auth, Toast UI Editor, AWS EC2 Linux</li></ul>
+<h3><strong><span style="color: rgb(38, 38, 38); font-family: -apple-system, 'system-ui', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;" data-raw-html="span">📌</span>기술 스택 및 라이브러리</strong></h3>
+<ul><li>Next.js, TailWind CSS, Next-Auth, Toast UI Editor, MongoDB, Firebase, AWS EC2 Linux</li></ul>
 
 
 <br>
 <img src="https://user-images.githubusercontent.com/38034518/156157389-dfe935b6-584b-4e81-835f-0a7246b4f26d.png" alt="image.png">
 
 
-프론트 단은 Next.js, TailWind CSS로 구현됐으며, 로그인 인증은 Next.js/서버리스(Server less)에 유연한 Next-Auth 라이브러리와 bCrypt 암호화/reCaptcha를 사용해 회원 유저 검증을 진행합니다.
+프론트 단은 Next.js, TailWind CSS로 구현됐으며, 로그인 인증은 Next-Auth 라이브러리와 bCrypt 암호화/reCaptcha를 사용해 회원 유저 검증을 진행합니다.
 
 <br/>
 
-서버리스<span data-raw-html="span" class="s1"> </span>환경에서<span data-raw-html="span" class="s1"> DB </span>접근은<span data-raw-html="span" class="s1"> </span>클라이언트<span data-raw-html="span" class="s1"> </span>요청으로<span data-raw-html="span" class="s1"> Next API</span>에서만<span data-raw-html="span" class="s1"> </span>가능하도록<span data-raw-html="span" class="s1"> </span>분리해<span data-raw-html="span" class="s1"> </span>놓았으며<span data-raw-html="span" class="s1">, DB</span>는<span data-raw-html="span" class="s1"> </span>자바스크립트와<span data-raw-html="span" class="s1"> </span>호환성이<span data-raw-html="span" class="s1"> </span>좋은<span data-raw-html="span" class="s1"> MongoDB</span>와<span data-raw-html="span" class="s1"> </span>이미지<span data-raw-html="span" class="s1"> </span>서버로<span data-raw-html="span" class="s1"> Firebase </span>스토리지를<span data-raw-html="span" class="s1"> </span>사용하고<span data-raw-html="span" class="s1"> </span>있습니다<span data-raw-html="span" class="s1">.</span>
+서버리스<span data-raw-html="span" class="s1"> </span>환경에서<span data-raw-html="span" class="s1"> DB </span>접근은<span data-raw-html="span" class="s1"> </span>클라이언트<span data-raw-html="span" class="s1"> </span>요청으로<span data-raw-html="span" class="s1"> Next API</span>에서만<span data-raw-html="span" class="s1"> </span>가능하도록<span data-raw-html="span" class="s1"> </span>분리해<span data-raw-html="span" class="s1"> </span>놓았으며<span data-raw-html="span" class="s1">, DB</span>는<span data-raw-html="span" class="s1"> </span><span data-raw-html="span" class="s1"> MongoDB</span>와<span data-raw-html="span" class="s1"> </span>이미지<span data-raw-html="span" class="s1"> </span>서버로<span data-raw-html="span" class="s1"> Firebase </span>스토리지를<span data-raw-html="span" class="s1"> </span>사용하고<span data-raw-html="span" class="s1"> </span>있습니다<span data-raw-html="span" class="s1">.</span>
 <br><br>
 글 작성시 사용하는 위지윅(Wysiwyg) 에디터의 경우 Toast UI Editor를 적용했으며, 마지막 배포<span data-raw-html="span" class="s1">는 Vercel 대신 AWS EC2 </span>리눅스<span data-raw-html="span" class="s1"> </span>서버에서<span data-raw-html="span" class="s1"> PM2 </span>프로세서<span data-raw-html="span" class="s1"> </span>매니저를<span data-raw-html="span" class="s1"> </span>통해<span data-raw-html="span" class="s1"> </span>배포되었습니다<span data-raw-html="span" class="s1">.</span>
 
